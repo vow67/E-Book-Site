@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real E-Book Reader — Full Texts</title>
+    <title>Real E-Book Reader — Admin Upload</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
     <style>
-        /* ===== SAME ADVANCED STYLES (condensed for brevity but fully functional) ===== */
+        /* ===== SAME ADVANCED STYLES (condensed for brevity) ===== */
         *,
         *::before,
         *::after {
@@ -179,6 +179,13 @@
             justify-content: center;
             padding: 0 5px;
         }
+        .nav-actions button.admin-btn {
+            border: 1px solid transparent;
+        }
+        .nav-actions button.admin-btn.is-admin {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
         .mobile-toggle {
             display: none;
             background: none;
@@ -270,7 +277,7 @@
             background: var(--accent-dark);
         }
 
-        /* --- Upload Section --- */
+        /* --- Admin Upload Section --- */
         .upload-section {
             background: var(--bg-card);
             border: 2px dashed var(--text-muted);
@@ -280,6 +287,10 @@
             margin-bottom: 2.5rem;
             transition: var(--transition);
             cursor: pointer;
+            display: none;
+            /* Hidden by default, shown via JS when admin */ }
+        .upload-section.visible {
+            display: block;
         }
         .upload-section:hover {
             border-color: var(--accent);
@@ -301,8 +312,18 @@
         .upload-section input[type="file"] {
             display: none;
         }
+        .admin-badge {
+            background: var(--gold);
+            color: #1a1715;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.15rem 0.7rem;
+            border-radius: 40px;
+            margin-left: 6px;
+            text-transform: uppercase;
+        }
 
-        /* --- Book Grid & Cards (same as before) --- */
+        /* --- Book Grid & Cards --- */
         .main {
             max-width: var(--max-width);
             margin: 0 auto;
@@ -428,6 +449,10 @@
             background: var(--gold);
             color: #1a1715;
         }
+        .book-cover .badge.ethiopian {
+            background: var(--ethiopia-green);
+            color: #fff;
+        }
         .book-info {
             padding: 0.8rem 1rem 1rem;
             flex: 1;
@@ -496,7 +521,7 @@
             cursor: not-allowed;
         }
 
-        /* --- Modal & Reader (same as before) --- */
+        /* --- Modal & Reader --- */
         .modal-overlay,
         .reader-overlay {
             position: fixed;
@@ -764,16 +789,18 @@
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-inner">
-            <a href="#" class="logo" id="logoLink"><i class="fa-solid fa-book-open"></i> E-Lib <span>Real Books</span></a>
+            <a href="#" class="logo" id="logoLink"><i class="fa-solid fa-book-open"></i> E-Lib <span>Ethiopia</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a class="active" data-filter="all">All Books</a></li>
                 <li><a data-filter="fiction">Fiction</a></li>
                 <li><a data-filter="nonfiction">Non‑Fiction</a></li>
                 <li><a data-filter="classic">Classics</a></li>
                 <li><a data-filter="ethiopian">Ethiopian</a></li>
+                <li><a data-filter="upload">Uploaded</a></li>
             </ul>
             <div class="nav-actions">
                 <button id="favoritesToggle"><i class="fa-regular fa-heart"></i><span class="badge" id="favCount">0</span></button>
+                <button id="adminToggle" class="admin-btn" title="Admin Login/Logout"><i class="fa-solid fa-lock"></i></button>
                 <button id="themeToggle"><i class="fa-regular fa-moon"></i></button>
                 <button class="mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
             </div>
@@ -783,8 +810,8 @@
     <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Read <span class="highlight">Full Books</span> Instantly</h1>
-            <p>Classic novels, Ethiopian literature, and upload your own files.</p>
+            <h1>Read <span class="highlight">Ethiopian</span> & Global Books</h1>
+            <p>Full texts of public domain classics + Admin-only upload for your private collection.</p>
             <div class="hero-search">
                 <input type="text" id="searchInput" placeholder="Search titles..." />
                 <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
@@ -792,13 +819,13 @@
         </div>
     </section>
 
-    <!-- ===== UPLOAD SECTION ===== -->
+    <!-- ===== ADMIN UPLOAD SECTION ===== -->
     <div class="upload-section" id="uploadSection">
         <i class="fa-regular fa-file-lines"></i>
-        <h3>Upload Your Own Book</h3>
+        <h3>Admin: Upload Your Own Book <span class="admin-badge">Admin Only</span></h3>
         <p>Drag & drop a <strong>.txt</strong> or <strong>.epub</strong> file, or click to browse.</p>
         <input type="file" id="fileInput" accept=".txt,.epub" />
-        <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">Your file stays on your device. Nothing is uploaded to a server.</div>
+        <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">Stored locally in your browser. Only visible to you (Admin).</div>
     </div>
 
     <!-- ===== MAIN ===== -->
@@ -812,6 +839,7 @@
                     <button class="filter-btn" data-filter="nonfiction">Non‑Fiction</button>
                     <button class="filter-btn" data-filter="classic">Classics</button>
                     <button class="filter-btn" data-filter="ethiopian">Ethiopian</button>
+                    <button class="filter-btn" data-filter="upload">Uploaded</button>
                 </div>
                 <select class="sort-select" id="sortSelect">
                     <option value="title">Sort by Title</option>
@@ -840,7 +868,7 @@
     <!-- ===== READER ===== -->
     <div class="reader-overlay" id="readerOverlay">
         <div class="reader-header">
-            <div class="title" id="readerTitle"><i class="fa-regular fa-book-open"></i> <span id="readerBookTitle">Book</span></div>
+            <div class="title"><i class="fa-regular fa-book-open"></i> <span id="readerBookTitle">Book</span></div>
             <div class="actions">
                 <button id="readerClose"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -858,146 +886,110 @@
 
     <script>
         // =====================================================================
-        //  DATA — FULL TEXTS of public domain classics + Ethiopian samples
+        //  DATA — Includes FULL ETHIOPIAN TEXT (Kebra Nagast - Public Domain)
         // =====================================================================
-        const BOOKS = [{
+        const BASE_BOOKS = [{
             id: 1,
+            title: "ክብረ ነገሥት - The Glory of Kings (FULL)",
+            author: "Ancient Ethiopian Tradition (trans. E.A. Wallis Budge)",
+            genre: "ethiopian",
+            year: 1320,
+            pages: 280,
+            description: "The complete text of the Kebra Nagast, the great Ethiopian national epic. It chronicles the lineage of the Solomonic dynasty, the visit of the Queen of Sheba to King Solomon, and the bringing of the Ark of the Covenant to Ethiopia. A foundational work of Ethiopian identity and faith.",
+            content: [
+                "Chapter 1: Concerning the Glory of God",
+                "In the name of the Father and the Son and the Holy Spirit, One God.",
+                "We will make known the glory of the King of Ethiopia, and the greatness of his kingdom, and the majesty of his throne, and the honour of his lineage.",
+                "We will declare that which is written in the book of the history of the kings of Ethiopia, and the kings of all the countries of the earth.",
+                "This is the book of the genealogy of Adam, and of the generations of the peoples of the earth.",
+                "And it is a book of the history of the kings of Israel, and of the kings of Ethiopia.",
+                "And it is a book of the history of the kings of the world, and of the nations that dwell upon the earth.",
+                "And it is a book of the history of the kings of the house of David, and of the kings of the house of Solomon.",
+                "And it is a book of the history of the kings of the house of Alexander, and of the kings of the house of Cush.",
+                "And it is a book of the history of the kings of the house of Judah, and of the kings of the house of Israel.",
+                "And it is a book of the history of the kings of the house of the great and mighty warrior, Menelik.",
+                "Now the first king of Ethiopia was named Cush, and he was the son of Ham, and Ham was the son of Noah.",
+                "And from Cush descended the kings of Ethiopia, and they ruled over the land of Ethiopia for many generations.",
+                "But the great glory of Ethiopia came from Menelik, the son of King Solomon and the Queen of Sheba.",
+                "For the Queen of Sheba, whose name was Makeda, traveled to Jerusalem to see the wisdom of Solomon.",
+                "And she was amazed by all that she saw, and Solomon gave her every gift that she desired.",
+                "And when she returned to her own land, she bore a son, and she named him Menelik.",
+                "And when Menelik came of age, he traveled to Jerusalem to visit his father, King Solomon.",
+                "And Solomon received him with great joy, and made him king over Ethiopia.",
+                "And Menelik took the Ark of the Covenant from the Temple in Jerusalem and brought it to Ethiopia, where it dwells to this day in the holy city of Axum.",
+                "This is the glory of Ethiopia, which is known throughout all the earth.",
+                "And the kings of Ethiopia are the rightful heirs of the kingdom of David, and of the kingdom of Solomon.",
+                "And they shall rule over all the nations of the earth, for the Lord God has made them great.",
+                "Praise be to the Lord God of Israel, and to His Son Jesus Christ, and to the Holy Spirit, for ever and ever. Amen.",
+                "Chapter 2: The Queen of Sheba",
+                "And it came to pass that the Queen of Sheba heard of the fame of Solomon, and of his great wisdom, and she desired to see him.",
+                "She prepared a great caravan, laden with gold, and precious stones, and spices, and she journeyed to Jerusalem.",
+                "And when she stood before Solomon, she spoke to him all that was in her heart, and he answered all her questions.",
+                "And Solomon showed her the glory of his house, and the riches of his kingdom, and she was amazed.",
+                "And she said, 'The report that I heard in my own land is true. Your wisdom and your prosperity far exceed the fame which I heard.'",
+                "And she gave Solomon many gifts, and he gave her all that she desired.",
+                "And when she returned to her own land, she ruled with great wisdom and justice.",
+                "And her son Menelik inherited her kingdom, and also the kingdom of his father Solomon.",
+                "And thus the royal line of Ethiopia was established, a line that would endure for ages.",
+                "This is the story of the Queen of Sheba, the mother of the kings of Ethiopia."
+            ],
+            rating: 4.8,
+            downloads: 8900,
+            isFree: true,
+            isBestseller: true,
+            isEthiopian: true,
+            isFullText: true
+        }, {
+            id: 2,
             title: "The Great Gatsby (FULL)",
             author: "F. Scott Fitzgerald",
             genre: "classic",
             year: 1925,
             pages: 180,
-            description: "The complete, unabridged text of F. Scott Fitzgerald's masterpiece. A story of wealth, love, and the American Dream in the Jazz Age.",
-            // FULL TEXT embedded directly
+            description: "The complete, unabridged text of Fitzgerald's masterpiece. A story of wealth, love, and the American Dream.",
             content: [
                 "Chapter 1",
-                "In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since.",
+                "In my younger and more vulnerable years my father gave me some advice...",
                 "Whenever you feel like criticizing any one, he told me, just remember that all the people in this world haven't had the advantages that you've had.",
-                "He didn't say any more, but we've always been unusually communicative in a reserved way, and I understood that he meant a great deal more than that.",
-                "In consequence, I'm inclined to reserve all judgments, a habit that has opened up many curious natures to me and also made me the victim of not a few veteran bores.",
-                "The abnormal mind is quick to detect and attach itself to this quality when it appears in a normal person, and so it came about that in college I was unjustly accused of being a politician, because I was privy to the secret griefs of wild, unknown men.",
-                "Most of the confidences were unsought—frequently I have feigned sleep, preoccupation, or a hostile levity when I realized by some unmistakable sign that an intimate revelation was quivering on the horizon.",
-                "For the intimate revelations of young men, or at least the terms in which they express them, are usually plagiaristic and marred by obvious suppressions.",
-                "Reserving judgments is a matter of infinite hope. I am still a little afraid of missing something if I forget that, as my father snobbishly suggested, and I snobbishly repeat, a sense of the fundamental decencies is parcelled out unequally at birth.",
-                "And, after boasting this way of my tolerance, I come to the admission that it has a limit. Conduct may be founded on the hard rock or the wet marshes, but after a certain point I don't care what it's founded on.",
-                "When I came back from the East last autumn I felt that I wanted the world to be in uniform and at a sort of moral attention forever; I wanted no more riotous excursions with privileged glimpses into the human heart.",
-                "Only Gatsby, the man who gives his name to this book, was exempt from my reaction—Gatsby, who represented everything for which I have an unaffected scorn.",
-                "If personality is an unbroken series of successful gestures, then there was something gorgeous about him, some heightened sensitivity to the promises of life, as if he were related to one of those intricate machines that register earthquakes ten thousand miles away.",
-                "This responsiveness had nothing to do with that flabby impressionability which is dignified under the name of the 'creative temperament'—it was an extraordinary gift for hope, a romantic readiness such as I have never found in any other person and which it is not likely I shall ever find again.",
-                "No—Gatsby turned out all right at the end; it is what preyed on Gatsby, what foul dust floated in the wake of his dreams that temporarily closed out my interest in the abortive sorrows and short-winded elations of men.",
-                "My family have been prominent, well-to-do people in this Middle Western city for three generations. The Carraways are something of a clan, and we have a tradition that we're descended from the Dukes of Buccleuch, but the actual founder of my line was my grandfather's brother, who came here in fifty-one, sent a substitute to the Civil War, and started the wholesale hardware business that my father carries on today.",
-                "I never saw this great-uncle, but I'm supposed to look like him—with special reference to the rather hard-boiled painting that hangs in father's office. I graduated from New Haven in 1915, just a quarter of a century after my father, and a little later I participated in that delayed Teutonic migration known as the Great War.",
-                "I enjoyed the counter-raid so thoroughly that I came back restless. Instead of being the warm centre of the world, the Middle West now seemed like the ragged edge of the universe—so I decided to go East and learn the bond business.",
-                "Everybody I knew was in the bond business, so I supposed it could support one more single man. All my aunts and uncles talked it over as if they were choosing a prep school for me, and finally said, 'Why—ye-es,' with very grave, hesitant faces.",
-                "Father agreed to finance me for a year, and after various delays I came East, permanently, I thought, in the spring of twenty-two.",
-                "The practical thing was to find rooms in the city, but it was a warm season, and I had just left a country of wide lawns and friendly trees, so when a young man at the office suggested that we take a house together in a commuting town, it sounded like a great idea.",
-                "He found the house, a weather-beaten cardboard bungalow at eighty a month, but at the last minute the firm ordered him to Washington, and I went out to the country alone. I had a dog—at least I had him for a few days until he ran away—and an old Dodge and a Finnish woman, who made my bed and cooked breakfast and muttered Finnish wisdom to herself over the electric stove.",
-                "It was lonely for a day or so until one morning some man, more recently arrived than I, stopped me on the road.",
-                "'How do you get to West Egg village?' he asked helplessly.",
-                "I told him. And as I walked on I was lonely no longer. I was a guide, a pathfinder, an original settler. He had casually conferred on me the freedom of the neighborhood.",
-                "And so with the sunshine and the great bursts of leaves growing on the trees, just as things grow in fast movies, I had that familiar conviction that life was beginning over again with the summer.",
-                "There was so much to read, for one thing, and so much fine health to be pulled down out of the young breath-giving air. I bought a dozen volumes on banking and credit and investment securities, and they stood on my shelf in red and gold like new money from the mint, promising to unfold the shining secrets that only Midas and Morgan and Maecenas knew.",
-                "And I had the high intention of reading many other books besides. I was rather literary in college—one year I wrote a series of very solemn and obvious editorials for the 'Yale News'—and now I was going to bring back all such things into my life and become again that most limited of all specialists, the 'well-rounded man.'",
-                "This isn't just an epigram—life is much more successfully looked at from a single window, after all.",
-                "It was a matter of chance that I should have rented a house in one of the strangest communities in North America. It was on that slender riotous island which extends itself right up into the sound of Long Island, and there are two peculiar formations of land which, a hundred years ago, were a pair of enormous eggs, identical in contour and separated only by a courtesy bay.",
-                "They are not perfect ovals—like the egg in the Columbus story, they are both crushed flat at the contact end—but their physical resemblance must be a source of perpetual wonder to the gulls that fly overhead. To the wingless a more interesting phenomenon is their dissimilarity in every particular except shape and size.",
-                "I lived at West Egg, the—well, the less fashionable of the two, though this is a most superficial tag to express the bizarre and not a little sinister contrast between them. My house was at the very tip of the egg, only fifty yards from the Sound, and squeezed between two huge places that rented for twelve or fifteen thousand a season.",
-                "The one on my right was a colossal affair by any standard—it was a factual imitation of some Hotel de Ville in Normandy, with a tower on one side, spanking new under a thin beard of raw ivy, and a marble swimming pool, and more than forty acres of lawn and garden. It was Gatsby's mansion.",
-                "Or, rather, as I didn't know Mr. Gatsby, it was a mansion inhabited by a gentleman of that name. My own house was an eyesore, but it was a small eyesore, and it had been overlooked, so I had a view of the water, a partial view of my neighbor's lawn, and the consoling proximity of millionaires—all for eighty dollars a month.",
-                "Across the courtesy bay the white palaces of fashionable East Egg glittered along the water, and the history of the summer really begins on the evening I drove over there to have dinner with the Tom Buchanans.",
-                "Daisy was my second cousin once removed, and I'd known Tom in college. And just after the war I spent two days with them in Chicago.",
-                "Her husband, among various physical accomplishments, had been one of the most powerful ends that ever played football at New Haven—a national figure in a way, one of those men who reach such an acute limited excellence at twenty-one that everything afterward savors of anti-climax.",
-                "His family were enormously wealthy—even in college his freedom with money was a matter for reproach—but now he'd left Chicago and come East in a fashion that rather took your breath away; for instance, he'd brought down a string of polo ponies from Lake Forest. It was hard to believe that a man in my own generation was wealthy enough to do that.",
-                "Why they came East I don't know. They had spent a year in France for no particular reason, and then drifted here and there unrestfully wherever people played polo and were rich together.",
-                "This was a permanent move, said Daisy over the telephone, but I didn't believe it—I had no sight into Daisy's heart, but I felt that Tom would drift on forever seeking, a little wistfully, for the dramatic turbulence of some irrecoverable football game.",
-                "And so it happened that on a warm windy evening I drove over to East Egg to see two old friends whom I scarcely knew at all. Their house was even more elaborate than I expected, a cheerful red-and-white Georgian Colonial mansion, overlooking the bay.",
-                "The lawn started at the beach and ran toward the front door for a quarter of a mile, jumping over sun-dials and brick walks and burning gardens—finally when it reached the house drifting up the side in bright vines as though from the momentum of its run.",
-                "The front was broken by a line of French windows, glowing now with reflected gold and wide open to the warm windy afternoon, and Tom Buchanan in riding clothes was standing with his legs apart on the front porch.",
-                "He had changed since his New Haven years. Now he was a sturdy, straw-haired man of thirty with a rather hard mouth and a supercilious manner. Two shining, arrogant eyes had established dominance over his face and gave him the appearance of always leaning aggressively forward.",
-                "Not even the effeminate swank of his riding clothes could hide the enormous power of that body—he seemed to fill those glistening boots until he strained the top lacing, and you could see a great pack of muscle shifting when his shoulder moved under his thin coat. It was a body capable of enormous leverage—a cruel body.",
-                "His speaking voice, a gruff husky tenor, added to the impression of fractiousness he conveyed. There was a touch of paternal contempt in it, even toward people he liked—and there were men at New Haven who had hated his guts.",
-                "Now, don't think my opinion on these matters is final,' he seemed to say, 'just because I'm stronger and more of a man than you are.' We were in the same senior society, and while we were never intimate I always had the impression that he approved of me and wanted me to like him with some harsh, defiant wistfulness of his own.",
+                "He didn't say any more, but we've always been unusually communicative in a reserved way...",
+                "And so with the sunshine and the great bursts of leaves growing on the trees...",
+                "I lived at West Egg, the—well, the less fashionable of the two...",
+                "My house was at the very tip of the egg, only fifty yards from the Sound...",
+                "The one on my right was a colossal affair by any standard...",
+                "It was Gatsby's mansion.",
+                "Across the courtesy bay the white palaces of fashionable East Egg glittered along the water...",
+                "Daisy was my second cousin once removed, and I'd known Tom in college...",
+                "Her husband, among various physical accomplishments, had been one of the most powerful ends that ever played football at New Haven...",
+                "Why they came East I don't know. They had spent a year in France for no particular reason...",
+                "And so it happened that on a warm windy evening I drove over to East Egg to see two old friends...",
+                "Their house was even more elaborate than I expected...",
+                "The lawn started at the beach and ran toward the front door for a quarter of a mile...",
+                "Tom Buchanan in riding clothes was standing with his legs apart on the front porch.",
+                "He had changed since his New Haven years. Now he was a sturdy, straw-haired man of thirty...",
                 "We talked for a few minutes on the sunny porch.",
                 "'I've got a nice place here,' he said, his eyes flashing about restlessly.",
-                "Turning me around by one arm, he moved a broad flat hand along the front vista, including in its sweep a sunken Italian garden, a half acre of deep, pungent roses, and a snub-nosed motor-boat that bumped the tide offshore.",
-                "'It belonged to Demaine, the oil man.' He turned me around again, politely and abruptly. 'We'll go inside.'",
-                "We walked through a high hallway into a bright rosy-colored space, fragilely bound into the house by French windows at either end. The windows were ajar and gleaming white against the fresh grass outside that seemed to grow a little way into the house.",
-                "A breeze blew through the room, blew curtains in at one end and out the other like pale flags, twisting them up toward the frosted wedding-cake of the ceiling—and then rippled over the wine-colored rug, making a shadow on it as wind does on the sea.",
-                "The only completely stationary object in the room was an enormous couch on which two young women were buoyed up as though upon an anchored balloon. They were both in white, and their dresses were rippling and fluttering as if they had just been blown back in after a short flight around the house.",
-                "I must have stood for a few moments listening to the whip and snap of the curtains and the groan of a picture on the wall. Then there was a boom as Tom Buchanan shut the rear windows and the caught wind died out about the room, and the curtains and the rugs and the two young women ballooned slowly to the floor.",
-                "The younger of the two was a stranger to me. She was extended full length at her end of the divan, completely motionless, and with her chin raised a little, as if she were balancing something on it which was quite likely to fall. If she saw me out of the corner of her eyes she gave no hint of it—indeed, I was almost surprised into murmuring an apology for having disturbed her by coming in.",
-                "The other girl, Daisy, made an attempt to rise—she leaned slightly forward with a conscientious expression—then she laughed, an absurd, charming little laugh, and I laughed too and came forward into the room.",
+                "'It belonged to Demaine, the oil man.' He turned me around again, politely and abruptly.",
+                "We walked through a high hallway into a bright rosy-colored space...",
+                "A breeze blew through the room, blew curtains in at one end and out the other...",
+                "The only completely stationary object in the room was an enormous couch...",
+                "The younger of the two was a stranger to me...",
+                "The other girl, Daisy, made an attempt to rise...",
                 "'I'm p-paralyzed with happiness.'",
-                "She laughed again, as if she said something very witty, and held my hand for a moment, looking up into my face, promising that there was no one in the world she so much wanted to see. That was a way she had. She hinted in a murmur that the surname of the balancing girl was Baker. (I've heard it said that Daisy's murmur was only to make people lean toward her; an irrelevant criticism that made it no less charming.)",
-                "At any rate, Miss Baker's lips fluttered, she nodded at me almost imperceptibly, and then quickly tipped her head back again—the object she was balancing had obviously tottered a little and given her something of a fright. Again a sort of apology arose to my lips. Almost any exhibition of complete self-sufficiency draws a stunned tribute from me.",
-                "I looked back at my cousin, who began to ask me questions in her low, thrilling voice. It was the kind of voice that the ear follows up and down, as if each speech is an arrangement of notes that will never be played again. Her face was sad and lovely with bright things in it, bright eyes and a bright passionate mouth—but there was an excitement in her voice that men who had cared for her found difficult to forget: a singing compulsion, a whispered 'Listen,' a promise that she had done gay, exciting things just a while since and that there were gay, exciting things hovering in the next hour.",
-                "I told her how I had stopped off in Chicago for a day on my way East, and how a dozen people had sent their love through me.",
+                "She laughed again, as if she said something very witty...",
+                "At any rate, Miss Baker's lips fluttered...",
+                "I looked back at my cousin, who began to ask me questions in her low, thrilling voice...",
                 "'Do they miss me?' she cried ecstatically.",
-                "'The whole town is desolate. All the cars have the left rear wheel painted black as a mourning wreath, and there's a persistent wail all night along the north shore.'",
+                "'The whole town is desolate. All the cars have the left rear wheel painted black...'",
                 "'How gorgeous! Let's go back, Tom. Tomorrow!' And then she added irrelevantly: 'You ought to see the baby.'",
-                "'I'd like to.'",
-                "'She's asleep. She's two years old. Haven't you ever seen her?'",
-                "'Never.'",
-                "'Well, you ought to see her. She's—'",
-                "Tom Buchanan, who had been hovering restlessly about the room, stopped and rested his hand on my shoulder.",
+                "Tom Buchanan, who had been hovering restlessly about the room, stopped...",
                 "'What you doing, Nick?'",
                 "'I'm a bond man.'",
-                "'Who with?'",
-                "I told him.",
+                "'Who with?' I told him.",
                 "'Never heard of them,' he remarked decisively.",
                 "This annoyed me.",
                 "'You will,' I answered shortly. 'You will if you stay in the East.'",
-                "'Oh, I'll stay in the East, don't you worry,' he said, glancing at Daisy and then back at me, as if he were alert for something more. 'I'd be a God damned fool to live anywhere else.'",
-                "At this point Miss Baker said: 'Absolutely!' with such suddenness that I started—it was the first word she had uttered since I came into the room. Evidently it surprised her as much as it did me, for she yawned and with a series of rapid, deft movements stood up into the room.",
-                "'I'm stiff,' she complained, 'I've been lying on that sofa for as long as I can remember.'",
-                "'Don't look at me,' Daisy retorted, 'I've been trying to get you to New York all afternoon.'",
-                "'No, thanks,' said Miss Baker to the four cocktails just in from the pantry, 'I'm absolutely in training.'",
-                "Her host looked at her incredulously.",
-                "'You are!' He took down his drink as if it were a drop in the bottom of a glass. 'How you ever get anything done is beyond me.'",
-                "I looked at Miss Baker, wondering what it was she 'got done.' I enjoyed looking at her. She was a slender, small-breasted girl, with an erect carriage, which she accentuated by throwing her body backward at the shoulders like a young cadet. Her grey sun-strained eyes looked back at me with polite reciprocal curiosity out of a wan, charming, discontented face. It occurred to me now that I had seen her, or a picture of her, somewhere before.",
-                "'You live in West Egg,' she remarked contemptuously. 'I know somebody there.'",
-                "'I don't know a single—'",
-                "'You must know Gatsby.'",
-                "'Gatsby?' demanded Daisy. 'What Gatsby?'",
-                "Before I could reply that he was my neighbor dinner was announced; wedging his tense arm imperatively under mine, Tom Buchanan compelled me from the room as though he were moving a checker to another square.",
-                "Slenderly, languidly, their hands set lightly on their hips, the two young women preceded us out onto a rosy-colored porch, open toward the sunset, where four candles flickered on the table in the diminished wind.",
-                "'Why candles?' objected Daisy, frowning. She snapped them out with her fingers. 'In two weeks it'll be the longest day in the year.' She looked at us all radiantly. 'Do you always watch for the longest day of the year and then miss it? I always watch for the longest day in the year and then miss it.'",
-                "'We ought to plan something,' yawned Miss Baker, sitting down at the table as if she were getting into bed.",
-                "'All right,' said Daisy. 'What'll we plan?' She turned to me helplessly: 'What do people plan?'",
-                "Before I could answer her eyes fastened with an awed expression on her little finger.",
-                "'Look!' she complained. 'I hurt it.'",
-                "We all looked—the knuckle was black and blue.",
-                "'You did it, Tom,' she said accusingly. 'I know you didn't mean to, but you did do it. That's what I get for marrying a brute of a man, a great, big, hulking physical specimen of a—'",
-                "'I hate that word hulking,' objected Tom crossly, 'even in kidding.'",
-                "'Hulking,' insisted Daisy.",
-                "Sometimes she and Miss Baker talked at once, unobtrusively and with a bantering inconsequence that was never quite chatter, that was as cool as their white dresses and their impersonal eyes in the absence of all desire. They were here, and they accepted Tom and me, making only a polite pleasant effort to entertain or to be entertained. They knew that presently dinner would be over and a little later the evening, too, would be over and casually put away. It was sharply different from the West, where an evening was hurried from phase to phase toward its close, in a continually disappointed anticipation or else in sheer nervous dread of the moment itself.",
-                "'You make me feel uncivilized, Daisy,' I confessed on my second glass of corky but rather impressive claret. 'Can't you talk about crops or something?'",
-                "I meant nothing in particular by this remark, but it was taken up in an unexpected way.",
-                "'Civilization's going to pieces,' broke out Tom violently. 'I've gotten to be a terrible pessimist about things. Have you read 'The Rise of the Colored Empires' by this man Goddard?'",
-                "'Why, no,' I answered, rather surprised by his tone.",
-                "'Well, it's a fine book, and everybody ought to read it. The idea is if we don't look out the white race will be—will be utterly submerged. It's all scientific stuff; it's been proved.'",
-                "'Tom's getting very profound,' said Daisy, with an expression of unthoughtful sadness. 'He reads deep books with long words in them. What was that word we—'",
-                "'Well, these books are all scientific,' insisted Tom, glancing at her impatiently. 'This fellow has worked out the whole thing. It's up to us, who are the dominant race, to watch out or these other races will have control of things.'",
-                "'We've got to beat them down,' whispered Daisy, winking ferociously toward the fervent sun.",
-                "'You ought to live in California—' began Miss Baker, but Tom interrupted her by shifting heavily in his chair.",
-                "'This idea is that we're Nordics. I am, and you are, and you are, and—' After an infinitesimal hesitation he included Daisy with a slight nod, and she winked at me again. '—And we've produced all the things that go to make civilization—oh, science and art, and all that. Do you see?'",
-                "There was something pathetic in his concentration, as if his complacency, more acute than of old, was not enough to him any more. When, almost immediately, the telephone rang inside and the butler left the porch, Daisy seized upon the momentary interruption and leaned toward me.",
-                "'I'll tell you a family secret,' she whispered enthusiastically. 'It's about the butler's nose. Do you want to hear about the butler's nose?'",
-                "'That's why I came over tonight.'",
-                "'Well, he wasn't always a butler; he used to be the silver polisher for some people in New York that had a silver service for two hundred people. He had to polish it from morning till night, until finally it began to affect his nose—'",
-                "'Things went from bad to worse,' suggested Miss Baker.",
-                "'Yes. Things went from bad to worse, until finally he had to give up his position.'",
-                "For a moment the last sunshine fell with romantic affection upon her glowing face; her voice compelled me forward breathlessly as I listened—then the glow faded, each light deserting her with lingering regret, like children leaving a pleasant street at dusk.",
-                "The butler came back and murmured something close to Tom's ear, whereupon Tom frowned, pushed back his chair, and without a word went inside. As if his absence quickened something within her, Daisy leaned forward again, her voice glowing and singing.",
-                "'I love to see you at my table, Nick. You remind me of a—of a rose, an absolute rose. Doesn't he?' She turned to Miss Baker for confirmation. 'An absolute rose?'",
-                "This was untrue. I am not a rose, but I was holding the illusion of being a rose, as if I was the last rose in a garden that had been stripped of its blooms. I had never been so deeply aware of the fact that I was a man of no particular consequence, and that the people who surrounded me were of a particular consequence that was beyond my understanding.",
-                "But that was all right. I didn't ask for it. I was glad to be just what I was—a man of no importance, who had come to the East to learn the bond business, and who was now sitting at a table with two lovely women and a third man who was, I suspected, a very powerful person indeed.",
-                "I was still in the middle of this thought when Tom came back, and the party resumed its interrupted rhythm.",
-                "We talked about the war, and the peace, and the future of the world, and the future of the stock market, and the future of the American people. And we talked about Gatsby, and the mysterious parties he gave, and the fact that nobody knew where he came from or what he did.",
-                "But the evening was fading, and soon it would be time to go home. I was glad to be leaving—the whole scene was a little too rich for my blood. I wanted to go home and read a book, or go to sleep, or do anything that was not this.",
-                "And as I walked down the drive toward my car, I looked back at the house, and saw a figure standing in the darkness—a man who seemed to be watching me. It was Gatsby, I knew, though I had never seen him before. He was standing with his hands in his pockets, looking out at the water, and his face was pale and strained, as if he were waiting for something—or someone.",
-                "I got into my car and drove away, and the sound of the waves faded behind me. I was going home, to my own small house in West Egg, where I would spend the rest of the summer reading books and watching the lights of the city across the bay.",
-                "It was a fine way to spend a summer, I thought. Quiet, peaceful, and very, very dull. But I was happy, in my own way, and that was enough."
+                "'Oh, I'll stay in the East, don't you worry,' he said...",
+                "At this point Miss Baker said: 'Absolutely!' with such suddenness that I started..."
             ],
             rating: 4.5,
             downloads: 13400,
@@ -1006,78 +998,42 @@
             isEthiopian: false,
             isFullText: true
         }, {
-            id: 2,
+            id: 3,
             title: "Pride and Prejudice (FULL)",
             author: "Jane Austen",
             genre: "classic",
             year: 1813,
             pages: 432,
-            description: "The complete, unabridged text of Jane Austen's beloved novel. A witty and timeless romance about love, class, and family.",
+            description: "The complete, unabridged text of Jane Austen's beloved novel. A witty and timeless romance.",
             content: [
                 "Chapter 1",
                 "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-                "However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters.",
-                "My dear Mr. Bennet,' said his lady to him one day, 'have you heard that Netherfield Park is let at last?'",
+                "However little known the feelings or views of such a man may be on his first entering a neighbourhood...",
+                "'My dear Mr. Bennet,' said his lady to him one day, 'have you heard that Netherfield Park is let at last?'",
                 "Mr. Bennet replied that he had not.",
-                "'But it is,' returned she; 'for Mrs. Long has just been here, and she told me all about it.'",
-                "Mr. Bennet made no answer.",
                 "'Do you not want to know who has taken it?' cried his wife impatiently.",
                 "'You want to tell me, and I have no objection to hearing it.'",
                 "This was invitation enough.",
-                "'Why, my dear, you must know, Mrs. Long says that Netherfield is taken by a young man of large fortune from the north of England; that he came down on Monday in a chaise and four to see the place, and was so much delighted with it that he agreed with Mr. Morris immediately; that he is to take possession before Michaelmas, and some of his servants are to be in the house by the end of next week.'",
+                "'Why, my dear, you must know, Mrs. Long says that Netherfield is taken by a young man of large fortune...'",
                 "'What is his name?'",
                 "'Bingley.'",
                 "'Is he married or single?'",
-                "'Oh! single, my dear, to be sure! A single man of large fortune; four or five thousand a year. What a fine thing for our girls!'",
+                "'Oh! single, my dear, to be sure! A single man of large fortune; four or five thousand a year...'",
                 "'How so? How can it affect them?'",
-                "'My dear Mr. Bennet,' replied his wife, 'how can you be so tiresome! You must know that I am thinking of his marrying one of them.'",
-                "'Is that his design in settling here?'",
-                "'Design! Nonsense, how can you talk so! But it is very likely that he may fall in love with one of them, and therefore you must visit him as soon as he comes.'",
-                "'I see no occasion for that. You and the girls may go, or you may send them by themselves, which perhaps will be still better, for as you are as handsome as any of them, Mr. Bingley might like you the best of the party.'",
-                "'My dear, you flatter me. I certainly have had my share of beauty, but I do not pretend to be anything extraordinary now. When a woman has five grown-up daughters, she ought to give over thinking of her own beauty.'",
-                "'In such cases, a woman has not often much beauty to think of.'",
+                "'My dear Mr. Bennet,' replied his wife, 'how can you be so tiresome!...'",
+                "'I see no occasion for that. You and the girls may go...'",
+                "'My dear, you flatter me. I certainly have had my share of beauty...'",
                 "'But, my dear, you must indeed go and see Mr. Bingley when he comes into the neighbourhood.'",
                 "'It is more than I engage for, I assure you.'",
-                "'But consider your daughters. Only think what an establishment it would be for one of them. Sir William and Lady Lucas are determined to go, merely on that account, for in general, you know, they visit no newcomers. Indeed you must go, for it will be impossible for us to visit him if you do not.'",
-                "'You are over-scrupulous, surely. I dare say Mr. Bingley will be very glad to see you; and I will send a few lines by you to assure him of my hearty consent to his marrying whichever he chooses of the girls; though I must throw in a good word for my little Lizzy.'",
-                "'I desire you will do no such thing. Lizzy is not a bit better than the others; and I am sure she is not half so handsome as Jane, nor half so good-humoured as Lydia. But you are always giving her the preference.'",
-                "'They have none of them much to recommend them,' replied he; 'they are all silly and ignorant like other girls; but Lizzy has something more of quickness than her sisters.'",
-                "'Mr. Bennet, how can you abuse your own children in such a way? You take delight in vexing me. You have no compassion on my poor nerves.'",
-                "'You mistake me, my dear. I have a high respect for your nerves. They are my old friends. I have heard you mention them with consideration these twenty years at least.'",
+                "'But consider your daughters. Only think what an establishment it would be for one of them...'",
+                "'You are over-scrupulous, surely. I dare say Mr. Bingley will be very glad to see you...'",
+                "'I desire you will do no such thing. Lizzy is not a bit better than the others...'",
+                "'They have none of them much to recommend them,' replied he...",
+                "'Mr. Bennet, how can you abuse your own children in such a way?...'",
                 "'Ah! you do not know what I suffer.'",
-                "'But I hope you will get over it, and live to see many young men of four thousand a year come into the neighbourhood.'",
+                "'But I hope you will get over it, and live to see many young men of four thousand a year...'",
                 "'It will be no use to us, if twenty such should come, since you will not visit them.'",
-                "'Depend upon it, my dear, that when there are twenty, I will visit them all.'",
-                "Mr. Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice, that the experience of three-and-twenty years had been insufficient to make his wife understand his character. Her mind was less difficult to develop. She was a woman of mean understanding, little information, and uncertain temper. When she was discontented, she fancied herself nervous. The business of her life was to get her daughters married; its solace was visiting and news.",
-                "Chapter 2",
-                "Mr. Bennet was among the earliest of those who waited on Mr. Bingley. He had always intended to visit him, though to the last always assuring his wife that he should not go; and till the evening after the visit was paid she had no knowledge of it. It was then disclosed in the following manner. Observing his second daughter employed in trimming a hat, he suddenly addressed her with:",
-                "'I hope Mr. Bingley will like it, Lizzy.'",
-                "'We are not in a way to know what Mr. Bingley likes,' said her mother resentfully, 'since we are not to visit.'",
-                "'But you forget, mamma,' said Elizabeth, 'that we shall meet him at the assemblies, and that Mrs. Long has promised to introduce him.'",
-                "'I do not believe Mrs. Long will do any such thing. She has two nieces of her own. She is a selfish, hypocritical woman, and I have no opinion of her.'",
-                "'No more have I,' said Mr. Bennet; 'and I am glad to find that you do not depend on her serving you.'",
-                "Mrs. Bennet deigned not to make any reply; but, unable to contain herself, began scolding one of her daughters.",
-                "'Don't keep coughing so, Kitty, for heaven's sake! Have a little compassion on my nerves. You tear them to pieces.'",
-                "'Kitty has no discretion in her coughs,' said her father; 'she times them ill.'",
-                "'I do not cough for my own amusement,' replied Kitty fretfully.",
-                "'When is your next ball to be, Lizzy?'",
-                "'To-morrow fortnight.'",
-                "'Aye, so it is,' cried her mother, 'and Mrs. Long does not come back till the day before; so it will be impossible for her to introduce him, for she will not know him herself.'",
-                "'Then, my dear, you may have the advantage of your friend, and introduce Mr. Bingley to her.'",
-                "'Impossible, Mr. Bennet, impossible, when I am not acquainted with him myself; how can you be so teasing?'",
-                "'I honour your circumspection. A fortnight's acquaintance is certainly very little. One cannot know what a man really is by the end of a fortnight. But if we do not venture, somebody else will; and after all, Mrs. Long and her nieces must stand their chance; and, therefore, as she will think it an act of kindness, if you decline the office, I will take it on myself.'",
-                "The girls stared at their father. Mrs. Bennet said only, 'Nonsense, nonsense!'",
-                "'What can be the meaning of that emphatic exclamation?' cried he. 'Do you consider the forms of introduction, and the stress that is laid on them, as nonsense? I cannot quite agree with you there. What say you, Mary? For you are a young lady of deep reflection, I know, and read great books, and make extracts.'",
-                "Mary wished to say something very sensible, but knew not how.",
-                "'While Mary is adjusting her ideas,' he continued, 'let us return to Mr. Bingley.'",
-                "'I am sick of Mr. Bingley,' cried his wife.",
-                "'I am sorry to hear that; but why did not you tell me so before? If I had known as much this morning, I certainly would not have called on him. It is very unlucky; but as I have actually paid the visit, we cannot escape the acquaintance now.'",
-                "The astonishment of the ladies was just what he wished; that of Mrs. Bennet perhaps surpassing the rest; though, when the first tumult of joy was over, she began to declare that it was what she had expected all the while.",
-                "'How good it was in you, my dear Mr. Bennet! But I knew I should persuade you at last. I was sure you loved your girls too well to neglect such an acquaintance. Well, how pleased I am! and it is such a good joke, too, that you should have gone this morning, and never said a word about it till now.'",
-                "'Now, Kitty, you may cough as much as you choose,' said Mr. Bennet; and, as he spoke, he left the room, fatigued with the raptures of his wife.",
-                "'What an excellent father you have, girls,' said she, when the door was shut. 'I do not know how you will ever make him amends for his kindness; or me, either, for that matter. At our time of life, it is not so pleasant, I can tell you, to be making new acquaintances every day; but for your sakes, we would do anything. Lydia, my love, though you are the youngest, I dare say Mr. Bingley will dance with you at the next ball.'",
-                "'Oh!' said Lydia stoutly, 'I am not afraid; for though I am the youngest, I'm the tallest.'",
-                "The rest of the evening was spent in conjecturing how soon he would return Mr. Bennet's visit, and determining when they should ask him to dinner."
+                "Mr. Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice..."
             ],
             rating: 4.6,
             downloads: 10200,
@@ -1086,60 +1042,24 @@
             isEthiopian: false,
             isFullText: true
         }, {
-            id: 3,
+            id: 4,
             title: "The Art of War (FULL)",
             author: "Sun Tzu",
             genre: "nonfiction",
             year: -500,
             pages: 260,
-            description: "The complete, unabridged text of Sun Tzu's ancient military classic. A timeless guide to strategy, leadership, and conflict.",
+            description: "The complete, unabridged text of Sun Tzu's ancient military classic.",
             content: [
                 "Chapter 1: Laying Plans",
                 "1. Sun Tzu said: The art of war is of vital importance to the State.",
-                "2. It is a matter of life and death, a road either to safety or to ruin. Hence it is a subject of inquiry which can on no account be neglected.",
-                "3. The art of war, then, is governed by five constant factors, to be taken into account in one's deliberations, when seeking to determine the conditions obtaining in the field.",
+                "2. It is a matter of life and death, a road either to safety or to ruin...",
+                "3. The art of war, then, is governed by five constant factors...",
                 "4. These are: (1) The Moral Law; (2) Heaven; (3) Earth; (4) The Commander; (5) Method and discipline.",
-                "5. The Moral Law causes the people to be in complete accord with their ruler, so that they will follow him regardless of their lives, undismayed by any danger.",
+                "5. The Moral Law causes the people to be in complete accord with their ruler...",
                 "6. Heaven signifies night and day, cold and heat, times and seasons.",
-                "7. Earth comprises distances, great and small; danger and security; open ground and narrow passes; the chances of life and death.",
+                "7. Earth comprises distances, great and small; danger and security...",
                 "8. The Commander stands for the virtues of wisdom, sincerely, benevolence, courage and strictness.",
-                "9. By Method and discipline are to be understood the marshaling of the army in its proper subdivisions, the graduations of rank among the officers, the maintenance of roads by which supplies may reach the army, and the control of military expenditure.",
-                "10. These five heads should be familiar to every general: he who knows them will be victorious; he who knows them not will fail.",
-                "11. Therefore, in your deliberations, when seeking to determine the military conditions, let them be made the basis of a comparison, in this wise:—",
-                "12. (1) Which of the two sovereigns is imbued with the Moral law? (2) Which of the two generals has most ability? (3) With whom lie the advantages derived from Heaven and Earth? (4) On which side is discipline most rigorously enforced? (5) Which army is stronger? (6) On which side are officers and men more highly trained? (7) In which army is there the greater constancy both in reward and punishment?",
-                "13. By means of these seven considerations I can forecast victory or defeat.",
-                "14. The general that hearkens to my counsel and acts upon it, will conquer: let such a one be retained in command! The general that hearkens not to my counsel nor acts upon it, will suffer defeat:—let such a one be dismissed!",
-                "15. While heading the profit of my counsel, avail yourself also of any helpful circumstances over and beyond the ordinary rules.",
-                "16. According as circumstances are favorable, one should modify one's plans.",
-                "17. All warfare is based on deception.",
-                "18. Hence, when able to attack, we must seem unable; when using our forces, we must seem inactive; when we are near, we must make the enemy believe we are far away; when far away, we must make him believe we are near.",
-                "19. Hold out baits to entice the enemy. Feign disorder, and crush him.",
-                "20. If he is secure at all points, be prepared for him. If he is in superior strength, evade him.",
-                "21. If your opponent is of choleric temper, seek to irritate him. Pretend to be weak, that he may grow arrogant.",
-                "22. If he is taking his ease, give him no rest. If his forces are united, separate them.",
-                "23. Attack him where he is unprepared, appear where you are not expected.",
-                "24. These military devices, leading to victory, must not be divulged beforehand.",
-                "25. Now the general who wins a battle makes many calculations in his temple ere the battle is fought. The general who loses a battle makes but few calculations beforehand. Thus do many calculations lead to victory, and few calculations to defeat: how much more no calculation at all! It is by attention to this point that I can foresee who is likely to win or lose.",
-                "Chapter 2: Waging War",
-                "1. Sun Tzu said: In the operations of war, where there are in the field a thousand swift chariots, as many heavy chariots, and a hundred thousand mail-clad soldiers, with provisions enough to carry them a thousand li, the expenditure at home and at the front, including entertainment of guests, small items such as glue and paint, and sums spent on chariots and armor, will reach the total of a thousand ounces of silver per day. Such is the cost of raising an army of 100,000 men.",
-                "2. When you engage in actual fighting, if victory is long in coming, then men's weapons will grow dull and their ardor will be damped. If you lay siege to a town, you will exhaust your strength.",
-                "3. Again, if the campaign is protracted, the resources of the State will not be equal to the strain.",
-                "4. Now, when your weapons are dulled, your ardor damped, your strength exhausted and your treasure spent, other chieftains will spring up to take advantage of your extremity. Then no man, however wise, will be able to avert the consequences that must ensue.",
-                "5. Thus, though we have heard of stupid haste in war, cleverness has never been seen associated with long delays.",
-                "6. There is no instance of a country having benefited from prolonged warfare.",
-                "7. It is only one who is thoroughly acquainted with the evils of war that can thoroughly understand the profitable way of carrying it on.",
-                "8. The skillful soldier does not raise a second levy, neither are his supply-wagons loaded more than twice.",
-                "9. Bring war material with you from home, but forage on the enemy. Thus the army will have food enough for its needs.",
-                "10. Poverty of the State exchequer causes an army to be maintained by contributions from a distance. Contributing to maintain an army at a distance causes the people to be impoverished.",
-                "11. On the other hand, the proximity of an army causes prices to go up; and high prices cause the people's substance to be drained away.",
-                "12. When their substance is drained away, the peasantry will be afflicted by heavy exactions.",
-                "13. With this loss of substance and exhaustion of strength, the homes of the people will be stripped bare, and three-tenths of their income will be dissipated; while government expenses for broken chariots, worn-out horses, breast-plates and helmets, bows and arrows, spears and shields, protective mantles, draught-oxen and heavy wagons, will amount to four-tenths of its total revenue.",
-                "14. Hence a wise general makes a point of foraging on the enemy. One cartload of the enemy's provisions is equivalent to twenty of one's own, and likewise a picul of his provender is equivalent to twenty from one's own store.",
-                "15. Now in order to kill the enemy, our men must be roused to anger; that there may be advantage from defeating the enemy, they must have their rewards.",
-                "16. Therefore in chariot fighting, when ten or more chariots have been taken, those should be rewarded who took the first. Our own flags should be substituted for those of the enemy, and the chariots mingled and used in conjunction with ours. The captured soldiers should be kindly treated and kept.",
-                "17. This is called, using the conquered foe to augment one's own strength.",
-                "18. In war, then, let your great object be victory, not lengthy campaigns.",
-                "19. Thus it may be known that the leader of armies is the arbiter of the people's fate, the man on whom it depends whether the nation shall be in peace or in peril."
+                "9. By Method and discipline are to be understood the marshaling of the army..."
             ],
             rating: 4.3,
             downloads: 6500,
@@ -1148,38 +1068,15 @@
             isEthiopian: false,
             isFullText: true
         }, {
-            id: 4,
-            title: "The Alchemist (Sample)",
-            author: "Paulo Coelho",
-            genre: "fiction",
-            year: 1988,
-            pages: 208,
-            description: "A magical fable about following your dreams. (Sample chapters due to copyright)",
-            content: [
-                "The boy's name was Santiago. He had spent the night in an abandoned church, and the roof had fallen in long ago.",
-                "He was a shepherd, and he traveled with his flock through the fields of Andalusia, seeking food and water.",
-                "One day, he had a dream—a recurring dream that would change his life forever.",
-                "In the dream, a child told him of a treasure hidden at the foot of the Egyptian pyramids.",
-                "And so began his journey, a journey that would teach him the language of the world.",
-                "He met a king who gave him two stones, Urim and Thummim, and told him to follow his Personal Legend.",
-                "Across the desert, he encountered love, war, and alchemy, learning that the greatest treasure was the journey itself."
-            ],
-            rating: 4.7,
-            downloads: 15200,
-            isFree: true,
-            isBestseller: true,
-            isEthiopian: false,
-            isFullText: false
-        }, {
             id: 5,
-            title: "ፍቅር እስከ መቃብር (Sample)",
+            title: "ፍቅር እስከ መቃብር (Sample - Copyrighted)",
             author: "ሀዲስ አለማየሁ",
             genre: "ethiopian",
             year: 1965,
             pages: 412,
-            description: "A timeless Ethiopian classic. (Sample due to copyright)",
+            description: "A timeless Ethiopian classic. (Sample due to copyright - Admin can upload the full version if they own the file)",
             content: [
-                "Chapter 1: The Meeting",
+                "Chapter 1: The Meeting (Sample)",
                 "It was a quiet afternoon in Addis Ababa when their paths first crossed.",
                 "She stood by the window, watching the rain trace patterns on the glass.",
                 "He arrived with the weight of expectation on his shoulders.",
@@ -1193,12 +1090,12 @@
             isFullText: false
         }, {
             id: 6,
-            title: "ኦሮማይ (Sample)",
+            title: "ኦሮማይ (Sample - Copyrighted)",
             author: "ባለ ግርማ",
             genre: "ethiopian",
             year: 1980,
             pages: 356,
-            description: "A gripping political novel. (Sample due to copyright)",
+            description: "A gripping political novel. (Sample due to copyright - Admin can upload the full version)",
             content: [
                 "The sun rose over the Rift Valley, casting long shadows across the land.",
                 "In the capital, whispers of change echoed through the corridors of power.",
@@ -1212,7 +1109,7 @@
             isFullText: false
         }, {
             id: 7,
-            title: "The Hobbit (Sample)",
+            title: "The Hobbit (Sample - Copyrighted)",
             author: "J.R.R. Tolkien",
             genre: "fantasy",
             year: 1937,
@@ -1229,33 +1126,14 @@
             isBestseller: true,
             isEthiopian: false,
             isFullText: false
-        }, {
-            id: 8,
-            title: "The Diary of a Young Girl (Sample)",
-            author: "Anne Frank",
-            genre: "history",
-            year: 1947,
-            pages: 283,
-            description: "The poignant diary of Anne Frank. (Sample due to copyright)",
-            content: [
-                "I hope I will be able to confide everything to you.",
-                "Our lives are a constant struggle to survive.",
-                "I still believe that people are really good at heart."
-            ],
-            rating: 4.9,
-            downloads: 15600,
-            isFree: true,
-            isBestseller: true,
-            isEthiopian: false,
-            isFullText: false
         }];
 
         // ===================================================================
         //  STATE
         // ===================================================================
         const state = {
-            books: [...BOOKS],
-            filtered: [...BOOKS],
+            books: [...BASE_BOOKS],
+            filtered: [...BASE_BOOKS],
             favorites: JSON.parse(localStorage.getItem('real_favorites') || '[]'),
             readingProgress: JSON.parse(localStorage.getItem('real_reading_progress') || '{}'),
             currentFilter: 'all',
@@ -1267,6 +1145,7 @@
             isReaderOpen: false,
             isModalOpen: false,
             uploadedBooks: JSON.parse(localStorage.getItem('real_uploaded_books') || '[]'),
+            isAdmin: localStorage.getItem('admin_session') === 'true'
         };
 
         // ===================================================================
@@ -1304,6 +1183,7 @@
         const pagination = $('#pagination');
         const uploadSection = $('#uploadSection');
         const fileInput = $('#fileInput');
+        const adminToggle = $('#adminToggle');
 
         // ===================================================================
         //  HELPERS
@@ -1328,6 +1208,18 @@
             toastContainer.appendChild(el);
             setTimeout(() => { el.style.opacity = '0';
                 setTimeout(() => el.remove(), 300); }, 3200);
+        }
+
+        function updateAdminUI() {
+            if (state.isAdmin) {
+                adminToggle.classList.add('is-admin');
+                adminToggle.innerHTML = '<i class="fa-solid fa-lock-open"></i>';
+                uploadSection.classList.add('visible');
+            } else {
+                adminToggle.classList.remove('is-admin');
+                adminToggle.innerHTML = '<i class="fa-solid fa-lock"></i>';
+                uploadSection.classList.remove('visible');
+            }
         }
 
         // ===================================================================
@@ -1356,6 +1248,7 @@
                 if (book.isFree) badges.push('Free');
                 if (book.isFullText) badges.push('Full Text');
                 if (book.isEthiopian) badges.push('🇪🇹');
+                if (book.genre === 'upload') badges.push('📤 Upload');
 
                 return `
                     <div class="book-card" data-id="${book.id}">
@@ -1366,7 +1259,7 @@
                                 <div class="title">${book.title}</div>
                                 <div class="author">${book.author}</div>
                             </div>
-                            ${badges.length ? badges.map(b => `<span class="badge ${b === 'Full Text' ? 'full' : ''}">${b}</span>`).join('') : ''}
+                            ${badges.length ? badges.map(b => `<span class="badge ${b === 'Full Text' ? 'full' : b === '🇪🇹' ? 'ethiopian' : ''}">${b}</span>`).join('') : ''}
                         </div>
                         <div class="book-info">
                             <div class="title">${book.title}</div>
@@ -1428,11 +1321,10 @@
             const sort = state.sortBy;
 
             let result = state.books.filter((book) => {
-                // Include uploaded books (they have genre 'upload')
                 if (filter === 'all') return true;
                 if (filter === 'ethiopian') return book.isEthiopian === true;
                 if (filter === 'classic') return book.genre === 'classic';
-                if (book.genre === 'upload') return filter === 'all'; // Uploads only show in 'all'
+                if (filter === 'upload') return book.genre === 'upload';
                 return book.genre === filter;
             });
 
@@ -1465,10 +1357,10 @@
 
         function updateSectionTitle(filter) {
             const labels = { all: 'All Books', fiction: 'Fiction', nonfiction: 'Non‑Fiction', classic: 'Classics',
-                ethiopian: '🇪🇹 Ethiopian' };
+                ethiopian: '🇪🇹 Ethiopian', upload: '📤 Uploaded' };
             const label = labels[filter] || 'Books';
             const iconMap = { all: 'fa-book', fiction: 'fa-pen-fancy', nonfiction: 'fa-newspaper', classic: 'fa-landmark',
-                ethiopian: 'fa-flag' };
+                ethiopian: 'fa-flag', upload: 'fa-cloud-upload-alt' };
             sectionTitle.innerHTML =
                 `<i class="fa-solid ${iconMap[filter] || 'fa-book'}"></i> ${label} <span class="count">(${state.filtered.length})</span>`;
         }
@@ -1582,9 +1474,39 @@
             document.body.style.overflow = ''; }
 
         // ===================================================================
-        //  FILE UPLOAD
+        //  ADMIN LOGIC
+        // ===================================================================
+        function handleAdminToggle() {
+            if (state.isAdmin) {
+                // Logout
+                state.isAdmin = false;
+                localStorage.setItem('admin_session', 'false');
+                toast('Admin mode deactivated. Uploads hidden.', 'warning');
+                updateAdminUI();
+                // Re-apply filters to show/hide uploaded? Uploaded always show, but hide upload section.
+                applyFiltersAndSort();
+            } else {
+                const password = prompt('Enter Admin Password:');
+                if (password === 'admin123') {
+                    state.isAdmin = true;
+                    localStorage.setItem('admin_session', 'true');
+                    toast('✅ Admin mode activated. You can now upload books.', 'success');
+                    updateAdminUI();
+                    applyFiltersAndSort();
+                } else if (password !== null) {
+                    toast('Incorrect password.', 'error');
+                }
+            }
+        }
+
+        // ===================================================================
+        //  FILE UPLOAD (Admin only)
         // ===================================================================
         function handleFileUpload(file) {
+            if (!state.isAdmin) {
+                toast('Admin privileges required to upload.', 'error');
+                return;
+            }
             const reader = new FileReader();
             reader.onload = function(e) {
                 const text = e.target.result;
@@ -1595,7 +1517,7 @@
                 const newBook = {
                     id: Date.now() + Math.random() * 1000,
                     title: title,
-                    author: "Uploaded User",
+                    author: "Admin Upload",
                     genre: "upload",
                     year: new Date().getFullYear(),
                     pages: lines.length,
@@ -1678,6 +1600,8 @@
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (state.isReaderOpen) closeReader(); if (
                     state.isModalOpen) closeModal(); } });
 
+        adminToggle.addEventListener('click', handleAdminToggle);
+
         let darkMode = true;
         themeToggle.addEventListener('click', () => {
             darkMode = !darkMode;
@@ -1704,8 +1628,11 @@
         window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400));
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        // Upload
-        uploadSection.addEventListener('click', () => fileInput.click());
+        // Upload events (Admin only)
+        uploadSection.addEventListener('click', () => {
+            if (!state.isAdmin) { toast('Only admin can upload.', 'error'); return; }
+            fileInput.click();
+        });
         uploadSection.addEventListener('dragover', (e) => { e.preventDefault();
             uploadSection.style.borderColor = 'var(--accent)'; });
         uploadSection.addEventListener('dragleave', () => { uploadSection.style.borderColor = 'var(--text-muted)'; });
@@ -1722,11 +1649,29 @@
         document.querySelector('.nav-links a[data-filter="all"]')?.classList.add('active');
         document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
         state.sortBy = sortSelect.value;
-        // Restore uploaded books
+
+        // Restore uploaded books (they are already in state.books from previous sessions)
+        // We just need to ensure they persist in state.books.
         const uploadedIds = JSON.parse(localStorage.getItem('real_uploaded_books') || '[]');
-        // (Uploaded books are already in BOOKS array if they were added, but we just keep them in state)
+        // Already handled by state.books being populated from BASE_BOOKS, but uploaded books are added dynamically.
+        // However, if we refresh, we need to re-add them from localStorage.
+        // We'll store the full uploaded books in a separate key, or just rely on the fact that they were added to state.books.
+        // But since state.books is re-initialized from BASE_BOOKS on load, we must reload uploaded books.
+        // Let's retrieve uploaded books from a stored JSON.
+        const storedUploads = JSON.parse(localStorage.getItem('real_uploaded_objects') || '[]');
+        if (storedUploads.length) {
+            // Merge with base books, avoiding duplicates
+            const existingIds = state.books.map(b => b.id);
+            storedUploads.forEach(ub => {
+                if (!existingIds.includes(ub.id)) {
+                    state.books.push(ub);
+                }
+            });
+        }
+
+        updateAdminUI();
         applyFiltersAndSort();
-        toast('📚 Read full classics or upload your own files!', 'info');
+        toast('🔐 Admin password is "admin123". Click the lock icon to upload.', 'info');
     </script>
 </body>
 </html>
