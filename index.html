@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Global E-Book Library</title>
+    <title>Advanced E-Book Library — Ethiopian Collection</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <!-- Google Fonts -->
@@ -32,6 +32,9 @@
             --gold: #fdcb6e;
             --green: #00b894;
             --red: #e17055;
+            --ethiopia-green: #078930;
+            --ethiopia-yellow: #FCDD09;
+            --ethiopia-red: #DA121A;
             --shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
             --radius: 14px;
             --radius-sm: 8px;
@@ -39,9 +42,9 @@
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             --header-height: 68px;
             --max-width: 1400px;
+            --font-size-base: 1rem;
         }
 
-        /* Light theme */
         [data-theme="light"] {
             --bg-primary: #f8f5f0;
             --bg-secondary: #ece8e2;
@@ -63,7 +66,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
-            transition: background var(--transition), color var(--transition);
+            transition: background var(--transition), color var(--transition), font-size 0.2s;
         }
 
         ::-webkit-scrollbar {
@@ -75,9 +78,6 @@
         ::-webkit-scrollbar-thumb {
             background: var(--accent);
             border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-light);
         }
 
         /* ===== HEADER ===== */
@@ -165,6 +165,25 @@
         [data-theme="light"] .nav-links a.active {
             background: rgba(108, 92, 231, 0.10);
         }
+        /* Ethiopian flag indicator in nav */
+        .nav-links a.ethiopian {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a.ethiopian .flag-dots {
+            display: flex;
+            gap: 2px;
+        }
+        .nav-links a.ethiopian .flag-dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .nav-links a.ethiopian .flag-dots .g { background: var(--ethiopia-green); }
+        .nav-links a.ethiopian .flag-dots .y { background: var(--ethiopia-yellow); }
+        .nav-links a.ethiopian .flag-dots .r { background: var(--ethiopia-red); }
 
         .nav-actions {
             display: flex;
@@ -285,6 +304,12 @@
         }
         .hero h1 .highlight {
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero h1 .ethiopia-highlight {
+            background: linear-gradient(135deg, var(--ethiopia-green), var(--ethiopia-yellow), var(--ethiopia-red));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -410,6 +435,12 @@
             color: var(--text-secondary);
         }
 
+        .controls {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
         .filter-group {
             display: flex;
             gap: 0.4rem;
@@ -442,6 +473,130 @@
         [data-theme="light"] .filter-btn:hover {
             background: rgba(0, 0, 0, 0.08);
         }
+        .filter-btn.ethiopian-filter {
+            background: rgba(7, 137, 48, 0.15);
+            color: var(--ethiopia-green);
+            border-color: rgba(7, 137, 48, 0.2);
+        }
+        .filter-btn.ethiopian-filter.active {
+            background: var(--ethiopia-green);
+            color: #fff;
+            border-color: var(--ethiopia-green);
+        }
+        .filter-btn.ethiopian-filter:hover {
+            background: rgba(7, 137, 48, 0.25);
+        }
+
+        .sort-select {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.35rem 1.2rem 0.35rem 1rem;
+            border-radius: 40px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--font);
+            transition: var(--transition);
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a8a09a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+        .sort-select:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        [data-theme="light"] .sort-select {
+            border-color: rgba(0, 0, 0, 0.06);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235a5550' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        }
+
+        /* ===== CONTINUE READING ===== */
+        .continue-section {
+            margin-bottom: 2.5rem;
+        }
+        .continue-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .continue-section h3 i {
+            color: var(--accent);
+        }
+        .continue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.2rem;
+        }
+        .continue-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .continue-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .continue-card .icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            opacity: 0.6;
+        }
+        .continue-card .info {
+            flex: 1;
+            min-width: 0;
+        }
+        .continue-card .info .title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .continue-card .info .author {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        .continue-card .info .progress-text {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .continue-card .progress-bar {
+            width: 60px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .continue-card .progress-bar .fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        .continue-card .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 4px;
+            transition: var(--transition);
+        }
+        .continue-card .close-btn:hover {
+            color: var(--red);
+        }
 
         /* ===== BOOK GRID ===== */
         .book-grid {
@@ -472,6 +627,9 @@
         }
         [data-theme="light"] .book-card:hover {
             border-color: rgba(108, 92, 231, 0.20);
+        }
+        .book-card.ethiopian-book {
+            border-left: 3px solid var(--ethiopia-green);
         }
 
         .book-cover {
@@ -510,6 +668,11 @@
             color: var(--text-secondary);
             margin-top: 2px;
         }
+        .book-cover .cover-content .ethiopia-flag {
+            font-size: 0.8rem;
+            margin-top: 4px;
+            letter-spacing: 2px;
+        }
 
         .book-cover .badge {
             position: absolute;
@@ -530,6 +693,10 @@
         .book-cover .badge.bestseller {
             background: var(--gold);
             color: #1a1715;
+        }
+        .book-cover .badge.ethiopian {
+            background: var(--ethiopia-green);
+            color: #fff;
         }
 
         .book-info {
@@ -600,6 +767,48 @@
         }
         .book-card .fav-btn.liked:hover {
             color: var(--text-secondary);
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+            font-size: 0.85rem;
+        }
+        .pagination button:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+        .pagination button.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .pagination button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        [data-theme="light"] .pagination button {
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="light"] .pagination button:hover {
+            background: var(--bg-hover);
+            border-color: rgba(0, 0, 0, 0.12);
         }
 
         /* ===== EMPTY STATE ===== */
@@ -839,6 +1048,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             flex-shrink: 0;
             min-height: 56px;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
         [data-theme="light"] .reader-header {
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
@@ -856,7 +1067,8 @@
         }
         .reader-header .actions {
             display: flex;
-            gap: 0.4rem;
+            gap: 0.3rem;
+            align-items: center;
         }
         .reader-header .actions button {
             background: none;
@@ -872,6 +1084,15 @@
             color: var(--text-primary);
             background: rgba(255, 255, 255, 0.04);
         }
+        .reader-header .actions .font-size-controls {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+        .reader-header .actions .font-size-controls button {
+            font-size: 0.9rem;
+            padding: 4px 8px;
+        }
 
         .reader-body {
             flex: 1;
@@ -880,7 +1101,7 @@
             max-width: 720px;
             margin: 0 auto;
             width: 100%;
-            font-size: 1.05rem;
+            font-size: var(--font-size-base, 1.05rem);
             line-height: 1.9;
             color: var(--text-primary);
         }
@@ -940,6 +1161,21 @@
             border-radius: 4px;
             width: 0%;
             transition: width 0.1s;
+        }
+        .reader-footer .bookmark-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            padding: 4px;
+        }
+        .reader-footer .bookmark-btn:hover {
+            color: var(--text-primary);
+        }
+        .reader-footer .bookmark-btn.active {
+            color: var(--gold);
         }
 
         @media (max-width: 600px) {
@@ -1079,6 +1315,10 @@
             .modal-details h2 {
                 font-size: 1.3rem;
             }
+            .controls {
+                width: 100%;
+                justify-content: flex-start;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1109,6 +1349,9 @@
                 flex: 0 0 140px;
                 width: 140px;
             }
+            .continue-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Utility */
@@ -1131,7 +1374,7 @@
             <a href="#" class="logo" id="logoLink">
                 <i class="fa-solid fa-book-open"></i>
                 E-Lib
-                <span>Global</span>
+                <span>Ethiopia</span>
             </a>
 
             <ul class="nav-links" id="navLinks">
@@ -1143,6 +1386,10 @@
                 <li><a data-filter="mystery">Mystery</a></li>
                 <li><a data-filter="romance">Romance</a></li>
                 <li><a data-filter="history">History</a></li>
+                <li><a data-filter="ethiopian" class="ethiopian">
+                    <span class="flag-dots"><span class="g"></span><span class="y"></span><span class="r"></span></span>
+                    Ethiopian
+                </a></li>
             </ul>
 
             <div class="nav-actions">
@@ -1164,12 +1411,12 @@
     <section class="hero">
         <div class="hero-content">
             <h1>
-                Discover Your Next<br />
-                <span class="highlight">Great Read</span>
+                Discover <span class="ethiopia-highlight">Ethiopian</span> &<br />
+                <span class="highlight">Global Literature</span>
             </h1>
             <p>
-                Explore a curated collection of books from around the world —
-                timeless classics, modern masterpieces, and hidden gems.
+                Explore a vast collection of Ethiopian classics, modern Amharic works,
+                and world literature — all in one place. Thousands of pages at your fingertips.
             </p>
             <div class="hero-search">
                 <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." />
@@ -1181,20 +1428,43 @@
     <!-- ===== MAIN ===== -->
     <main class="main">
 
+        <!-- Continue Reading -->
+        <div class="continue-section hidden" id="continueSection">
+            <h3><i class="fa-regular fa-clock"></i> Continue Reading</h3>
+            <div class="continue-grid" id="continueGrid"></div>
+        </div>
+
         <div class="section-header">
             <h2 id="sectionTitle">
                 <i class="fa-solid fa-book"></i> All Books
                 <span class="count" id="bookCount"></span>
             </h2>
-            <div class="filter-group" id="filterGroup">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="fiction">Fiction</button>
-                <button class="filter-btn" data-filter="nonfiction">Non‑Fiction</button>
-                <button class="filter-btn" data-filter="sci-fi">Sci‑Fi</button>
-                <button class="filter-btn" data-filter="fantasy">Fantasy</button>
-                <button class="filter-btn" data-filter="mystery">Mystery</button>
-                <button class="filter-btn" data-filter="romance">Romance</button>
-                <button class="filter-btn" data-filter="history">History</button>
+            <div class="controls">
+                <div class="filter-group" id="filterGroup">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="fiction">Fiction</button>
+                    <button class="filter-btn" data-filter="nonfiction">Non‑Fiction</button>
+                    <button class="filter-btn" data-filter="sci-fi">Sci‑Fi</button>
+                    <button class="filter-btn" data-filter="fantasy">Fantasy</button>
+                    <button class="filter-btn" data-filter="mystery">Mystery</button>
+                    <button class="filter-btn" data-filter="romance">Romance</button>
+                    <button class="filter-btn" data-filter="history">History</button>
+                    <button class="filter-btn ethiopian-filter" data-filter="ethiopian">
+                        <span class="flag-dots" style="display:inline-flex;gap:2px;margin-right:4px;">
+                            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#078930;"></span>
+                            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#FCDD09;"></span>
+                            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#DA121A;"></span>
+                        </span>
+                        Ethiopian
+                    </button>
+                </div>
+                <select class="sort-select" id="sortSelect">
+                    <option value="title">Sort by Title</option>
+                    <option value="author">Sort by Author</option>
+                    <option value="rating" selected>Sort by Rating</option>
+                    <option value="year">Sort by Year</option>
+                    <option value="downloads">Sort by Popularity</option>
+                </select>
             </div>
         </div>
 
@@ -1205,6 +1475,9 @@
             <h3>No books found</h3>
             <p>Try adjusting your search or filter.</p>
         </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
     </main>
 
     <!-- ===== DETAIL MODAL ===== -->
@@ -1223,6 +1496,10 @@
                 <span id="readerBookTitle">Book</span>
             </div>
             <div class="actions">
+                <div class="font-size-controls">
+                    <button id="fontDecrease" title="Decrease font size">A-</button>
+                    <button id="fontIncrease" title="Increase font size">A+</button>
+                </div>
                 <button id="readerClose" title="Close reader"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
@@ -1232,6 +1509,7 @@
             <div class="progress-track" id="readerProgressTrack">
                 <div class="fill" id="readerProgressFill"></div>
             </div>
+            <button class="bookmark-btn" id="bookmarkBtn" title="Toggle bookmark"><i class="fa-regular fa-bookmark"></i></button>
             <span id="readerScrollHint">Scroll to read</span>
         </div>
     </div>
@@ -1249,352 +1527,979 @@
     <!-- ============================================================ -->
     <script>
         // ===================================================================
-        //  DATA — Global book collection
+        //  DATA — Massive Collection including 35+ Ethiopian books
         // ===================================================================
-        const BOOKS = [{
-            id: 1,
-            title: "The Alchemist",
-            author: "Paulo Coelho",
-            genre: "fiction",
-            year: 1988,
-            pages: 208,
-            description: "A magical fable about following your dreams. Santiago, a young shepherd, embarks on a journey to find a treasure near the Egyptian pyramids, discovering the true meaning of life along the way.",
-            content: [
-                "The boy's name was Santiago. He had spent the night in an abandoned church, and the roof had fallen in long ago.",
-                "He was a shepherd, and he traveled with his flock through the fields of Andalusia, seeking food and water.",
-                "One day, he had a dream—a recurring dream that would change his life forever.",
-                "In the dream, a child told him of a treasure hidden at the foot of the Egyptian pyramids.",
-                "And so began his journey, a journey that would teach him the language of the world."
-            ],
-            rating: 4.7,
-            downloads: 15200,
-            isFree: true,
-            isBestseller: true
-        }, {
-            id: 2,
-            title: "1984",
-            author: "George Orwell",
-            genre: "sci-fi",
-            year: 1949,
-            pages: 328,
-            description: "A dystopian masterpiece that paints a terrifying portrait of a totalitarian society under constant surveillance. Winston Smith rebels against the Party, only to discover the price of freedom.",
-            content: [
-                "It was a bright cold day in April, and the clocks were striking thirteen.",
-                "Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions.",
-                "He was a small man, with a thin face and a receding hairline. His eyes were blue, and his expression was one of quiet desperation.",
-                "The Party watched everything. Big Brother was always watching."
-            ],
-            rating: 4.8,
-            downloads: 18900,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 3,
-            title: "The Great Gatsby",
-            author: "F. Scott Fitzgerald",
-            genre: "fiction",
-            year: 1925,
-            pages: 180,
-            description: "A classic tale of the American Dream, love, and tragedy during the Jazz Age. Jay Gatsby's obsession with Daisy Buchanan leads to a spectacular downfall.",
-            content: [
-                "In my younger and more vulnerable years, my father gave me some advice that I've been turning over in my mind ever since.",
-                "Whenever you feel like criticizing any one, he told me, just remember that all the people in this world haven't had the advantages that you've had.",
-                "And so I was drawn into the world of the rich, the beautiful, and the damned—a world of glittering parties and dark secrets."
-            ],
-            rating: 4.5,
-            downloads: 13400,
-            isFree: true,
-            isBestseller: false
-        }, {
-            id: 4,
-            title: "Sapiens: A Brief History of Humankind",
-            author: "Yuval Noah Harari",
-            genre: "nonfiction",
-            year: 2011,
-            pages: 443,
-            description: "A sweeping account of the history of our species, from the Stone Age to the present day. Harari explores how Homo sapiens came to dominate the planet.",
-            content: [
-                "About 70,000 years ago, Homo sapiens were just an insignificant animal minding its own business in a corner of Africa.",
-                "Then, in a flash of evolutionary time, we conquered the globe, shaped the world, and began to ask questions about our own nature.",
-                "This book tells the story of how we became what we are—and what we might become."
-            ],
-            rating: 4.6,
-            downloads: 9800,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 5,
-            title: "The Hobbit",
-            author: "J.R.R. Tolkien",
-            genre: "fantasy",
-            year: 1937,
-            pages: 310,
-            description: "A beloved fantasy adventure about Bilbo Baggins, a hobbit who is swept into an unexpected quest to reclaim the lost Dwarven kingdom of Erebor from the dragon Smaug.",
-            content: [
-                "In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, nor a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort.",
-                "Bilbo Baggins lived in his comfortable hole at Bag End, smoking his pipe and minding his own business.",
-                "But then came Gandalf the wizard, with a proposition that would change everything."
-            ],
-            rating: 4.7,
-            downloads: 11200,
-            isFree: true,
-            isBestseller: true
-        }, {
-            id: 6,
-            title: "Murder on the Orient Express",
-            author: "Agatha Christie",
-            genre: "mystery",
-            year: 1934,
-            pages: 256,
-            description: "A brilliant detective story set on a luxury train. When a passenger is murdered, Hercule Poirot must unravel a web of lies and secrets among the train's passengers.",
-            content: [
-                "The train was packed with passengers, each with their own story, their own secrets.",
-                "Hercule Poirot, the famed Belgian detective, was on board, enjoying the journey through the snow-covered Alps.",
-                "Then, in the middle of the night, a scream shattered the silence, and a murder was discovered.",
-                "Poirot knew that the killer was still on the train. It was a locked-room mystery of the highest order."
-            ],
-            rating: 4.4,
-            downloads: 7800,
-            isFree: false,
-            isBestseller: false
-        }, {
-            id: 7,
-            title: "Pride and Prejudice",
-            author: "Jane Austen",
-            genre: "romance",
-            year: 1813,
-            pages: 432,
-            description: "A timeless romantic comedy of manners that explores the complexities of love, class, and family in 19th-century England. Elizabeth Bennet navigates the challenges of courtship and social expectations.",
-            content: [
-                "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-                "The Bennet family was in a state of agitation. A wealthy young man named Mr. Bingley had arrived in the neighborhood.",
-                "Mrs. Bennet, with her five daughters, saw this as an opportunity beyond measure."
-            ],
-            rating: 4.6,
-            downloads: 10200,
-            isFree: true,
-            isBestseller: true
-        }, {
-            id: 8,
-            title: "The Diary of a Young Girl",
-            author: "Anne Frank",
-            genre: "history",
-            year: 1947,
-            pages: 283,
-            description: "The poignant diary of Anne Frank, a Jewish teenager who went into hiding during the Nazi occupation of the Netherlands. A testament to the human spirit in the face of unspeakable horror.",
-            content: [
-                "I hope I will be able to confide everything to you, as I have never been able to confide in anyone, and I hope you will be a great source of comfort and support.",
-                "Our lives are a constant struggle to survive, but we hold onto the hope that one day we will be free again.",
-                "I still believe that people are really good at heart."
-            ],
-            rating: 4.9,
-            downloads: 15600,
-            isFree: true,
-            isBestseller: true
-        }, {
-            id: 9,
-            title: "The Art of War",
-            author: "Sun Tzu",
-            genre: "nonfiction",
-            year: -500,
-            pages: 260,
-            description: "An ancient Chinese military treatise that has influenced military strategy, business tactics, and leadership for over two millennia. Simple yet profound.",
-            content: [
-                "The art of war is of vital importance to the state. It is a matter of life and death, a road either to safety or to ruin.",
-                "Hence it is a subject of inquiry which can on no account be neglected.",
-                "The supreme art of war is to subdue the enemy without fighting."
-            ],
-            rating: 4.3,
-            downloads: 6500,
-            isFree: true,
-            isBestseller: false
-        }, {
-            id: 10,
-            title: "Dune",
-            author: "Frank Herbert",
-            genre: "sci-fi",
-            year: 1965,
-            pages: 896,
-            description: "A sweeping epic of politics, ecology, and religion set on the desert planet Arrakis. Paul Atreides must navigate a web of treachery and destiny to save his people.",
-            content: [
-                "In the year 10,191, the universe was a place of immense power and intrigue.",
-                "The planet Arrakis—Dune—was the source of the spice melange, the most valuable substance in the galaxy.",
-                "House Atreides was about to face its greatest trial, and a young man named Paul would be at the center of it all."
-            ],
-            rating: 4.8,
-            downloads: 9300,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 11,
-            title: "The Catcher in the Rye",
-            author: "J.D. Salinger",
-            genre: "fiction",
-            year: 1951,
-            pages: 277,
-            description: "A controversial classic that follows Holden Caulfield, a teenage boy navigating the complexities of adolescence, identity, and loss in post-war America.",
-            content: [
-                "If you really want to hear about it, the first thing you'll probably want to know is where I was born, and what my lousy childhood was like.",
-                "I'm not going to tell you my whole goddam autobiography or anything. I'll just tell you about this madman stuff that happened to me around last Christmas."
-            ],
-            rating: 4.1,
-            downloads: 8100,
-            isFree: true,
-            isBestseller: false
-        }, {
-            id: 12,
-            title: "The Silent Patient",
-            author: "Alex Michaelides",
-            genre: "mystery",
-            year: 2019,
-            pages: 336,
-            description: "A psychological thriller about a woman who shoots her husband and then never speaks again. A therapist becomes obsessed with uncovering the truth.",
-            content: [
-                "Alicia Berenson was a famous painter. She had everything—a successful career, a loving husband, and a beautiful home.",
-                "Then, one evening, she shot her husband in the face five times and never spoke another word.",
-                "Theo Faber, a psychotherapist, was determined to find out why."
-            ],
-            rating: 4.2,
-            downloads: 5400,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 13,
-            title: "The Name of the Wind",
-            author: "Patrick Rothfuss",
-            genre: "fantasy",
-            year: 2007,
-            pages: 662,
-            description: "A mesmerizing fantasy epic about Kvothe, a young man who rises from obscurity to become a legendary figure. A story of magic, music, and revenge.",
-            content: [
-                "I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life.",
-                "I was expelled from the University at a younger age than most people are allowed in. I tread paths by moonlight that others fear to speak of during day.",
-                "I am Kvothe. You may have heard of me."
-            ],
-            rating: 4.7,
-            downloads: 7100,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 14,
-            title: "Becoming",
-            author: "Michelle Obama",
-            genre: "nonfiction",
-            year: 2018,
-            pages: 448,
-            description: "A deeply personal memoir by the former First Lady of the United States. Michelle Obama shares her journey from the South Side of Chicago to the White House.",
-            content: [
-                "I was born on the South Side of Chicago, in a small apartment on the second floor of a house on Euclid Avenue.",
-                "My father worked as a pump operator at the city's water plant. My mother was a homemaker who never missed a day of school for me.",
-                "They taught me the value of hard work, integrity, and the importance of giving back."
-            ],
-            rating: 4.8,
-            downloads: 8800,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 15,
-            title: "The Count of Monte Cristo",
-            author: "Alexandre Dumas",
-            genre: "fiction",
-            year: 1844,
-            pages: 1276,
-            description: "A classic adventure of betrayal and revenge. Edmond Dantès is unjustly imprisoned, escapes, and embarks on a quest for justice against those who wronged him.",
-            content: [
-                "The ship was returning to the port of Marseilles, carrying a young man who was about to receive a great surprise.",
-                "Edmond Dantès was a sailor of exceptional skill and ambition, but his world was about to be turned upside down.",
-                "A conspiracy of jealousy and greed would send him to the island prison of Château d'If, from which there was no escape."
-            ],
-            rating: 4.6,
-            downloads: 6200,
-            isFree: true,
-            isBestseller: false
-        }, {
-            id: 16,
-            title: "The Psychology of Money",
-            author: "Morgan Housel",
-            genre: "nonfiction",
-            year: 2020,
-            pages: 242,
-            description: "A collection of short stories exploring the strange and fascinating ways people think about money. A wealth of wisdom on financial behavior.",
-            content: [
-                "Doing well with money has a little to do with how smart you are and a lot to do with how you behave.",
-                "The hardest financial skill is getting the goalpost to stop moving.",
-                "Save money, even if you have to earn a lower salary to do so. The best way to accumulate wealth is to spend less than you earn."
-            ],
-            rating: 4.5,
-            downloads: 4900,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 17,
-            title: "The Night Circus",
-            author: "Erin Morgenstern",
-            genre: "fantasy",
-            year: 2011,
-            pages: 387,
-            description: "A mesmerizing tale of a magical competition between two young illusionists, set against the backdrop of a mysterious circus that appears without warning.",
-            content: [
-                "The circus arrives without warning. No announcements, no fanfare, just a sign that appears overnight.",
-                "It is a place of wonder and enchantment, where the impossible becomes possible.",
-                "But behind the magic lies a fierce competition between two young illusionists, bound by a challenge they did not choose."
-            ],
-            rating: 4.4,
-            downloads: 5600,
-            isFree: true,
-            isBestseller: false
-        }, {
-            id: 18,
-            title: "The Thursday Murder Club",
-            author: "Richard Osman",
-            genre: "mystery",
-            year: 2020,
-            pages: 384,
-            description: "A charming mystery featuring a group of unlikely detectives in a retirement village who investigate murders. Witty, warm, and utterly captivating.",
-            content: [
-                "In the village of Coopers Chase, there lived a group of remarkable people who called themselves the Thursday Murder Club.",
-                "Joyce, Elizabeth, Ibrahim, and Ron met every Thursday to solve cold cases from their armchairs.",
-                "But when a real murder takes place, they find themselves in the middle of a case that will test their wits and their friendship."
-            ],
-            rating: 4.3,
-            downloads: 4300,
-            isFree: false,
-            isBestseller: true
-        }, {
-            id: 19,
-            title: "Normal People",
-            author: "Sally Rooney",
-            genre: "romance",
-            year: 2018,
-            pages: 288,
-            description: "A tender and complex novel about the relationship between two young people from different social classes in Ireland. A story of love, intimacy, and the search for connection.",
-            content: [
-                "Marianne and Connell grew up in the same small town in rural Ireland, but they lived in different worlds.",
-                "She was from a wealthy family, he was the son of a single mother who cleaned houses.",
-                "Despite their differences, they were drawn to each other in ways neither of them could explain."
-            ],
-            rating: 4.2,
-            downloads: 5100,
-            isFree: true,
-            isBestseller: false
-        }, {
-            id: 20,
-            title: "The Warmth of Other Suns",
-            author: "Isabel Wilkerson",
-            genre: "history",
-            year: 2010,
-            pages: 640,
-            description: "A masterful account of the Great Migration, the movement of millions of African Americans from the South to the North and West over six decades.",
-            content: [
-                "The story of the Great Migration is the story of the 20th century in America.",
-                "It was a movement of hope and desperation, of people seeking a better life for themselves and their children.",
-                "Through the lives of three individuals, Isabel Wilkerson tells the story of this epic journey."
-            ],
-            rating: 4.7,
-            downloads: 4700,
-            isFree: false,
-            isBestseller: true
-        }];
+        const BOOKS = [
+            // --- GLOBAL BOOKS (20 titles) ---
+            {
+                id: 1,
+                title: "The Alchemist",
+                author: "Paulo Coelho",
+                genre: "fiction",
+                year: 1988,
+                pages: 208,
+                description: "A magical fable about following your dreams. Santiago, a young shepherd, embarks on a journey to find a treasure near the Egyptian pyramids, discovering the true meaning of life along the way.",
+                content: [
+                    "The boy's name was Santiago. He had spent the night in an abandoned church...",
+                    "He was a shepherd, and he traveled with his flock through the fields of Andalusia...",
+                    "One day, he had a dream—a recurring dream that would change his life forever.",
+                    "In the dream, a child told him of a treasure hidden at the foot of the Egyptian pyramids.",
+                    "And so began his journey, a journey that would teach him the language of the world."
+                ],
+                rating: 4.7,
+                downloads: 15200,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 2,
+                title: "1984",
+                author: "George Orwell",
+                genre: "sci-fi",
+                year: 1949,
+                pages: 328,
+                description: "A dystopian masterpiece that paints a terrifying portrait of a totalitarian society under constant surveillance.",
+                content: [
+                    "It was a bright cold day in April, and the clocks were striking thirteen.",
+                    "Winston Smith slipped quickly through the glass doors of Victory Mansions.",
+                    "The Party watched everything. Big Brother was always watching."
+                ],
+                rating: 4.8,
+                downloads: 18900,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 3,
+                title: "The Great Gatsby",
+                author: "F. Scott Fitzgerald",
+                genre: "fiction",
+                year: 1925,
+                pages: 180,
+                description: "A classic tale of the American Dream, love, and tragedy during the Jazz Age.",
+                content: [
+                    "In my younger and more vulnerable years, my father gave me some advice...",
+                    "Whenever you feel like criticizing any one, just remember...",
+                    "And so I was drawn into the world of the rich, the beautiful, and the damned."
+                ],
+                rating: 4.5,
+                downloads: 13400,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 4,
+                title: "Sapiens",
+                author: "Yuval Noah Harari",
+                genre: "nonfiction",
+                year: 2011,
+                pages: 443,
+                description: "A sweeping account of the history of our species, from the Stone Age to the present day.",
+                content: [
+                    "About 70,000 years ago, Homo sapiens were just an insignificant animal...",
+                    "Then, in a flash of evolutionary time, we conquered the globe.",
+                    "This book tells the story of how we became what we are."
+                ],
+                rating: 4.6,
+                downloads: 9800,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 5,
+                title: "The Hobbit",
+                author: "J.R.R. Tolkien",
+                genre: "fantasy",
+                year: 1937,
+                pages: 310,
+                description: "A beloved fantasy adventure about Bilbo Baggins, a hobbit who is swept into an unexpected quest.",
+                content: [
+                    "In a hole in the ground there lived a hobbit.",
+                    "Bilbo Baggins lived in his comfortable hole at Bag End.",
+                    "But then came Gandalf the wizard, with a proposition that would change everything."
+                ],
+                rating: 4.7,
+                downloads: 11200,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 6,
+                title: "Murder on the Orient Express",
+                author: "Agatha Christie",
+                genre: "mystery",
+                year: 1934,
+                pages: 256,
+                description: "A brilliant detective story set on a luxury train. Hercule Poirot must unravel a web of lies.",
+                content: [
+                    "The train was packed with passengers, each with their own story.",
+                    "Hercule Poirot, the famed Belgian detective, was on board.",
+                    "Then, in the middle of the night, a scream shattered the silence."
+                ],
+                rating: 4.4,
+                downloads: 7800,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 7,
+                title: "Pride and Prejudice",
+                author: "Jane Austen",
+                genre: "romance",
+                year: 1813,
+                pages: 432,
+                description: "A timeless romantic comedy of manners that explores the complexities of love and class.",
+                content: [
+                    "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+                    "The Bennet family was in a state of agitation.",
+                    "Elizabeth, however, was not impressed by Mr. Darcy."
+                ],
+                rating: 4.6,
+                downloads: 10200,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 8,
+                title: "The Diary of a Young Girl",
+                author: "Anne Frank",
+                genre: "history",
+                year: 1947,
+                pages: 283,
+                description: "The poignant diary of Anne Frank, a Jewish teenager who went into hiding during the Nazi occupation.",
+                content: [
+                    "I hope I will be able to confide everything to you.",
+                    "Our lives are a constant struggle to survive.",
+                    "I still believe that people are really good at heart."
+                ],
+                rating: 4.9,
+                downloads: 15600,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 9,
+                title: "The Art of War",
+                author: "Sun Tzu",
+                genre: "nonfiction",
+                year: -500,
+                pages: 260,
+                description: "An ancient Chinese military treatise that has influenced strategy for over two millennia.",
+                content: [
+                    "The art of war is of vital importance to the state.",
+                    "Hence it is a subject of inquiry which can on no account be neglected.",
+                    "The supreme art of war is to subdue the enemy without fighting."
+                ],
+                rating: 4.3,
+                downloads: 6500,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 10,
+                title: "Dune",
+                author: "Frank Herbert",
+                genre: "sci-fi",
+                year: 1965,
+                pages: 896,
+                description: "A sweeping epic of politics, ecology, and religion set on the desert planet Arrakis.",
+                content: [
+                    "In the year 10,191, the universe was a place of immense power.",
+                    "The planet Arrakis—Dune—was the source of the spice melange.",
+                    "House Atreides was about to face its greatest trial."
+                ],
+                rating: 4.8,
+                downloads: 9300,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 11,
+                title: "The Catcher in the Rye",
+                author: "J.D. Salinger",
+                genre: "fiction",
+                year: 1951,
+                pages: 277,
+                description: "A controversial classic that follows Holden Caulfield, a teenage boy navigating adolescence.",
+                content: [
+                    "If you really want to hear about it, the first thing you'll probably want to know...",
+                    "I'm not going to tell you my whole goddam autobiography."
+                ],
+                rating: 4.1,
+                downloads: 8100,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 12,
+                title: "The Silent Patient",
+                author: "Alex Michaelides",
+                genre: "mystery",
+                year: 2019,
+                pages: 336,
+                description: "A psychological thriller about a woman who shoots her husband and then never speaks again.",
+                content: [
+                    "Alicia Berenson was a famous painter. She had everything.",
+                    "Then, one evening, she shot her husband in the face and never spoke another word.",
+                    "Theo Faber, a psychotherapist, was determined to find out why."
+                ],
+                rating: 4.2,
+                downloads: 5400,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 13,
+                title: "The Name of the Wind",
+                author: "Patrick Rothfuss",
+                genre: "fantasy",
+                year: 2007,
+                pages: 662,
+                description: "A mesmerizing fantasy epic about Kvothe, a young man who rises from obscurity to become a legend.",
+                content: [
+                    "I have stolen princesses back from sleeping barrow kings.",
+                    "I burned down the town of Trebon.",
+                    "I am Kvothe. You may have heard of me."
+                ],
+                rating: 4.7,
+                downloads: 7100,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 14,
+                title: "Becoming",
+                author: "Michelle Obama",
+                genre: "nonfiction",
+                year: 2018,
+                pages: 448,
+                description: "A deeply personal memoir by the former First Lady of the United States.",
+                content: [
+                    "I was born on the South Side of Chicago.",
+                    "My father worked as a pump operator at the city's water plant.",
+                    "They taught me the value of hard work, integrity, and the importance of giving back."
+                ],
+                rating: 4.8,
+                downloads: 8800,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 15,
+                title: "The Count of Monte Cristo",
+                author: "Alexandre Dumas",
+                genre: "fiction",
+                year: 1844,
+                pages: 1276,
+                description: "A classic adventure of betrayal and revenge. Edmond Dantès is unjustly imprisoned and escapes.",
+                content: [
+                    "The ship was returning to the port of Marseilles.",
+                    "Edmond Dantès was a sailor of exceptional skill and ambition.",
+                    "A conspiracy of jealousy and greed would send him to the island prison."
+                ],
+                rating: 4.6,
+                downloads: 6200,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 16,
+                title: "The Psychology of Money",
+                author: "Morgan Housel",
+                genre: "nonfiction",
+                year: 2020,
+                pages: 242,
+                description: "A collection of short stories exploring the strange ways people think about money.",
+                content: [
+                    "Doing well with money has a little to do with how smart you are.",
+                    "The hardest financial skill is getting the goalpost to stop moving.",
+                    "Save money, even if you have to earn a lower salary."
+                ],
+                rating: 4.5,
+                downloads: 4900,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 17,
+                title: "The Night Circus",
+                author: "Erin Morgenstern",
+                genre: "fantasy",
+                year: 2011,
+                pages: 387,
+                description: "A mesmerizing tale of a magical competition between two young illusionists.",
+                content: [
+                    "The circus arrives without warning.",
+                    "It is a place of wonder and enchantment.",
+                    "Behind the magic lies a fierce competition."
+                ],
+                rating: 4.4,
+                downloads: 5600,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 18,
+                title: "The Thursday Murder Club",
+                author: "Richard Osman",
+                genre: "mystery",
+                year: 2020,
+                pages: 384,
+                description: "A charming mystery featuring a group of unlikely detectives in a retirement village.",
+                content: [
+                    "In the village of Coopers Chase, there lived a group of remarkable people.",
+                    "Joyce, Elizabeth, Ibrahim, and Ron met every Thursday to solve cold cases.",
+                    "But when a real murder takes place, they find themselves in the middle of a case."
+                ],
+                rating: 4.3,
+                downloads: 4300,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            }, {
+                id: 19,
+                title: "Normal People",
+                author: "Sally Rooney",
+                genre: "romance",
+                year: 2018,
+                pages: 288,
+                description: "A tender and complex novel about the relationship between two young people from different social classes.",
+                content: [
+                    "Marianne and Connell grew up in the same small town in rural Ireland.",
+                    "She was from a wealthy family, he was the son of a single mother.",
+                    "Despite their differences, they were drawn to each other."
+                ],
+                rating: 4.2,
+                downloads: 5100,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: false
+            }, {
+                id: 20,
+                title: "The Warmth of Other Suns",
+                author: "Isabel Wilkerson",
+                genre: "history",
+                year: 2010,
+                pages: 640,
+                description: "A masterful account of the Great Migration, the movement of millions of African Americans.",
+                content: [
+                    "The story of the Great Migration is the story of the 20th century in America.",
+                    "It was a movement of hope and desperation.",
+                    "Through the lives of three individuals, this epic journey is told."
+                ],
+                rating: 4.7,
+                downloads: 4700,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: false
+            },
+
+            // ======================================================================
+            //  ETHIOPIAN BOOKS — 35+ titles covering various genres
+            // ======================================================================
+            // Fiction / Amharic Novels
+            {
+                id: 21,
+                title: "ፍቅር እስከ መቃብር",
+                titleEn: "Fikir Eske Mekabir",
+                author: "ሀዲስ አለማየሁ (Haddis Alemayehu)",
+                genre: "fiction",
+                year: 1965,
+                pages: 412,
+                description: "A timeless Ethiopian classic that explores love, sacrifice, and the human condition against the backdrop of a changing Ethiopia. Widely regarded as one of the greatest works in Amharic literature.",
+                content: [
+                    "Chapter 1: The Meeting",
+                    "It was a quiet afternoon in Addis Ababa when their paths first crossed.",
+                    "She stood by the window, watching the rain trace patterns on the glass.",
+                    "He arrived with the weight of expectation on his shoulders.",
+                    "Their story, like the ancient mountains of Ethiopia, would endure through seasons of joy and sorrow."
+                ],
+                rating: 4.9,
+                downloads: 12400,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 22,
+                title: "ኦሮማይ",
+                titleEn: "Oromay",
+                author: "ባለ ግርማ (Baalu Girma)",
+                genre: "fiction",
+                year: 1980,
+                pages: 356,
+                description: "A gripping political novel that captures the turbulence of Ethiopia's revolutionary era. Baalu Girma weaves a tale of intrigue, betrayal, and the quest for identity.",
+                content: [
+                    "The sun rose over the Rift Valley, casting long shadows across the land.",
+                    "In the capital, whispers of change echoed through the corridors of power.",
+                    "He was a man caught between two worlds — the old and the new.",
+                    "In the end, it was not the politics that defined him, but the love he carried in his heart."
+                ],
+                rating: 4.7,
+                downloads: 8900,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 23,
+                title: "የአዲስ አበባ ልብ",
+                titleEn: "YeAddis Ababa Lib",
+                author: "አስፋው ዘመን (Asfaw Zemen)",
+                genre: "fiction",
+                year: 2018,
+                pages: 298,
+                description: "A contemporary novel set in modern Addis Ababa, exploring the lives of young Ethiopians navigating tradition, ambition, and the pulse of a rapidly changing city.",
+                content: [
+                    "Addis Ababa — the new flower. A city of contrasts.",
+                    "They were four friends, each chasing a dream.",
+                    "In the bustling streets of the capital, they would find love, loss, and the meaning of home."
+                ],
+                rating: 4.3,
+                downloads: 4500,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 24,
+                title: "አልጠገብኩም",
+                titleEn: "Altegebkum",
+                author: "ደረጀ መኩሪያ (Dereje Mekuria)",
+                genre: "fiction",
+                year: 2005,
+                pages: 320,
+                description: "A powerful novel about the struggles of a young Ethiopian man trying to find his place in a society torn between tradition and modernity.",
+                content: [
+                    "He had always been told that education was the key to success.",
+                    "But the doors of opportunity were not always open to those who lacked connections.",
+                    "His journey would take him from the rural highlands to the bustling capital.",
+                    "And along the way, he would discover that true success is measured not by wealth, but by the impact we have on others."
+                ],
+                rating: 4.4,
+                downloads: 3800,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 25,
+                title: "በረከት",
+                titleEn: "Bereket",
+                author: "አብዱልሰላም አህመድ (Abdulsalam Ahmed)",
+                genre: "fiction",
+                year: 2010,
+                pages: 272,
+                description: "A moving story of a young woman who overcomes adversity to become a successful entrepreneur, challenging gender norms in Ethiopian society.",
+                content: [
+                    "From a young age, Bereket was told that a woman's place was in the home.",
+                    "But she had other dreams — dreams of building something of her own.",
+                    "Against all odds, she started a small business that would grow into a thriving enterprise.",
+                    "Her story is an inspiration to women everywhere to never give up on their ambitions."
+                ],
+                rating: 4.2,
+                downloads: 3100,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 26,
+                title: "ሰላም ለሁሉም",
+                titleEn: "Selam LeHulum",
+                author: "ተክለ መደብ (Tekle Medeb)",
+                genre: "fiction",
+                year: 2015,
+                pages: 340,
+                description: "A heartwarming novel about a diverse group of Ethiopians from different regions who come together to build a community centre in Addis Ababa.",
+                content: [
+                    "In a city of millions, it's easy to feel alone.",
+                    "But a group of strangers, brought together by a shared vision, would create something beautiful.",
+                    "Their story is a testament to the power of unity and the strength of the Ethiopian spirit."
+                ],
+                rating: 4.1,
+                downloads: 2900,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 27,
+                title: "ቀን ከቀን",
+                titleEn: "Ken KeKen",
+                author: "አስቴር ክብረት (Aster Kebret)",
+                genre: "fiction",
+                year: 2020,
+                pages: 266,
+                description: "A contemporary novel following the lives of three generations of Ethiopian women, exploring themes of family, identity, and the changing role of women in society.",
+                content: [
+                    "Grandmother, mother, and daughter — three women bound by blood but separated by time.",
+                    "Each faced her own challenges, yet each found strength in the women who came before her.",
+                    "Their stories are woven together like the threads of a traditional Ethiopian shawl."
+                ],
+                rating: 4.5,
+                downloads: 3600,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: true
+            },
+
+            // History & Non-Fiction
+            {
+                id: 28,
+                title: "ታሪክ ዘመን ነገሥት",
+                titleEn: "Tarik Zemen Negest",
+                author: "ጠበቃ ተክለ (Tekle Tsadik)",
+                genre: "history",
+                year: 1954,
+                pages: 520,
+                description: "A comprehensive history of Ethiopian emperors, from ancient Aksum to the modern era. This seminal work documents the rich political and cultural heritage of the nation.",
+                content: [
+                    "Long before the rise of modern nations, the kingdom of Aksum stood as a beacon of civilization.",
+                    "Its obelisks reached toward the heavens, its trade routes stretched across the Red Sea.",
+                    "The story of Ethiopia begins here, in the heart of the highlands."
+                ],
+                rating: 4.8,
+                downloads: 7300,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 29,
+                title: "ከእስር ቤት ወደ ነፃነት",
+                titleEn: "KeIsir Beit Wede Netsanet",
+                author: "በዛብህ ፅጌ (Bezabih Tsighe)",
+                genre: "history",
+                year: 1992,
+                pages: 376,
+                description: "A memoir of resistance and resilience, chronicling Ethiopia's struggle for freedom and the indomitable will of its people during times of upheaval.",
+                content: [
+                    "In the darkness of the prison cell, hope was the only light.",
+                    "They took everything from us — our homes, our families, our freedom.",
+                    "But they could not take our spirit. For in the heart of every Ethiopian burns a fire that no tyranny can extinguish."
+                ],
+                rating: 4.7,
+                downloads: 6100,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 30,
+                title: "የኢትዮጵያ ሥርወ መንግሥት",
+                titleEn: "YeEthiopia Serwe Mengist",
+                author: "ታምራት እሸቴ (Tamrat Eshete)",
+                genre: "history",
+                year: 2001,
+                pages: 450,
+                description: "An in-depth exploration of the dynasties that ruled Ethiopia over the centuries, from the Solomonic line to the modern imperial period.",
+                content: [
+                    "The Solomonic dynasty claimed descent from King Solomon and the Queen of Sheba.",
+                    "For centuries, they ruled Ethiopia with a divine mandate.",
+                    "This book traces their rise, their glory, and their eventual decline."
+                ],
+                rating: 4.5,
+                downloads: 4800,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 31,
+                title: "የኢትዮጵያ መልክዓ ምድር እና ሕዝብ",
+                titleEn: "YeEthiopia Melka Mider ena Hizb",
+                author: "መለሰ አለሙ (Melesse Alemu)",
+                genre: "nonfiction",
+                year: 2008,
+                pages: 390,
+                description: "A comprehensive geographical and cultural study of Ethiopia's diverse regions, peoples, and traditions.",
+                content: [
+                    "Ethiopia is a land of contrasts — high mountains and deep valleys, desert and forest.",
+                    "Its people speak over 80 different languages, each with its own unique culture.",
+                    "This book is a journey across the beautiful tapestry of Ethiopian life."
+                ],
+                rating: 4.4,
+                downloads: 3500,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 32,
+                title: "እንቁ ጠብታ",
+                titleEn: "Enku Teteba",
+                author: "ጥሩነህ መንግሥቱ (Tiruneh Mengistu)",
+                genre: "nonfiction",
+                year: 2012,
+                pages: 280,
+                description: "A collection of essays on Ethiopian culture, exploring everything from traditional coffee ceremonies to the unique architecture of Lalibela.",
+                content: [
+                    "The coffee ceremony is more than just a drink — it is a social ritual that brings communities together.",
+                    "The rock-hewn churches of Lalibela are a testament to the faith and ingenuity of our ancestors.",
+                    "These are the threads that weave the fabric of Ethiopian identity."
+                ],
+                rating: 4.2,
+                downloads: 2900,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            },
+
+            // Poetry
+            {
+                id: 33,
+                title: "በረከት አበባ",
+                titleEn: "Bereket Abeba",
+                author: "መስፍን ኃይሉ (Mesfin Hailu)",
+                genre: "poetry",
+                year: 2015,
+                pages: 142,
+                description: "An evocative collection of Amharic poems celebrating the Ethiopian landscape, culture, and the enduring spirit of its people.",
+                content: [
+                    "The mist rises like a prayer from the lake,",
+                    "Carrying the hopes of those who wake.",
+                    "In the stillness, a heron takes flight,",
+                    "Painting the sky with strokes of light.",
+                    "This is my Ethiopia, ancient and new,",
+                    "A land where every dawn is born anew."
+                ],
+                rating: 4.4,
+                downloads: 3100,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 34,
+                title: "የግና ሰብ",
+                titleEn: "Yegna Seb",
+                author: "ብርሃን ገብረእግዚአብሔር (Birhan GebreEgziabher)",
+                genre: "poetry",
+                year: 2001,
+                pages: 188,
+                description: "A powerful collection of Amharic poetry and spoken word that gives voice to the Ethiopian spirit. These verses celebrate heritage, resilience, and the beauty of the land.",
+                content: [
+                    "Oh mountains of my fathers, standing tall against the sky,",
+                    "Your peaks touch the heavens, your valleys hold our cry.",
+                    "From the lowlands to the plateaus, your voice is heard afar,",
+                    "A song of ancient glory, a shining northern star."
+                ],
+                rating: 4.5,
+                downloads: 3200,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 35,
+                title: "ሰሜን ወደ ሰሜን",
+                titleEn: "Semen Wede Semen",
+                author: "ዮሃንስ አክሊሉ (Yohannes Aklilu)",
+                genre: "poetry",
+                year: 2010,
+                pages: 160,
+                description: "A poignant collection of poems that reflect on the themes of love, loss, and the search for meaning in the modern Ethiopian experience.",
+                content: [
+                    "In the bustling streets of Addis, I search for you,",
+                    "Among the throngs of souls, both old and new.",
+                    "Your memory haunts me like a familiar song,",
+                    "A melody that lingers, though the years are long."
+                ],
+                rating: 4.3,
+                downloads: 2400,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 36,
+                title: "የልብ ቃል",
+                titleEn: "Yelib Kal",
+                author: "ገብረሃና አዲስ (Gebrehana Addis)",
+                genre: "poetry",
+                year: 2018,
+                pages: 130,
+                description: "A modern collection of Amharic poetry exploring themes of identity, diaspora, and the connection between past and present.",
+                content: [
+                    "I was born in a land of ancient kings,",
+                    "But I grew up under foreign skies.",
+                    "My heart beats to the rhythm of the drums,",
+                    "That echo from the hills where my ancestors lie."
+                ],
+                rating: 4.1,
+                downloads: 2000,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            },
+
+            // Children's Books
+            {
+                id: 37,
+                title: "የልጆች ገነት",
+                titleEn: "YeLijoch Genet",
+                author: "ሠለሞን ደረሰ (Solomon Derese)",
+                genre: "children",
+                year: 2010,
+                pages: 64,
+                description: "A delightful children's book filled with colorful stories and lessons from Ethiopian folklore. Perfect for young readers to learn about kindness, courage, and community.",
+                content: [
+                    "The Little Bird and the Big Tree",
+                    "In a small village in the Ethiopian highlands, there lived a little bird named Tsehay.",
+                    "One day, the big tree in the village square began to wither.",
+                    "Tsehay flew far and wide, carrying drops of water in her beak.",
+                    "She showed that even the smallest among us can make a big difference."
+                ],
+                rating: 4.6,
+                downloads: 3400,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 38,
+                title: "አንድ ቀን በኢትዮጵያ",
+                titleEn: "And Ken BeEthiopia",
+                author: "ማርያም አዲስ (Mariam Addis)",
+                genre: "children",
+                year: 2015,
+                pages: 48,
+                description: "A beautifully illustrated children's book that takes young readers on a journey through Ethiopia's diverse landscapes and cultures in a single day.",
+                content: [
+                    "Wake up in the highlands, where the sun rises over the mountains.",
+                    "Travel to the lowlands, where the heat shimmers on the savannah.",
+                    "Visit the ancient churches of Lalibela and the bustling markets of Addis.",
+                    "A day in Ethiopia is an adventure from dawn to dusk."
+                ],
+                rating: 4.5,
+                downloads: 2800,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 39,
+                title: "የዶሮ እና ተኩላ ተረት",
+                titleEn: "YeDoro ena Tekula Teret",
+                author: "ሰራዊት አለሙ (Serawit Alemu)",
+                genre: "children",
+                year: 2012,
+                pages: 52,
+                description: "A classic Ethiopian folktale about a clever hen who outwits a hungry wolf, teaching children the value of intelligence and bravery.",
+                content: [
+                    "Once upon a time, in a small village, there lived a wise hen named Doro.",
+                    "She had many chicks and was always careful to protect them.",
+                    "One day, a cunning wolf came to the village, looking for a meal.",
+                    "But Doro was too smart for the wolf, and she taught him a lesson he would never forget."
+                ],
+                rating: 4.4,
+                downloads: 2600,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 40,
+                title: "በረከት ተማሪ",
+                titleEn: "Bereket Temari",
+                author: "አዲስ አለም (Addis Alem)",
+                genre: "children",
+                year: 2018,
+                pages: 40,
+                description: "An inspiring story of a young Ethiopian boy who overcomes obstacles to pursue his dream of becoming a teacher, encouraging children to value education.",
+                content: [
+                    "Bereket loved school more than anything.",
+                    "Every day, he walked for miles to get to his classroom.",
+                    "He dreamed of becoming a teacher so he could help other children learn.",
+                    "With hard work and determination, his dream came true."
+                ],
+                rating: 4.3,
+                downloads: 2200,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            },
+
+            // More Ethiopian Fiction / Contemporary
+            {
+                id: 41,
+                title: "ጥላ",
+                titleEn: "Tila",
+                author: "ሰሎሞን እንዳለ (Solomon Endale)",
+                genre: "fiction",
+                year: 2019,
+                pages: 310,
+                description: "A psychological thriller set in Addis Ababa, following a detective as he investigates a series of mysterious disappearances.",
+                content: [
+                    "The city was shrouded in darkness, and the streets whispered secrets.",
+                    "Detective Tila knew that the truth was always hidden in the shadows.",
+                    "As he delved deeper into the case, he uncovered a web of corruption and deceit.",
+                    "The answer was closer than he ever imagined."
+                ],
+                rating: 4.2,
+                downloads: 2700,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 42,
+                title: "ማዕበል",
+                titleEn: "Maebel",
+                author: "ሳምራ ሙሉቀን (Samara Muluken)",
+                genre: "fiction",
+                year: 2021,
+                pages: 290,
+                description: "A coming-of-age story about a young Ethiopian woman navigating the complexities of love, career, and family in the 21st century.",
+                content: [
+                    "She had always been the perfect daughter, following the path laid out for her.",
+                    "But deep inside, she longed for something more — a life of her own choosing.",
+                    "When she finally broke free, she discovered that true happiness comes from being true to oneself."
+                ],
+                rating: 4.3,
+                downloads: 3000,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 43,
+                title: "ፍልስፍና ወደ አዲስ አበባ",
+                titleEn: "Filsfena Wede Addis Ababa",
+                author: "ደስታ ኃይሉ (Desta Hailu)",
+                genre: "fiction",
+                year: 2016,
+                pages: 340,
+                description: "A philosophical novel that follows a group of intellectuals in Addis Ababa as they grapple with questions of identity, progress, and the meaning of life.",
+                content: [
+                    "In the cafes of Addis, they gathered to discuss the big questions.",
+                    "What does it mean to be Ethiopian in the modern world?",
+                    "Can tradition and progress coexist?",
+                    "Their debates would shape the future of the nation."
+                ],
+                rating: 4.1,
+                downloads: 2400,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 44,
+                title: "የእህት ፍቅር",
+                titleEn: "YeEhit Fikir",
+                author: "ማርያም ተስፋዬ (Mariam Tesfaye)",
+                genre: "romance",
+                year: 2017,
+                pages: 260,
+                description: "A heartwarming romance novel about two sisters who fall in love with the same man, and the complex emotions that ensue.",
+                content: [
+                    "They were sisters, bound by blood and love.",
+                    "But when they both fell for the same man, their bond was put to the test.",
+                    "In the end, they realized that true love is about sacrifice and understanding."
+                ],
+                rating: 4.0,
+                downloads: 2100,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 45,
+                title: "በዓል ማዶ",
+                titleEn: "Beal Mado",
+                author: "ትሩነህ አበበ (Tiruneh Abebe)",
+                genre: "fiction",
+                year: 2014,
+                pages: 300,
+                description: "A novel set in the rural highlands of Ethiopia, telling the story of a young farmer who must choose between tradition and the allure of the city.",
+                content: [
+                    "The land was his life, his heritage, his identity.",
+                    "But the city called to him with promises of a better future.",
+                    "His decision would change the course of his family's history forever."
+                ],
+                rating: 4.2,
+                downloads: 2600,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 46,
+                title: "ማን ነው?",
+                titleEn: "Man New?",
+                author: "እስጢፋኖስ አለሙ (Estifanos Alemu)",
+                genre: "mystery",
+                year: 2020,
+                pages: 280,
+                description: "A gripping mystery novel set in Addis Ababa, where a journalist investigates a high-profile murder that exposes secrets among the city's elite.",
+                content: [
+                    "When a prominent businessman is found dead in his penthouse, the city is shocked.",
+                    "Journalist Solomom is determined to uncover the truth.",
+                    "As he digs deeper, he uncovers a conspiracy that reaches the highest levels of power."
+                ],
+                rating: 4.3,
+                downloads: 2300,
+                isFree: false,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 47,
+                title: "ልጅ አባት",
+                titleEn: "Lij Abat",
+                author: "ፍቅር አድማሱ (Fikre Admasu)",
+                genre: "fiction",
+                year: 2013,
+                pages: 320,
+                description: "A touching story about a young boy raised by his grandparents in rural Ethiopia, and his journey to find his father in the city.",
+                content: [
+                    "He had never known his father, only stories.",
+                    "Determined to find him, he embarked on a journey to Addis Ababa.",
+                    "What he discovered changed his understanding of family and belonging."
+                ],
+                rating: 4.5,
+                downloads: 3400,
+                isFree: true,
+                isBestseller: true,
+                isEthiopian: true
+            }, {
+                id: 48,
+                title: "ጨረቃ ሰለባ",
+                titleEn: "Chereka Selaba",
+                author: "ዳንኤል ገብረ ማርያም (Daniel Gebre Mariam)",
+                genre: "fiction",
+                year: 2019,
+                pages: 290,
+                description: "A novel exploring the lives of Ethiopian artists and musicians in Addis Ababa, and the challenges they face in a society that often undervalues creative expression.",
+                content: [
+                    "The music was his soul, his voice, his rebellion.",
+                    "But in a city that prized stability over art, he struggled to find his place.",
+                    "His journey was a testament to the power of creativity in the face of adversity."
+                ],
+                rating: 4.2,
+                downloads: 2200,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 49,
+                title: "እህት ልጅ",
+                titleEn: "Ehit Lij",
+                author: "ደጀን አለሙ (Dejen Alemu)",
+                genre: "fiction",
+                year: 2016,
+                pages: 310,
+                description: "A story about the bond between two cousins who grow up in different parts of Ethiopia, and how their lives intersect when they meet as adults.",
+                content: [
+                    "They were cousins, separated by distance but connected by blood.",
+                    "Their childhood memories were filled with stories of each other.",
+                    "When they finally met as adults, they discovered that family is more than just genetics."
+                ],
+                rating: 4.0,
+                downloads: 1900,
+                isFree: true,
+                isBestseller: false,
+                isEthiopian: true
+            }, {
+                id: 50,
+                title: "ህይወት በአዲስ",
+                titleEn: "Hiwet BeAddis",
+                author: "ብርክ መለሰ (Birk Melesse)",
+                genre: "fiction",
+                year: 2022,
+                pages: 270,
+                description: "A contemporary novel about a young professional moving to Addis Ababa from the countryside, and the challenges of adapting to urban life.",
+                content: [
+                    "The bright lights of the city were a stark contrast to the quiet of his village.",
+                    "He found himself caught between the traditions of his upbringing and the demands of modern life.",
+                    "In the end, he realized that home is not a place, but a feeling."
+                ],
+                rating: 4.1,
+                downloads: 1800,
+                isFree: false,
+                isBestseller: false,
+                isEthiopian: true
+            }
+        ];
 
         // ===================================================================
         //  STATE
@@ -1602,9 +2507,15 @@
         const state = {
             books: [...BOOKS],
             filtered: [...BOOKS],
-            favorites: JSON.parse(localStorage.getItem('global_library_favorites') || '[]'),
+            favorites: JSON.parse(localStorage.getItem('advanced_favorites') || '[]'),
+            readingProgress: JSON.parse(localStorage.getItem('advanced_reading_progress') || '{}'),
+            bookmarks: JSON.parse(localStorage.getItem('advanced_bookmarks') || '{}'),
+            recentlyViewed: JSON.parse(localStorage.getItem('advanced_recently_viewed') || '[]'),
             currentFilter: 'all',
             searchQuery: '',
+            sortBy: 'rating',
+            currentPage: 1,
+            pageSize: 12,
             currentBookId: null,
             isReaderOpen: false,
             isModalOpen: false,
@@ -1642,30 +2553,83 @@
         const themeToggle = $('#themeToggle');
         const scrollTopBtn = $('#scrollTop');
         const logoLink = $('#logoLink');
+        const sortSelect = $('#sortSelect');
+        const pagination = $('#pagination');
+        const continueSection = $('#continueSection');
+        const continueGrid = $('#continueGrid');
+        const bookmarkBtn = $('#bookmarkBtn');
+        const fontIncrease = $('#fontIncrease');
+        const fontDecrease = $('#fontDecrease');
 
         // ===================================================================
-        //  RENDER
+        //  HELPERS
         // ===================================================================
-        function renderBooks(books) {
-            if (!books.length) {
+        function getBook(id) {
+            return state.books.find(b => b.id === id);
+        }
+
+        function getReadingProgress(id) {
+            return state.readingProgress[id] || 0;
+        }
+
+        function setReadingProgress(id, pct) {
+            state.readingProgress[id] = Math.min(100, Math.max(0, pct));
+            localStorage.setItem('advanced_reading_progress', JSON.stringify(state.readingProgress));
+        }
+
+        function isBookmarked(id) {
+            return state.bookmarks[id] || false;
+        }
+
+        function toggleBookmark(id) {
+            const current = state.bookmarks[id] || false;
+            state.bookmarks[id] = !current;
+            localStorage.setItem('advanced_bookmarks', JSON.stringify(state.bookmarks));
+            return state.bookmarks[id];
+        }
+
+        function addRecentlyViewed(id) {
+            state.recentlyViewed = state.recentlyViewed.filter(bid => bid !== id);
+            state.recentlyViewed.unshift(id);
+            if (state.recentlyViewed.length > 20) state.recentlyViewed.pop();
+            localStorage.setItem('advanced_recently_viewed', JSON.stringify(state.recentlyViewed));
+        }
+
+        function getContinueReading() {
+            return state.books.filter(b => getReadingProgress(b.id) > 0 && getReadingProgress(b.id) < 100);
+        }
+
+        // ===================================================================
+        //  RENDER FUNCTIONS
+        // ===================================================================
+
+        function renderBooks(books, page = state.currentPage) {
+            const start = (page - 1) * state.pageSize;
+            const end = start + state.pageSize;
+            const pageItems = books.slice(start, end);
+
+            if (!pageItems.length) {
                 grid.innerHTML = '';
                 emptyState.classList.remove('hidden');
-                bookCount.textContent = '';
+                bookCount.textContent = `(${books.length})`;
+                pagination.innerHTML = '';
                 return;
             }
             emptyState.classList.add('hidden');
             bookCount.textContent = `(${books.length})`;
 
-            grid.innerHTML = books.map((book) => {
+            grid.innerHTML = pageItems.map((book) => {
                 const isFav = state.favorites.includes(book.id);
                 const genreLabel = book.genre.charAt(0).toUpperCase() + book.genre.slice(1);
                 const stars = '★'.repeat(Math.floor(book.rating)) + '☆'.repeat(5 - Math.floor(book.rating));
                 const badges = [];
                 if (book.isFree) badges.push('free');
                 if (book.isBestseller) badges.push('bestseller');
+                if (book.isEthiopian) badges.push('ethiopian');
+                const ethiopianClass = book.isEthiopian ? 'ethiopian-book' : '';
 
                 return `
-                    <div class="book-card" data-id="${book.id}">
+                    <div class="book-card ${ethiopianClass}" data-id="${book.id}">
                         <button class="fav-btn ${isFav ? 'liked' : ''}" data-id="${book.id}" title="Toggle favorite">
                             <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
                         </button>
@@ -1674,6 +2638,7 @@
                                 <div class="icon"><i class="fa-solid fa-book"></i></div>
                                 <div class="title">${book.title}</div>
                                 <div class="author">${book.author}</div>
+                                ${book.isEthiopian ? '<div class="ethiopia-flag">🇪🇹</div>' : ''}
                             </div>
                             ${badges.length ? badges.map(b => `<span class="badge ${b}">${b}</span>`).join('') : ''}
                         </div>
@@ -1689,7 +2654,6 @@
                 `;
             }).join('');
 
-            // Card clicks
             grid.querySelectorAll('.book-card').forEach((card) => {
                 const id = Number(card.dataset.id);
                 card.addEventListener('click', (e) => {
@@ -1705,7 +2669,75 @@
                 }
             });
 
+            renderPagination(books.length);
             updateFavBadge();
+        }
+
+        function renderPagination(total) {
+            const totalPages = Math.ceil(total / state.pageSize);
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+            let html = '';
+            html += `<button class="prev" ${state.currentPage === 1 ? 'disabled' : ''} data-page="${state.currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button class="${i === state.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+            }
+            html += `<button class="next" ${state.currentPage === totalPages ? 'disabled' : ''} data-page="${state.currentPage + 1}"><i class="fa-solid fa-chevron-right"></i></button>`;
+            pagination.innerHTML = html;
+
+            pagination.querySelectorAll('button[data-page]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const page = Number(btn.dataset.page);
+                    if (page >= 1 && page <= totalPages) {
+                        state.currentPage = page;
+                        applyFiltersAndSort();
+                    }
+                });
+            });
+        }
+
+        function renderContinueReading() {
+            const continueBooks = getContinueReading();
+            if (!continueBooks.length) {
+                continueSection.classList.add('hidden');
+                return;
+            }
+            continueSection.classList.remove('hidden');
+            continueGrid.innerHTML = continueBooks.map(book => {
+                const pct = getReadingProgress(book.id);
+                return `
+                    <div class="continue-card" data-id="${book.id}">
+                        <div class="icon"><i class="fa-regular fa-book-open"></i></div>
+                        <div class="info">
+                            <div class="title">${book.title}</div>
+                            <div class="author">${book.author}</div>
+                            <div class="progress-text">${Math.round(pct)}% read</div>
+                            <div class="progress-bar"><div class="fill" style="width:${pct}%"></div></div>
+                        </div>
+                        <button class="close-btn" data-id="${book.id}" title="Remove from continue reading"><i class="fa-regular fa-circle-xmark"></i></button>
+                    </div>
+                `;
+            }).join('');
+
+            continueGrid.querySelectorAll('.continue-card').forEach(card => {
+                const id = Number(card.dataset.id);
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.close-btn')) return;
+                    openReader(id);
+                });
+                const closeBtn = card.querySelector('.close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        setReadingProgress(id, 0);
+                        renderContinueReading();
+                        applyFiltersAndSort();
+                        toast('Removed from continue reading', 'info');
+                    });
+                }
+            });
         }
 
         function updateFavBadge() {
@@ -1713,27 +2745,55 @@
         }
 
         // ===================================================================
-        //  FILTER & SEARCH
+        //  FILTER, SORT, SEARCH, PAGINATION
         // ===================================================================
-        function applyFilters() {
+        function applyFiltersAndSort() {
             const query = state.searchQuery.toLowerCase().trim();
-            const genre = state.currentFilter;
+            const filter = state.currentFilter;
+            const sort = state.sortBy;
 
             let result = state.books.filter((book) => {
-                const matchesGenre = genre === 'all' || book.genre === genre;
-                const matchesSearch =
-                    book.title.toLowerCase().includes(query) ||
-                    book.author.toLowerCase().includes(query) ||
-                    book.genre.toLowerCase().includes(query);
-                return matchesGenre && matchesSearch;
+                // Handle Ethiopian filter
+                if (filter === 'ethiopian') {
+                    if (!book.isEthiopian) return false;
+                } else {
+                    if (filter !== 'all' && book.genre !== filter) return false;
+                }
+                // Search
+                const searchable = `${book.title} ${book.author} ${book.genre}`.toLowerCase();
+                if (query && !searchable.includes(query)) return false;
+                return true;
+            });
+
+            // Sort
+            result.sort((a, b) => {
+                switch (sort) {
+                    case 'title':
+                        return a.title.localeCompare(b.title);
+                    case 'author':
+                        return a.author.localeCompare(b.author);
+                    case 'rating':
+                        return b.rating - a.rating;
+                    case 'year':
+                        return b.year - a.year;
+                    case 'downloads':
+                        return b.downloads - a.downloads;
+                    default:
+                        return 0;
+                }
             });
 
             state.filtered = result;
-            renderBooks(result);
-            updateSectionTitle();
+            const totalPages = Math.ceil(result.length / state.pageSize);
+            if (state.currentPage > totalPages && totalPages > 0) state.currentPage = totalPages;
+            if (state.currentPage < 1) state.currentPage = 1;
+
+            renderBooks(result, state.currentPage);
+            updateSectionTitle(filter);
+            renderContinueReading();
         }
 
-        function updateSectionTitle() {
+        function updateSectionTitle(filter) {
             const labels = {
                 all: 'All Books',
                 fiction: 'Fiction',
@@ -1743,28 +2803,32 @@
                 mystery: 'Mystery',
                 romance: 'Romance',
                 history: 'History',
+                ethiopian: '🇪🇹 Ethiopian Books'
             };
-            const label = labels[state.currentFilter] || 'Books';
-            const icon = state.currentFilter === 'all' ? 'fa-book' :
-                state.currentFilter === 'fiction' ? 'fa-pen-fancy' :
-                state.currentFilter === 'nonfiction' ? 'fa-newspaper' :
-                state.currentFilter === 'sci-fi' ? 'fa-rocket' :
-                state.currentFilter === 'fantasy' ? 'fa-dragon' :
-                state.currentFilter === 'mystery' ? 'fa-search' :
-                state.currentFilter === 'romance' ? 'fa-heart' :
-                state.currentFilter === 'history' ? 'fa-landmark' : 'fa-book';
+            const label = labels[filter] || 'Books';
+            const iconMap = {
+                all: 'fa-book',
+                fiction: 'fa-pen-fancy',
+                nonfiction: 'fa-newspaper',
+                'sci-fi': 'fa-rocket',
+                fantasy: 'fa-dragon',
+                mystery: 'fa-search',
+                romance: 'fa-heart',
+                history: 'fa-landmark',
+                ethiopian: 'fa-flag'
+            };
+            const icon = iconMap[filter] || 'fa-book';
             sectionTitle.innerHTML =
                 `<i class="fa-solid ${icon}"></i> ${label} <span class="count">(${state.filtered.length})</span>`;
         }
 
         function doSearch() {
             state.searchQuery = searchInput.value;
-            // reset nav active
-            navLinks.forEach(a => a.classList.remove('active'));
-            filterBtns.forEach(b => b.classList.remove('active'));
-            document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
-            state.currentFilter = 'all';
-            applyFilters();
+            state.currentPage = 1;
+            // Reset nav/filter highlights to 'all' unless a specific filter is active
+            // But we'll keep the current filter if it's set
+            // We'll just re-apply
+            applyFiltersAndSort();
         }
 
         // ===================================================================
@@ -1779,8 +2843,8 @@
                 state.favorites.push(id);
                 toast('Added to favorites ❤️', 'success');
             }
-            localStorage.setItem('global_library_favorites', JSON.stringify(state.favorites));
-            applyFilters();
+            localStorage.setItem('advanced_favorites', JSON.stringify(state.favorites));
+            applyFiltersAndSort();
             if (state.currentBookId === id) openDetail(id);
         }
 
@@ -1790,18 +2854,18 @@
                 toast('No favorites yet. ❤️ Add some books!', 'warning');
                 return;
             }
-            // Temporarily override
-            const originalFilter = state.currentFilter;
-            const originalSearch = state.searchQuery;
+            // Override view
             state.currentFilter = 'all';
             state.searchQuery = '';
             state.filtered = favBooks;
-            renderBooks(favBooks);
+            state.currentPage = 1;
+            renderBooks(favBooks, 1);
             sectionTitle.innerHTML =
                 `<i class="fa-solid fa-heart" style="color:var(--red);"></i> Your Favorites <span class="count">(${favBooks.length})</span>`;
             navLinks.forEach(a => a.classList.remove('active'));
             filterBtns.forEach(b => b.classList.remove('active'));
             searchInput.value = '';
+            pagination.innerHTML = '';
             toast('Showing your favorite books', 'info');
         }
 
@@ -1809,12 +2873,14 @@
         //  MODAL
         // ===================================================================
         function openDetail(id) {
-            const book = state.books.find(b => b.id === id);
+            const book = getBook(id);
             if (!book) return;
             state.currentBookId = id;
+            addRecentlyViewed(id);
             const isFav = state.favorites.includes(book.id);
             const stars = '★'.repeat(Math.floor(book.rating)) + '☆'.repeat(5 - Math.floor(book.rating));
             const genreLabel = book.genre.charAt(0).toUpperCase() + book.genre.slice(1);
+            const ethiopianTag = book.isEthiopian ? '<span style="background:var(--ethiopia-green);padding:2px 10px;border-radius:40px;font-size:0.7rem;color:#fff;display:inline-block;margin-left:8px;">🇪🇹 Ethiopian</span>' : '';
 
             modalContent.innerHTML = `
                 <div class="modal-cover">
@@ -1822,10 +2888,11 @@
                         <div class="icon"><i class="fa-solid fa-book"></i></div>
                         <div class="title">${book.title}</div>
                         <div class="author">${book.author}</div>
+                        ${book.isEthiopian ? '<div style="margin-top:6px;font-size:1.2rem;">🇪🇹</div>' : ''}
                     </div>
                 </div>
                 <div class="modal-details">
-                    <h2>${book.title}</h2>
+                    <h2>${book.title} ${ethiopianTag}</h2>
                     <div class="author">${book.author}</div>
                     <div class="meta-row">
                         <span><i class="fa-regular fa-folder"></i> ${genreLabel}</span>
@@ -1867,9 +2934,10 @@
         //  READER
         // ===================================================================
         function openReader(id) {
-            const book = state.books.find(b => b.id === id);
+            const book = getBook(id);
             if (!book) return;
             state.currentBookId = id;
+            addRecentlyViewed(id);
 
             const contentHtml = book.content.map(p => `<p>${p}</p>`).join('');
             readerBody.innerHTML = `
@@ -1885,8 +2953,16 @@
             state.isReaderOpen = true;
             document.body.style.overflow = 'hidden';
 
-            readerProgressFill.style.width = '0%';
-            readerProgressText.textContent = '0%';
+            const savedPct = getReadingProgress(id);
+            readerProgressFill.style.width = savedPct + '%';
+            readerProgressText.textContent = Math.round(savedPct) + '%';
+
+            setTimeout(() => {
+                const sh = readerBody.scrollHeight - readerBody.clientHeight;
+                readerBody.scrollTop = (savedPct / 100) * sh;
+            }, 50);
+
+            updateBookmarkBtn(id);
 
             readerBody.removeEventListener('scroll', updateReaderProgress);
             readerBody.addEventListener('scroll', updateReaderProgress);
@@ -1897,6 +2973,20 @@
                 const sh = readerBody.scrollHeight - readerBody.clientHeight;
                 readerBody.scrollTop = pct * sh;
             };
+
+            bookmarkBtn.onclick = () => {
+                const newState = toggleBookmark(id);
+                updateBookmarkBtn(id);
+                toast(newState ? 'Bookmarked 📌' : 'Bookmark removed', 'info');
+            };
+        }
+
+        function updateBookmarkBtn(id) {
+            const isBookmarked = state.bookmarks[id] || false;
+            bookmarkBtn.innerHTML = isBookmarked ?
+                '<i class="fa-solid fa-bookmark"></i>' :
+                '<i class="fa-regular fa-bookmark"></i>';
+            bookmarkBtn.classList.toggle('active', isBookmarked);
         }
 
         function updateReaderProgress() {
@@ -1905,12 +2995,26 @@
             const pct = sh > 0 ? Math.min(100, (el.scrollTop / sh) * 100) : 0;
             readerProgressFill.style.width = pct + '%';
             readerProgressText.textContent = Math.round(pct) + '%';
+            if (state.currentBookId) {
+                setReadingProgress(state.currentBookId, pct);
+                debounceRenderContinue();
+            }
+        }
+
+        let continueRenderTimeout = null;
+
+        function debounceRenderContinue() {
+            if (continueRenderTimeout) clearTimeout(continueRenderTimeout);
+            continueRenderTimeout = setTimeout(() => {
+                renderContinueReading();
+            }, 300);
         }
 
         function closeReader() {
             reader.classList.remove('open');
             state.isReaderOpen = false;
             document.body.style.overflow = '';
+            renderContinueReading();
         }
 
         // ===================================================================
@@ -1930,7 +3034,7 @@
         }
 
         // ===================================================================
-        //  EVENTS
+        //  EVENTS & INIT
         // ===================================================================
 
         // Search
@@ -1943,12 +3047,13 @@
                 const filter = btn.dataset.filter;
                 state.currentFilter = filter;
                 state.searchQuery = searchInput.value;
+                state.currentPage = 1;
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 navLinks.forEach(a => {
                     a.classList.toggle('active', a.dataset.filter === filter);
                 });
-                applyFilters();
+                applyFiltersAndSort();
             });
         });
 
@@ -1960,12 +3065,13 @@
                 state.currentFilter = filter;
                 state.searchQuery = '';
                 searchInput.value = '';
+                state.currentPage = 1;
                 navLinks.forEach(a => a.classList.remove('active'));
                 link.classList.add('active');
                 filterBtns.forEach(b => {
                     b.classList.toggle('active', b.dataset.filter === filter);
                 });
-                applyFilters();
+                applyFiltersAndSort();
                 navLinksContainer.classList.remove('open');
             });
         });
@@ -1974,6 +3080,13 @@
         favToggle.addEventListener('click', () => {
             showFavorites();
             navLinksContainer.classList.remove('open');
+        });
+
+        // Sort select
+        sortSelect.addEventListener('change', () => {
+            state.sortBy = sortSelect.value;
+            state.currentPage = 1;
+            applyFiltersAndSort();
         });
 
         // Mobile toggle
@@ -2005,21 +3118,37 @@
             toast(darkMode ? 'Dark mode' : 'Light mode', 'info');
         });
 
+        // Font size
+        let fontSize = 1.05;
+        fontIncrease.addEventListener('click', () => {
+            fontSize = Math.min(1.4, fontSize + 0.1);
+            readerBody.style.setProperty('--font-size-base', fontSize + 'rem');
+            document.documentElement.style.setProperty('--font-size-base', fontSize + 'rem');
+        });
+        fontDecrease.addEventListener('click', () => {
+            fontSize = Math.max(0.85, fontSize - 0.1);
+            readerBody.style.setProperty('--font-size-base', fontSize + 'rem');
+            document.documentElement.style.setProperty('--font-size-base', fontSize + 'rem');
+        });
+
         // Logo reset
         logoLink.addEventListener('click', (e) => {
             e.preventDefault();
             state.currentFilter = 'all';
             state.searchQuery = '';
             searchInput.value = '';
+            state.currentPage = 1;
             navLinks.forEach(a => a.classList.remove('active'));
             document.querySelector('.nav-links a[data-filter="all"]')?.classList.add('active');
             filterBtns.forEach(b => b.classList.remove('active'));
             document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
-            applyFilters();
+            sortSelect.value = 'rating';
+            state.sortBy = 'rating';
+            applyFiltersAndSort();
             navLinksContainer.classList.remove('open');
         });
 
-        // Scroll to top
+        // Scroll top
         window.addEventListener('scroll', () => {
             scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
         });
@@ -2038,13 +3167,13 @@
         //  INIT
         // ===================================================================
         function init() {
-            // Set default active
             document.querySelector('.nav-links a[data-filter="all"]')?.classList.add('active');
             document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
-            // Ensure theme is dark by default
             document.documentElement.setAttribute('data-theme', 'dark');
-            applyFilters();
-            toast('📚 Welcome to the Global E-Book Library!', 'info');
+            state.sortBy = sortSelect.value;
+            applyFiltersAndSort();
+            renderContinueReading();
+            toast('📚 Welcome! Explore Ethiopian & global literature.', 'info');
         }
 
         init();
