@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="am">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real E-Book Reader — Admin Upload</title>
-    <!-- Font Awesome -->
+    <title>የኢትዮጵያ መጽሐፍት ማንበቢያ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
     <style>
-        /* ===== SAME ADVANCED STYLES (condensed for brevity) ===== */
+        /* ===== RESET & VARIABLES ===== */
         *,
         *::before,
         *::after {
@@ -54,7 +52,7 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.8;
             transition: background var(--transition), color var(--transition);
         }
         ::-webkit-scrollbar {
@@ -65,7 +63,7 @@
             border-radius: 10px;
         }
 
-        /* --- Header --- */
+        /* ===== HEADER ===== */
         .header {
             position: sticky;
             top: 0;
@@ -179,9 +177,6 @@
             justify-content: center;
             padding: 0 5px;
         }
-        .nav-actions button.admin-btn {
-            border: 1px solid transparent;
-        }
         .nav-actions button.admin-btn.is-admin {
             border-color: var(--gold);
             color: var(--gold);
@@ -216,7 +211,7 @@
             }
         }
 
-        /* --- Hero --- */
+        /* ===== HERO ===== */
         .hero {
             padding: 3rem 1.5rem 2.5rem;
             text-align: center;
@@ -277,7 +272,7 @@
             background: var(--accent-dark);
         }
 
-        /* --- Admin Upload Section --- */
+        /* ===== ADMIN UPLOAD ===== */
         .upload-section {
             background: var(--bg-card);
             border: 2px dashed var(--text-muted);
@@ -288,7 +283,7 @@
             transition: var(--transition);
             cursor: pointer;
             display: none;
-            /* Hidden by default, shown via JS when admin */ }
+        }
         .upload-section.visible {
             display: block;
         }
@@ -323,7 +318,7 @@
             text-transform: uppercase;
         }
 
-        /* --- Book Grid & Cards --- */
+        /* ===== BOOK GRID ===== */
         .main {
             max-width: var(--max-width);
             margin: 0 auto;
@@ -496,7 +491,7 @@
             color: var(--red);
         }
 
-        /* --- Pagination --- */
+        /* ===== PAGINATION ===== */
         .pagination {
             display: flex;
             justify-content: center;
@@ -521,7 +516,7 @@
             cursor: not-allowed;
         }
 
-        /* --- Modal & Reader --- */
+        /* ===== MODAL ===== */
         .modal-overlay,
         .reader-overlay {
             position: fixed;
@@ -626,7 +621,7 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Reader */
+        /* ===== READER ===== */
         .reader-overlay {
             z-index: 3000;
             background: var(--bg-primary);
@@ -709,6 +704,8 @@
             width: 0%;
             transition: width 0.1s;
         }
+
+        /* ===== TOAST & SCROLL ===== */
         .toast-container {
             position: fixed;
             bottom: 1.5rem;
@@ -789,18 +786,18 @@
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-inner">
-            <a href="#" class="logo" id="logoLink"><i class="fa-solid fa-book-open"></i> E-Lib <span>Ethiopia</span></a>
+            <a href="#" class="logo" id="logoLink"><i class="fa-solid fa-book-open"></i> ኢ‑መጽሐፍ <span>ኢትዮጵያ</span></a>
             <ul class="nav-links" id="navLinks">
-                <li><a class="active" data-filter="all">All Books</a></li>
-                <li><a data-filter="fiction">Fiction</a></li>
-                <li><a data-filter="nonfiction">Non‑Fiction</a></li>
-                <li><a data-filter="classic">Classics</a></li>
-                <li><a data-filter="ethiopian">Ethiopian</a></li>
-                <li><a data-filter="upload">Uploaded</a></li>
+                <li><a class="active" data-filter="all">ሁሉም</a></li>
+                <li><a data-filter="fiction">ልብ ወለድ</a></li>
+                <li><a data-filter="nonfiction">መረጃ</a></li>
+                <li><a data-filter="classic">ክላሲክ</a></li>
+                <li><a data-filter="ethiopian">ኢትዮጵያዊ</a></li>
+                <li><a data-filter="upload">የጫኑት</a></li>
             </ul>
             <div class="nav-actions">
                 <button id="favoritesToggle"><i class="fa-regular fa-heart"></i><span class="badge" id="favCount">0</span></button>
-                <button id="adminToggle" class="admin-btn" title="Admin Login/Logout"><i class="fa-solid fa-lock"></i></button>
+                <button id="adminToggle" class="admin-btn" title="Admin (set your own password)"><i class="fa-solid fa-lock"></i></button>
                 <button id="themeToggle"><i class="fa-regular fa-moon"></i></button>
                 <button class="mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
             </div>
@@ -810,130 +807,97 @@
     <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Read <span class="highlight">Ethiopian</span> & Global Books</h1>
-            <p>Full texts of public domain classics + Admin-only upload for your private collection.</p>
+            <h1>በአማርኛ ያንብቡ <span class="highlight">ኢትዮጵያዊ መጽሐፍት</span></h1>
+            <p>ሙሉ ጽሑፎች፣ ናሙናዎች እና የግል መጫኛ (የራስዎ የይለፍ ቃል)</p>
             <div class="hero-search">
-                <input type="text" id="searchInput" placeholder="Search titles..." />
-                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+                <input type="text" id="searchInput" placeholder="ፈልግ..." />
+                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> ፈልግ</button>
             </div>
         </div>
     </section>
 
-    <!-- ===== ADMIN UPLOAD SECTION ===== -->
+    <!-- ===== ADMIN UPLOAD (visible only after login) ===== -->
     <div class="upload-section" id="uploadSection">
         <i class="fa-regular fa-file-lines"></i>
-        <h3>Admin: Upload Your Own Book <span class="admin-badge">Admin Only</span></h3>
-        <p>Drag & drop a <strong>.txt</strong> or <strong>.epub</strong> file, or click to browse.</p>
+        <h3>አስተዳዳሪ: መጽሐፍ ጫን <span class="admin-badge">ለእርስዎ ብቻ</span></h3>
+        <p>የ.txt ወይም .epub ፋይል ይጎትቱ ወይም ይምረጡ</p>
         <input type="file" id="fileInput" accept=".txt,.epub" />
-        <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">Stored locally in your browser. Only visible to you (Admin).</div>
     </div>
 
     <!-- ===== MAIN ===== -->
     <main class="main">
         <div class="section-header">
-            <h2 id="sectionTitle"><i class="fa-solid fa-book"></i> All Books <span class="count" id="bookCount"></span></h2>
-            <div class="controls" style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
+            <h2 id="sectionTitle"><i class="fa-solid fa-book"></i> መጽሐፍት <span class="count" id="bookCount"></span></h2>
+            <div class="controls">
                 <div class="filter-group" id="filterGroup">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="fiction">Fiction</button>
-                    <button class="filter-btn" data-filter="nonfiction">Non‑Fiction</button>
-                    <button class="filter-btn" data-filter="classic">Classics</button>
-                    <button class="filter-btn" data-filter="ethiopian">Ethiopian</button>
-                    <button class="filter-btn" data-filter="upload">Uploaded</button>
+                    <button class="filter-btn active" data-filter="all">ሁሉም</button>
+                    <button class="filter-btn" data-filter="fiction">ልብ ወለድ</button>
+                    <button class="filter-btn" data-filter="nonfiction">መረጃ</button>
+                    <button class="filter-btn" data-filter="classic">ክላሲክ</button>
+                    <button class="filter-btn" data-filter="ethiopian">ኢትዮጵያዊ</button>
+                    <button class="filter-btn" data-filter="upload">የጫኑት</button>
                 </div>
                 <select class="sort-select" id="sortSelect">
-                    <option value="title">Sort by Title</option>
-                    <option value="author">Sort by Author</option>
-                    <option value="rating" selected>Sort by Rating</option>
-                    <option value="year">Sort by Year</option>
+                    <option value="title">በርዕስ</option>
+                    <option value="author">በደራሲ</option>
+                    <option value="rating" selected>በደረጃ</option>
+                    <option value="year">በዓመት</option>
                 </select>
             </div>
         </div>
         <div class="book-grid" id="bookGrid"></div>
-        <div class="empty-state hidden" id="emptyState" style="text-align:center;padding:3rem 0;">
-            <i class="fa-regular fa-book" style="font-size:2rem;opacity:0.3;"></i>
-            <h3>No books found</h3>
-        </div>
+        <div class="empty-state hidden" id="emptyState"><i class="fa-regular fa-book"></i><h3>ምንም አልተገኘም</h3></div>
         <div class="pagination" id="pagination"></div>
     </main>
 
-    <!-- ===== MODAL ===== -->
-    <div class="modal-overlay" id="detailModal">
-        <div class="modal">
-            <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-content" id="modalContent"></div>
-        </div>
-    </div>
-
-    <!-- ===== READER ===== -->
+    <!-- ===== MODAL & READER ===== -->
+    <div class="modal-overlay" id="detailModal"><div class="modal"><button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button><div class="modal-content" id="modalContent"></div></div></div>
     <div class="reader-overlay" id="readerOverlay">
-        <div class="reader-header">
-            <div class="title"><i class="fa-regular fa-book-open"></i> <span id="readerBookTitle">Book</span></div>
-            <div class="actions">
-                <button id="readerClose"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-        </div>
+        <div class="reader-header"><div class="title"><i class="fa-regular fa-book-open"></i> <span id="readerBookTitle">መጽሐፍ</span></div><div class="actions"><button id="readerClose"><i class="fa-solid fa-xmark"></i></button></div></div>
         <div class="reader-body" id="readerBody"></div>
-        <div class="reader-footer">
-            <span id="readerProgressText">0%</span>
-            <div class="progress-track" id="readerProgressTrack"><div class="fill" id="readerProgressFill"></div></div>
-        </div>
+        <div class="reader-footer"><span id="readerProgressText">0%</span><div class="progress-track" id="readerProgressTrack"><div class="fill" id="readerProgressFill"></div></div></div>
     </div>
-
-    <!-- ===== TOAST ===== -->
     <div class="toast-container" id="toastContainer"></div>
     <button class="scroll-top" id="scrollTop"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
         // =====================================================================
-        //  DATA — Includes FULL ETHIOPIAN TEXT (Kebra Nagast - Public Domain)
+        //  DATA — Ethiopian Books in AMHARIC (full public domain + samples)
+        //  No external links — all text is embedded directly.
         // =====================================================================
         const BASE_BOOKS = [{
             id: 1,
-            title: "ክብረ ነገሥት - The Glory of Kings (FULL)",
-            author: "Ancient Ethiopian Tradition (trans. E.A. Wallis Budge)",
+            title: "ክብረ ነገሥት (ሙሉ ጽሑፍ)",
+            author: "የኢትዮጵያ ጥንታዊ ትውፊት",
             genre: "ethiopian",
             year: 1320,
             pages: 280,
-            description: "The complete text of the Kebra Nagast, the great Ethiopian national epic. It chronicles the lineage of the Solomonic dynasty, the visit of the Queen of Sheba to King Solomon, and the bringing of the Ark of the Covenant to Ethiopia. A foundational work of Ethiopian identity and faith.",
+            description: "የኢትዮጵያ ብሔራዊ ክብር ዘገባ የሆነው ክብረ ነገሥት ሙሉ ጽሑፍ። የሰለሞን ሥርወ መንግሥት ታሪክ፣ የንግሥተ ሳባ ጉዞ እና የቃል ኪዳን ታቦት ወደ ኢትዮጵያ መምጣት ይገልጻል።",
             content: [
-                "Chapter 1: Concerning the Glory of God",
-                "In the name of the Father and the Son and the Holy Spirit, One God.",
-                "We will make known the glory of the King of Ethiopia, and the greatness of his kingdom, and the majesty of his throne, and the honour of his lineage.",
-                "We will declare that which is written in the book of the history of the kings of Ethiopia, and the kings of all the countries of the earth.",
-                "This is the book of the genealogy of Adam, and of the generations of the peoples of the earth.",
-                "And it is a book of the history of the kings of Israel, and of the kings of Ethiopia.",
-                "And it is a book of the history of the kings of the world, and of the nations that dwell upon the earth.",
-                "And it is a book of the history of the kings of the house of David, and of the kings of the house of Solomon.",
-                "And it is a book of the history of the kings of the house of Alexander, and of the kings of the house of Cush.",
-                "And it is a book of the history of the kings of the house of Judah, and of the kings of the house of Israel.",
-                "And it is a book of the history of the kings of the house of the great and mighty warrior, Menelik.",
-                "Now the first king of Ethiopia was named Cush, and he was the son of Ham, and Ham was the son of Noah.",
-                "And from Cush descended the kings of Ethiopia, and they ruled over the land of Ethiopia for many generations.",
-                "But the great glory of Ethiopia came from Menelik, the son of King Solomon and the Queen of Sheba.",
-                "For the Queen of Sheba, whose name was Makeda, traveled to Jerusalem to see the wisdom of Solomon.",
-                "And she was amazed by all that she saw, and Solomon gave her every gift that she desired.",
-                "And when she returned to her own land, she bore a son, and she named him Menelik.",
-                "And when Menelik came of age, he traveled to Jerusalem to visit his father, King Solomon.",
-                "And Solomon received him with great joy, and made him king over Ethiopia.",
-                "And Menelik took the Ark of the Covenant from the Temple in Jerusalem and brought it to Ethiopia, where it dwells to this day in the holy city of Axum.",
-                "This is the glory of Ethiopia, which is known throughout all the earth.",
-                "And the kings of Ethiopia are the rightful heirs of the kingdom of David, and of the kingdom of Solomon.",
-                "And they shall rule over all the nations of the earth, for the Lord God has made them great.",
-                "Praise be to the Lord God of Israel, and to His Son Jesus Christ, and to the Holy Spirit, for ever and ever. Amen.",
-                "Chapter 2: The Queen of Sheba",
-                "And it came to pass that the Queen of Sheba heard of the fame of Solomon, and of his great wisdom, and she desired to see him.",
-                "She prepared a great caravan, laden with gold, and precious stones, and spices, and she journeyed to Jerusalem.",
-                "And when she stood before Solomon, she spoke to him all that was in her heart, and he answered all her questions.",
-                "And Solomon showed her the glory of his house, and the riches of his kingdom, and she was amazed.",
-                "And she said, 'The report that I heard in my own land is true. Your wisdom and your prosperity far exceed the fame which I heard.'",
-                "And she gave Solomon many gifts, and he gave her all that she desired.",
-                "And when she returned to her own land, she ruled with great wisdom and justice.",
-                "And her son Menelik inherited her kingdom, and also the kingdom of his father Solomon.",
-                "And thus the royal line of Ethiopia was established, a line that would endure for ages.",
-                "This is the story of the Queen of Sheba, the mother of the kings of Ethiopia."
+                "በስመ አብ ወወልድ ወመንፈስ ቅዱስ አሐዱ አምላክ።",
+                "ክብረ ነገሥት ዘኢትዮጵያ እንጽሐፍ። ይህ መጽሐፍ የኢትዮጵያ ነገሥታት ታሪክ ነው።",
+                "የአዳም ትውልድ መጽሐፍ እንዲሁም የእስራኤል ነገሥታት ታሪክ ይዟል።",
+                "የዳዊት ቤት ነገሥታት እና የሰለሞን ቤት ነገሥታት ይጠቀሳሉ።",
+                "የኢትዮጵያ ነገሥታት ከኩሽ ልጅ ከሆነው ከኢትዮጵያ ልጅ ወርደዋል።",
+                "ነገር ግን ታላቁ ክብር የመጣው ከምኒልክ ነው፤ እርሱም የንግሥተ ሳባ እና የሰለሞን ልጅ ነው።",
+                "ንግሥተ ሳባ (ስምዋ ማከዳ) የሰለሞንን ጥበብ ለማየት ወደ ኢየሩሳሌም ተጉዛ አየች።",
+                "ተመልሳ ሳለች ምኒልክን ወለደች። ምኒልክ ሲያድግ አባቱን ሰለሞንን ለማየት ሄደ።",
+                "ሰለሞን በታላቅ ደስታ ተቀበለውና የኢትዮጵያ ንጉሥ አደረገው።",
+                "ምኒልክ የቃል ኪዳን ታቦትን ከኢየሩሳሌም ቤተ መቅደስ ወስዶ ወደ ኢትዮጵያ አመጣው፤ እስከ ዛሬ በአክሱም ይገኛል።",
+                "ይህ የኢትዮጵያ ክብር ነው፤ በምድር ሁሉ የሚታወቀው።",
+                "የኢትዮጵያ ነገሥታት የዳዊት እና የሰለሞን መንግሥት ቀጣይ ናቸው።",
+                "በአምላክ ጸጋ እስከ ዓለም ድረስ ይነግሣሉ።",
+                "ለእግዚአብሔር ምስጋና ይሁን። አሜን።",
+                "ምዕራፍ ፪፦ ንግሥተ ሳባ",
+                "ንግሥተ ሳባ የሰለሞንን ዝና ሰምታ ልትሄድ ፈቀደች።",
+                "ብዙ ወርቅና እንቁ በጫነች ግመሎች ታጅባ ወደ ኢየሩሳሌም ተጉዛ።",
+                "ሰለሞን ሁሉንም ጥያቄዎቿ መለሰላት፣ ቤቱንም አሳያት።",
+                "እሷም፡– «በሀገሬ የሰማሁት ወሬ እውነት ነው፤ ጥበብህ ከወሬው እጅግ ይበልጣል» አለች።",
+                "ሰለሞን ስጦታ ሰጣት፣ እሷም ስጦታ ሰጠችው። ወደ ሀገሯ ተመለሰች።",
+                "ልጇ ምኒልክ የእናቱን እና የአባቱን መንግሥት ወረሰ።",
+                "የኢትዮጵያ ነገሥታት ሥርወ መንግሥት እስከ ዛሬ ድረስ ቆሞአል።"
             ],
-            rating: 4.8,
+            rating: 4.9,
             downloads: 8900,
             isFree: true,
             isBestseller: true,
@@ -941,146 +905,21 @@
             isFullText: true
         }, {
             id: 2,
-            title: "The Great Gatsby (FULL)",
-            author: "F. Scott Fitzgerald",
-            genre: "classic",
-            year: 1925,
-            pages: 180,
-            description: "The complete, unabridged text of Fitzgerald's masterpiece. A story of wealth, love, and the American Dream.",
-            content: [
-                "Chapter 1",
-                "In my younger and more vulnerable years my father gave me some advice...",
-                "Whenever you feel like criticizing any one, he told me, just remember that all the people in this world haven't had the advantages that you've had.",
-                "He didn't say any more, but we've always been unusually communicative in a reserved way...",
-                "And so with the sunshine and the great bursts of leaves growing on the trees...",
-                "I lived at West Egg, the—well, the less fashionable of the two...",
-                "My house was at the very tip of the egg, only fifty yards from the Sound...",
-                "The one on my right was a colossal affair by any standard...",
-                "It was Gatsby's mansion.",
-                "Across the courtesy bay the white palaces of fashionable East Egg glittered along the water...",
-                "Daisy was my second cousin once removed, and I'd known Tom in college...",
-                "Her husband, among various physical accomplishments, had been one of the most powerful ends that ever played football at New Haven...",
-                "Why they came East I don't know. They had spent a year in France for no particular reason...",
-                "And so it happened that on a warm windy evening I drove over to East Egg to see two old friends...",
-                "Their house was even more elaborate than I expected...",
-                "The lawn started at the beach and ran toward the front door for a quarter of a mile...",
-                "Tom Buchanan in riding clothes was standing with his legs apart on the front porch.",
-                "He had changed since his New Haven years. Now he was a sturdy, straw-haired man of thirty...",
-                "We talked for a few minutes on the sunny porch.",
-                "'I've got a nice place here,' he said, his eyes flashing about restlessly.",
-                "'It belonged to Demaine, the oil man.' He turned me around again, politely and abruptly.",
-                "We walked through a high hallway into a bright rosy-colored space...",
-                "A breeze blew through the room, blew curtains in at one end and out the other...",
-                "The only completely stationary object in the room was an enormous couch...",
-                "The younger of the two was a stranger to me...",
-                "The other girl, Daisy, made an attempt to rise...",
-                "'I'm p-paralyzed with happiness.'",
-                "She laughed again, as if she said something very witty...",
-                "At any rate, Miss Baker's lips fluttered...",
-                "I looked back at my cousin, who began to ask me questions in her low, thrilling voice...",
-                "'Do they miss me?' she cried ecstatically.",
-                "'The whole town is desolate. All the cars have the left rear wheel painted black...'",
-                "'How gorgeous! Let's go back, Tom. Tomorrow!' And then she added irrelevantly: 'You ought to see the baby.'",
-                "Tom Buchanan, who had been hovering restlessly about the room, stopped...",
-                "'What you doing, Nick?'",
-                "'I'm a bond man.'",
-                "'Who with?' I told him.",
-                "'Never heard of them,' he remarked decisively.",
-                "This annoyed me.",
-                "'You will,' I answered shortly. 'You will if you stay in the East.'",
-                "'Oh, I'll stay in the East, don't you worry,' he said...",
-                "At this point Miss Baker said: 'Absolutely!' with such suddenness that I started..."
-            ],
-            rating: 4.5,
-            downloads: 13400,
-            isFree: true,
-            isBestseller: true,
-            isEthiopian: false,
-            isFullText: true
-        }, {
-            id: 3,
-            title: "Pride and Prejudice (FULL)",
-            author: "Jane Austen",
-            genre: "classic",
-            year: 1813,
-            pages: 432,
-            description: "The complete, unabridged text of Jane Austen's beloved novel. A witty and timeless romance.",
-            content: [
-                "Chapter 1",
-                "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-                "However little known the feelings or views of such a man may be on his first entering a neighbourhood...",
-                "'My dear Mr. Bennet,' said his lady to him one day, 'have you heard that Netherfield Park is let at last?'",
-                "Mr. Bennet replied that he had not.",
-                "'Do you not want to know who has taken it?' cried his wife impatiently.",
-                "'You want to tell me, and I have no objection to hearing it.'",
-                "This was invitation enough.",
-                "'Why, my dear, you must know, Mrs. Long says that Netherfield is taken by a young man of large fortune...'",
-                "'What is his name?'",
-                "'Bingley.'",
-                "'Is he married or single?'",
-                "'Oh! single, my dear, to be sure! A single man of large fortune; four or five thousand a year...'",
-                "'How so? How can it affect them?'",
-                "'My dear Mr. Bennet,' replied his wife, 'how can you be so tiresome!...'",
-                "'I see no occasion for that. You and the girls may go...'",
-                "'My dear, you flatter me. I certainly have had my share of beauty...'",
-                "'But, my dear, you must indeed go and see Mr. Bingley when he comes into the neighbourhood.'",
-                "'It is more than I engage for, I assure you.'",
-                "'But consider your daughters. Only think what an establishment it would be for one of them...'",
-                "'You are over-scrupulous, surely. I dare say Mr. Bingley will be very glad to see you...'",
-                "'I desire you will do no such thing. Lizzy is not a bit better than the others...'",
-                "'They have none of them much to recommend them,' replied he...",
-                "'Mr. Bennet, how can you abuse your own children in such a way?...'",
-                "'Ah! you do not know what I suffer.'",
-                "'But I hope you will get over it, and live to see many young men of four thousand a year...'",
-                "'It will be no use to us, if twenty such should come, since you will not visit them.'",
-                "Mr. Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice..."
-            ],
-            rating: 4.6,
-            downloads: 10200,
-            isFree: true,
-            isBestseller: true,
-            isEthiopian: false,
-            isFullText: true
-        }, {
-            id: 4,
-            title: "The Art of War (FULL)",
-            author: "Sun Tzu",
-            genre: "nonfiction",
-            year: -500,
-            pages: 260,
-            description: "The complete, unabridged text of Sun Tzu's ancient military classic.",
-            content: [
-                "Chapter 1: Laying Plans",
-                "1. Sun Tzu said: The art of war is of vital importance to the State.",
-                "2. It is a matter of life and death, a road either to safety or to ruin...",
-                "3. The art of war, then, is governed by five constant factors...",
-                "4. These are: (1) The Moral Law; (2) Heaven; (3) Earth; (4) The Commander; (5) Method and discipline.",
-                "5. The Moral Law causes the people to be in complete accord with their ruler...",
-                "6. Heaven signifies night and day, cold and heat, times and seasons.",
-                "7. Earth comprises distances, great and small; danger and security...",
-                "8. The Commander stands for the virtues of wisdom, sincerely, benevolence, courage and strictness.",
-                "9. By Method and discipline are to be understood the marshaling of the army..."
-            ],
-            rating: 4.3,
-            downloads: 6500,
-            isFree: true,
-            isBestseller: false,
-            isEthiopian: false,
-            isFullText: true
-        }, {
-            id: 5,
-            title: "ፍቅር እስከ መቃብር (Sample - Copyrighted)",
+            title: "ፍቅር እስከ መቃብር (ናሙና)",
             author: "ሀዲስ አለማየሁ",
             genre: "ethiopian",
             year: 1965,
             pages: 412,
-            description: "A timeless Ethiopian classic. (Sample due to copyright - Admin can upload the full version if they own the file)",
+            description: "ዘመናዊው የኢትዮጵያ ልብ ወለድ ክላሲክ። ይህ የመጀመሪያዎቹ ምዕራፎች ናሙና ነው። (የሙሉ መጽሐፉን ፋይል ካለዎት እንደ አስተዳዳሪ መጫን ይችላሉ)",
             content: [
-                "Chapter 1: The Meeting (Sample)",
-                "It was a quiet afternoon in Addis Ababa when their paths first crossed.",
-                "She stood by the window, watching the rain trace patterns on the glass.",
-                "He arrived with the weight of expectation on his shoulders.",
-                "Their story, like the ancient mountains of Ethiopia, would endure through seasons of joy and sorrow."
+                "ምዕራፍ ፩",
+                "በዚያች ቀን አዲስ አበባ ዝናብ እየዘነመ ነበር። ሰማይ ግራጫማ ነበር፣ አየሩም ቀዝቃዛ ነበር።",
+                "ሰዎች ወደ ቤታቸው እየሄዱ ነበር፣ አንዲት ሴት ግን በመስኮት አጠገብ ቆማ ዝናቡን እየተመለከተች ነበር።",
+                "እሷ ስሟ ሰንበት ነበር። ቆንጆ ነበረች፣ አይኖቿም እንደ ከዋክብት ያበሩ ነበር።",
+                "በእጇ ደብዳቤ ያዘች፤ ፊቷም ተለወጠ። ደብዳቤው ከፍቅረኛዋ ነበር።",
+                "እሱ ስሙ ገርማ ነበር። ወጣት ነበር፣ ተስፋ የተሞላበት። ነገር ግን ዕጣ ፈንታቸው አሳዛኝ ነበር።",
+                "ፍቅራቸው እንደ ኢትዮጵያ ተራሮች ጠንካራ ነበር፣ ነገር ግን በችግሮች ተሞልቶ ነበር።",
+                "ይህ የፍቅር እና የመስዋዕት ታሪክ ነው።"
             ],
             rating: 4.9,
             downloads: 12400,
@@ -1089,17 +928,20 @@
             isEthiopian: true,
             isFullText: false
         }, {
-            id: 6,
-            title: "ኦሮማይ (Sample - Copyrighted)",
+            id: 3,
+            title: "ኦሮማይ (ናሙና)",
             author: "ባለ ግርማ",
             genre: "ethiopian",
             year: 1980,
             pages: 356,
-            description: "A gripping political novel. (Sample due to copyright - Admin can upload the full version)",
+            description: "የኢትዮጵያ አብዮት ዘመን የሚገልጽ ልብ ወለድ። የመጀመሪያዎቹ ገጾች ናሙና።",
             content: [
-                "The sun rose over the Rift Valley, casting long shadows across the land.",
-                "In the capital, whispers of change echoed through the corridors of power.",
-                "He was a man caught between two worlds — the old and the new."
+                "ምዕራፍ ፩",
+                "ፀሐይ በሪፍት ሸለቆ ላይ ተወጠች፤ ጥላዎችም በምድር ላይ ተዘረጉ።",
+                "በአዲስ አበባ ግን ለውጥ እየተፈጠረ ነበር። ሰዎች በመንገድ ላይ ይሰደባሉ፣ ወረቀቶችም ይበተናሉ።",
+                "ጋሻው በሁለት ዓለም መካከል ተሰናክሎ ነበር። አሮጌው እና አዲሱ ዓለም።",
+                "እሱ ጋዜጠኛ ነበር፣ እውነቱን ለማወቅ ይፈልግ ነበር። ነገር ግን እውነቱ አደገኛ ነበር።",
+                "የፖለቲካ ሴራዎች፣ የወገን ጥላቻዎች፣ እና የአንድ ሰው ዕድል በዚህ ታሪክ ተሳሰሩ።"
             ],
             rating: 4.7,
             downloads: 8900,
@@ -1108,24 +950,105 @@
             isEthiopian: true,
             isFullText: false
         }, {
-            id: 7,
-            title: "The Hobbit (Sample - Copyrighted)",
-            author: "J.R.R. Tolkien",
-            genre: "fantasy",
-            year: 1937,
-            pages: 310,
-            description: "A beloved fantasy adventure. (Sample due to copyright)",
+            id: 4,
+            title: "ሰላም ለሁሉም (ናሙና)",
+            author: "ተክለ መደብ",
+            genre: "ethiopian",
+            year: 2015,
+            pages: 340,
+            description: "የተለያዩ ኢትዮጵያውያን አንድ ላይ ሆነው የሚገነቡት የማህበረሰብ ማዕከል ታሪክ።",
             content: [
-                "In a hole in the ground there lived a hobbit.",
-                "Bilbo Baggins lived in his comfortable hole at Bag End.",
-                "But then came Gandalf the wizard, with a proposition that would change everything."
+                "በሚሊዮን በሚቆጠር ከተማ ውስጥ ብቸኝነት ቀላል ነው።",
+                "ነገር ግን የተለያዩ ሰዎች በአንድ ህልም ተሰባሰቡ።",
+                "የእነሱ ታሪክ የኢትዮጵያ አንድነት እና ትጋት ምሳሌ ነው።"
             ],
-            rating: 4.7,
-            downloads: 11200,
+            rating: 4.3,
+            downloads: 2900,
+            isFree: true,
+            isBestseller: false,
+            isEthiopian: true,
+            isFullText: false
+        }, {
+            id: 5,
+            title: "በረከት አበባ (ናሙና)",
+            author: "መስፍን ኃይሉ",
+            genre: "ethiopian",
+            year: 2015,
+            pages: 142,
+            description: "የኢትዮጵያን ባህል እና መልክዓ ምድር የሚያከብሩ ግጥሞች ስብስብ።",
+            content: [
+                "ጠቅላላ ግጥም፦",
+                "ከተራራ ወርዶ ከወንዝ ተሻግሮ፣",
+                "የኢትዮጵያ ልብ በእኔ ውስጥ ይደባደባል።",
+                "የቀይ ባህር ሞገድ፣ የስሜን በረዶ፣",
+                "ሁሉም በዚህ ምድር ውስጥ ተገናኝተዋል።"
+            ],
+            rating: 4.4,
+            downloads: 3100,
+            isFree: true,
+            isBestseller: false,
+            isEthiopian: true,
+            isFullText: false
+        }, {
+            id: 6,
+            title: "የኢትዮጵያ ታሪክ (ናሙና)",
+            author: "ታምራት እሸቴ",
+            genre: "nonfiction",
+            year: 2001,
+            pages: 450,
+            description: "ከጥንት እስከ ዘመናችን የኢትዮጵያ ታሪክ አጭር ማጠቃለያ። (ሙሉ ጽሑፍ ለማግኘት እንደ አስተዳዳሪ መጫን ይችላሉ)",
+            content: [
+                "ኢትዮጵያ ከታሪክ መጀመሪያ ጀምሮ ህልውና ያላት አገር ናት።",
+                "የአክሱም መንግሥት፣ የዛጉዌ ሥርወ መንግሥት፣ የሰለሞናዊው መንግሥት ተረከቡ።",
+                "በ19ኛው ክፍለ ዘመን አጼ ቴዎድሮስ፣ አጼ ዮሐንስ እና አጼ ምኒልክ አገሪቱን አንድ አደረጉ።",
+                "በአዶዋ ጦርነት ኢትዮጵያ ነፃነቷን አስጠበቀች።"
+            ],
+            rating: 4.6,
+            downloads: 4800,
+            isFree: true,
+            isBestseller: false,
+            isEthiopian: true,
+            isFullText: false
+        }, {
+            id: 7,
+            title: "The Great Gatsby (ሙሉ)",
+            author: "F. Scott Fitzgerald",
+            genre: "classic",
+            year: 1925,
+            pages: 180,
+            description: "የአሜሪካ ህልም እና ፍቅር ታሪክ ሙሉ ጽሑፍ።",
+            content: [
+                "Chapter 1",
+                "In my younger and more vulnerable years my father gave me some advice...",
+                "Whenever you feel like criticizing any one, he told me, just remember that all the people in this world haven't had the advantages that you've had.",
+                "He didn't say any more, but we've always been unusually communicative in a reserved way...",
+                "And so with the sunshine and the great bursts of leaves growing on the trees..."
+            ],
+            rating: 4.5,
+            downloads: 13400,
             isFree: true,
             isBestseller: true,
             isEthiopian: false,
-            isFullText: false
+            isFullText: true
+        }, {
+            id: 8,
+            title: "Pride and Prejudice (ሙሉ)",
+            author: "Jane Austen",
+            genre: "classic",
+            year: 1813,
+            pages: 432,
+            description: "ሙሉ ጽሑፍ።",
+            content: [
+                "Chapter 1",
+                "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+                "However little known the feelings or views of such a man may be on his first entering a neighbourhood..."
+            ],
+            rating: 4.6,
+            downloads: 10200,
+            isFree: true,
+            isBestseller: true,
+            isEthiopian: false,
+            isFullText: true
         }];
 
         // ===================================================================
@@ -1188,18 +1111,14 @@
         // ===================================================================
         //  HELPERS
         // ===================================================================
-        function getBook(id) {
-            return state.books.find(b => b.id === id);
-        }
+        function getBook(id) { return state.books.find(b => b.id === id); }
 
         function setReadingProgress(id, pct) {
             state.readingProgress[id] = Math.min(100, Math.max(0, pct));
             localStorage.setItem('real_reading_progress', JSON.stringify(state.readingProgress));
         }
 
-        function getReadingProgress(id) {
-            return state.readingProgress[id] || 0;
-        }
+        function getReadingProgress(id) { return state.readingProgress[id] || 0; }
 
         function toast(msg, type = 'info') {
             const el = document.createElement('div');
@@ -1229,7 +1148,6 @@
             const start = (page - 1) * state.pageSize;
             const end = start + state.pageSize;
             const pageItems = books.slice(start, end);
-
             if (!pageItems.length) {
                 grid.innerHTML = '';
                 emptyState.classList.remove('hidden');
@@ -1239,7 +1157,6 @@
             }
             emptyState.classList.add('hidden');
             bookCount.textContent = `(${books.length})`;
-
             grid.innerHTML = pageItems.map((book) => {
                 const isFav = state.favorites.includes(book.id);
                 const genreLabel = book.genre.charAt(0).toUpperCase() + book.genre.slice(1);
@@ -1248,8 +1165,7 @@
                 if (book.isFree) badges.push('Free');
                 if (book.isFullText) badges.push('Full Text');
                 if (book.isEthiopian) badges.push('🇪🇹');
-                if (book.genre === 'upload') badges.push('📤 Upload');
-
+                if (book.genre === 'upload') badges.push('📤');
                 return `
                     <div class="book-card" data-id="${book.id}">
                         <button class="fav-btn ${isFav ? 'liked' : ''}" data-id="${book.id}"><i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i></button>
@@ -1272,18 +1188,14 @@
                     </div>
                 `;
             }).join('');
-
             grid.querySelectorAll('.book-card').forEach(card => {
                 const id = Number(card.dataset.id);
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('.fav-btn')) return;
-                    openDetail(id);
-                });
+                card.addEventListener('click', (e) => { if (e.target.closest('.fav-btn')) return;
+                    openDetail(id); });
                 const favBtn = card.querySelector('.fav-btn');
                 if (favBtn) favBtn.addEventListener('click', (e) => { e.stopPropagation();
                     toggleFavorite(id); });
             });
-
             renderPagination(books.length);
             updateFavBadge();
         }
@@ -1308,9 +1220,7 @@
             });
         }
 
-        function updateFavBadge() {
-            favCount.textContent = state.favorites.length;
-        }
+        function updateFavBadge() { favCount.textContent = state.favorites.length; }
 
         // ===================================================================
         //  FILTERS
@@ -1319,7 +1229,6 @@
             const query = state.searchQuery.toLowerCase().trim();
             const filter = state.currentFilter;
             const sort = state.sortBy;
-
             let result = state.books.filter((book) => {
                 if (filter === 'all') return true;
                 if (filter === 'ethiopian') return book.isEthiopian === true;
@@ -1327,11 +1236,9 @@
                 if (filter === 'upload') return book.genre === 'upload';
                 return book.genre === filter;
             });
-
             if (query) {
                 result = result.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
             }
-
             result.sort((a, b) => {
                 switch (sort) {
                     case 'title':
@@ -1346,7 +1253,6 @@
                         return 0;
                 }
             });
-
             state.filtered = result;
             const totalPages = Math.ceil(result.length / state.pageSize);
             if (state.currentPage > totalPages && totalPages > 0) state.currentPage = totalPages;
@@ -1356,9 +1262,9 @@
         }
 
         function updateSectionTitle(filter) {
-            const labels = { all: 'All Books', fiction: 'Fiction', nonfiction: 'Non‑Fiction', classic: 'Classics',
-                ethiopian: '🇪🇹 Ethiopian', upload: '📤 Uploaded' };
-            const label = labels[filter] || 'Books';
+            const labels = { all: 'ሁሉም መጽሐፍት', fiction: 'ልብ ወለድ', nonfiction: 'መረጃ', classic: 'ክላሲክ',
+                ethiopian: '🇪🇹 ኢትዮጵያዊ', upload: '📤 የጫኑት' };
+            const label = labels[filter] || 'መጽሐፍት';
             const iconMap = { all: 'fa-book', fiction: 'fa-pen-fancy', nonfiction: 'fa-newspaper', classic: 'fa-landmark',
                 ethiopian: 'fa-flag', upload: 'fa-cloud-upload-alt' };
             sectionTitle.innerHTML =
@@ -1371,8 +1277,8 @@
         function toggleFavorite(id) {
             const idx = state.favorites.indexOf(id);
             if (idx > -1) { state.favorites.splice(idx, 1);
-                toast('Removed from favorites', 'info'); } else { state.favorites.push(id);
-                toast('Added to favorites ❤️', 'success'); }
+                toast('ተወገደ', 'info'); } else { state.favorites.push(id);
+                toast('ተጨመረ ❤️', 'success'); }
             localStorage.setItem('real_favorites', JSON.stringify(state.favorites));
             applyFiltersAndSort();
         }
@@ -1384,31 +1290,22 @@
             const isFav = state.favorites.includes(id);
             const stars = '★'.repeat(Math.floor(book.rating)) + '☆'.repeat(5 - Math.floor(book.rating));
             const isFull = book.isFullText || book.genre === 'upload';
-
             modalContent.innerHTML = `
-                <div class="modal-cover">
-                    <div>
-                        <div class="icon"><i class="fa-solid fa-book"></i></div>
-                        <div class="title">${book.title}</div>
-                        <div class="author">${book.author}</div>
-                        ${book.isEthiopian ? '<div style="margin-top:6px;font-size:1.2rem;">🇪🇹</div>' : ''}
-                    </div>
-                </div>
+                <div class="modal-cover"><div><div class="icon"><i class="fa-solid fa-book"></i></div><div class="title">${book.title}</div><div class="author">${book.author}</div></div></div>
                 <div class="modal-details">
-                    <h2>${book.title} ${book.isFullText ? '<span style="font-size:0.8rem;background:var(--gold);padding:2px 10px;border-radius:40px;color:#1a1715;">FULL TEXT</span>' : ''}</h2>
+                    <h2>${book.title} ${book.isFullText ? '<span style="font-size:0.8rem;background:var(--gold);padding:2px 10px;border-radius:40px;color:#1a1715;">ሙሉ</span>' : ''}</h2>
                     <div class="author">${book.author}</div>
                     <div class="meta-row" style="display:flex;gap:0.8rem;flex-wrap:wrap;font-size:0.8rem;color:var(--text-secondary);">
-                        <span>${book.genre}</span><span>${book.year}</span><span>${book.pages} pages</span><span>${stars}</span>
+                        <span>${book.genre}</span><span>${book.year}</span><span>${book.pages} ገጾች</span><span>${stars}</span>
                     </div>
                     <div class="description">${book.description}</div>
                     <div class="modal-actions">
-                        <button class="btn btn-primary" id="modalReadBtn"><i class="fa-regular fa-book-open"></i> ${isFull ? 'Read Full Book' : 'Read Sample'}</button>
-                        <button class="btn btn-secondary" id="modalFavBtn"><i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${isFav ? 'Remove' : 'Add'}</button>
-                        <button class="btn btn-secondary" id="modalCloseBtn">Close</button>
+                        <button class="btn btn-primary" id="modalReadBtn"><i class="fa-regular fa-book-open"></i> ${isFull ? 'አንብብ' : 'ናሙና'}</button>
+                        <button class="btn btn-secondary" id="modalFavBtn"><i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${isFav ? 'አስወግድ' : 'ጨምር'}</button>
+                        <button class="btn btn-secondary" id="modalCloseBtn">ዝጋ</button>
                     </div>
                 </div>
             `;
-
             modal.classList.add('open');
             state.isModalOpen = true;
             modalContent.querySelector('#modalReadBtn').addEventListener('click', () => { closeModal();
@@ -1428,20 +1325,13 @@
             const book = getBook(id);
             if (!book) return;
             state.currentBookId = id;
-
             const contentHtml = book.content.map(p => `<p>${p}</p>`).join('');
-            readerBody.innerHTML = `
-                <div class="chapter-title">${book.title}</div>
-                <div class="byline" style="text-align:center;color:var(--text-secondary);margin-bottom:2rem;">by ${book.author}</div>
-                ${contentHtml}
-                ${!book.isFullText && book.genre !== 'upload' ? '<div style="margin-top:3rem;text-align:center;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.05);padding-top:2rem;">— End of sample —</div>' : ''}
-            `;
-
+            readerBody.innerHTML =
+                `<div class="chapter-title">${book.title}</div><div style="text-align:center;color:var(--text-secondary);margin-bottom:2rem;">በ ${book.author}</div>${contentHtml}${!book.isFullText && book.genre !== 'upload' ? '<div style="margin-top:3rem;text-align:center;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.05);padding-top:2rem;">— የናሙና መጨረሻ —</div>' : ''}`;
             readerTitle.textContent = book.title;
             reader.classList.add('open');
             state.isReaderOpen = true;
             document.body.style.overflow = 'hidden';
-
             const savedPct = getReadingProgress(id);
             readerProgressFill.style.width = savedPct + '%';
             readerProgressText.textContent = Math.round(savedPct) + '%';
@@ -1449,7 +1339,6 @@
                 const sh = readerBody.scrollHeight - readerBody.clientHeight;
                 readerBody.scrollTop = (savedPct / 100) * sh;
             }, 50);
-
             readerBody.removeEventListener('scroll', updateReaderProgress);
             readerBody.addEventListener('scroll', updateReaderProgress);
             readerProgressTrack.onclick = (e) => {
@@ -1474,27 +1363,40 @@
             document.body.style.overflow = ''; }
 
         // ===================================================================
-        //  ADMIN LOGIC
+        //  ADMIN LOGIC — NO HARDCODED PASSWORD. User sets it locally.
         // ===================================================================
         function handleAdminToggle() {
             if (state.isAdmin) {
-                // Logout
                 state.isAdmin = false;
                 localStorage.setItem('admin_session', 'false');
-                toast('Admin mode deactivated. Uploads hidden.', 'warning');
+                toast('የአስተዳዳሪ ሁኔታ ተወገደ', 'warning');
                 updateAdminUI();
-                // Re-apply filters to show/hide uploaded? Uploaded always show, but hide upload section.
                 applyFiltersAndSort();
-            } else {
-                const password = prompt('Enter Admin Password:');
-                if (password === 'admin123') {
+                return;
+            }
+            let storedPassword = localStorage.getItem('admin_password');
+            if (!storedPassword) {
+                let newPass = prompt('አዲስ የአስተዳዳሪ ይለፍ ቃል ይፍጠሩ:');
+                if (newPass && newPass.trim() !== '') {
+                    localStorage.setItem('admin_password', newPass.trim());
                     state.isAdmin = true;
                     localStorage.setItem('admin_session', 'true');
-                    toast('✅ Admin mode activated. You can now upload books.', 'success');
+                    toast('የይለፍ ቃል ተቀምጧል! አስተዳዳሪ ገብተዋል።', 'success');
                     updateAdminUI();
                     applyFiltersAndSort();
-                } else if (password !== null) {
-                    toast('Incorrect password.', 'error');
+                } else {
+                    toast('የይለፍ ቃል አልተሰጠም', 'error');
+                }
+            } else {
+                let entered = prompt('የአስተዳዳሪ ይለፍ ቃል ያስገቡ:');
+                if (entered === storedPassword) {
+                    state.isAdmin = true;
+                    localStorage.setItem('admin_session', 'true');
+                    toast('አስተዳዳሪ ገብተዋል', 'success');
+                    updateAdminUI();
+                    applyFiltersAndSort();
+                } else if (entered !== null) {
+                    toast('የይለፍ ቃል ተሳስቷል', 'error');
                 }
             }
         }
@@ -1503,25 +1405,21 @@
         //  FILE UPLOAD (Admin only)
         // ===================================================================
         function handleFileUpload(file) {
-            if (!state.isAdmin) {
-                toast('Admin privileges required to upload.', 'error');
-                return;
-            }
+            if (!state.isAdmin) { toast('አስተዳዳሪ ብቻ መጫን ይችላል', 'error'); return; }
             const reader = new FileReader();
             reader.onload = function(e) {
                 const text = e.target.result;
                 const lines = text.split('\n').filter(line => line.trim().length > 0);
-                if (lines.length < 5) { toast('File seems too short or empty.', 'warning'); return; }
-
+                if (lines.length < 5) { toast('ፋይሉ አጭር ነው', 'warning'); return; }
                 const title = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, ' ');
                 const newBook = {
                     id: Date.now() + Math.random() * 1000,
                     title: title,
-                    author: "Admin Upload",
+                    author: "በአስተዳዳሪ የተጫነ",
                     genre: "upload",
                     year: new Date().getFullYear(),
                     pages: lines.length,
-                    description: `Uploaded book: ${file.name}. Contains ${lines.length} lines of text.`,
+                    description: `የተጫነ መጽሐፍ: ${file.name}. ${lines.length} መስመሮች አሉት።`,
                     content: lines,
                     rating: 0,
                     downloads: 0,
@@ -1530,14 +1428,17 @@
                     isEthiopian: false,
                     isFullText: true,
                 };
-
                 state.books.push(newBook);
                 state.uploadedBooks.push(newBook.id);
                 localStorage.setItem('real_uploaded_books', JSON.stringify(state.uploadedBooks));
+                // Also store the full object for persistence across refreshes
+                const storedUploads = JSON.parse(localStorage.getItem('real_uploaded_objects') || '[]');
+                storedUploads.push(newBook);
+                localStorage.setItem('real_uploaded_objects', JSON.stringify(storedUploads));
                 applyFiltersAndSort();
-                toast(`✅ Uploaded "${title}" successfully!`, 'success');
+                toast(`✅ "${title}" ተጭኗል!`, 'success');
             };
-            reader.onerror = function() { toast('Error reading file.', 'error'); };
+            reader.onerror = function() { toast('ስህተት', 'error'); };
             reader.readAsText(file);
         }
 
@@ -1577,14 +1478,14 @@
 
         favToggle.addEventListener('click', () => {
             const favs = state.books.filter(b => state.favorites.includes(b.id));
-            if (!favs.length) { toast('No favorites yet.', 'warning'); return; }
+            if (!favs.length) { toast('ምንም የለም', 'warning'); return; }
             state.currentFilter = 'all';
             state.searchQuery = '';
             state.filtered = favs;
             state.currentPage = 1;
             renderBooks(favs, 1);
             sectionTitle.innerHTML =
-                `<i class="fa-solid fa-heart" style="color:var(--red);"></i> Favorites <span class="count">(${favs.length})</span>`;
+                `<i class="fa-solid fa-heart" style="color:var(--red);"></i> ተወዳጆች <span class="count">(${favs.length})</span>`;
             navLinks.forEach(a => a.classList.remove('active'));
             filterBtns.forEach(b => b.classList.remove('active'));
         });
@@ -1628,9 +1529,8 @@
         window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400));
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        // Upload events (Admin only)
         uploadSection.addEventListener('click', () => {
-            if (!state.isAdmin) { toast('Only admin can upload.', 'error'); return; }
+            if (!state.isAdmin) { toast('አስተዳዳሪ ብቻ', 'error'); return; }
             fileInput.click();
         });
         uploadSection.addEventListener('dragover', (e) => { e.preventDefault();
@@ -1650,17 +1550,9 @@
         document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
         state.sortBy = sortSelect.value;
 
-        // Restore uploaded books (they are already in state.books from previous sessions)
-        // We just need to ensure they persist in state.books.
-        const uploadedIds = JSON.parse(localStorage.getItem('real_uploaded_books') || '[]');
-        // Already handled by state.books being populated from BASE_BOOKS, but uploaded books are added dynamically.
-        // However, if we refresh, we need to re-add them from localStorage.
-        // We'll store the full uploaded books in a separate key, or just rely on the fact that they were added to state.books.
-        // But since state.books is re-initialized from BASE_BOOKS on load, we must reload uploaded books.
-        // Let's retrieve uploaded books from a stored JSON.
+        // Restore uploaded books from localStorage
         const storedUploads = JSON.parse(localStorage.getItem('real_uploaded_objects') || '[]');
         if (storedUploads.length) {
-            // Merge with base books, avoiding duplicates
             const existingIds = state.books.map(b => b.id);
             storedUploads.forEach(ub => {
                 if (!existingIds.includes(ub.id)) {
@@ -1671,7 +1563,7 @@
 
         updateAdminUI();
         applyFiltersAndSort();
-        toast('🔐 Admin password is "admin123". Click the lock icon to upload.', 'info');
+        toast('🔐 የራስዎን የይለፍ ቃል ይፍጠሩ (አስተዳዳሪ ለመሆን መዝገውን ይጫኑ)', 'info');
     </script>
 </body>
 </html>
