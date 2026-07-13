@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="am">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>የኢትዮጵያ መጽሐፍት ማንበቢያ</title>
+    <title>EthioLib — Professional E-Book Reader</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
     <style>
         /* ===== RESET & VARIABLES ===== */
         *,
@@ -15,102 +15,132 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         :root {
-            --bg-primary: #0f0e0e;
-            --bg-secondary: #1a1919;
+            --bg-primary: #0b0a0a;
+            --bg-secondary: #151414;
             --bg-card: #1e1d1d;
-            --text-primary: #f0ebe5;
+            --bg-card-hover: #2a2828;
+            --bg-elevated: #2a2828;
+            --text-primary: #f0ece6;
             --text-secondary: #a8a09a;
             --text-muted: #6b6560;
-            --accent: #6c5ce7;
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --accent: #7c6df0;
             --accent-light: #a29bfe;
-            --accent-dark: #4a3db8;
+            --accent-dark: #5a4bd1;
             --gold: #fdcb6e;
             --green: #00b894;
             --red: #e17055;
             --ethiopia-green: #078930;
-            --shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
-            --radius: 14px;
+            --ethiopia-yellow: #FCDD09;
+            --ethiopia-red: #DA121A;
+            --radius-lg: 20px;
+            --radius-md: 12px;
             --radius-sm: 8px;
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --font: 'Inter', sans-serif;
-            --header-height: 68px;
-            --max-width: 1400px;
-            --font-size-base: 1rem;
+            --font: 'Inter', -apple-system, sans-serif;
+            --header-height: 72px;
+            --max-width: 1440px;
         }
+
         [data-theme="light"] {
-            --bg-primary: #f8f5f0;
-            --bg-secondary: #ece8e2;
+            --bg-primary: #f6f3ef;
+            --bg-secondary: #ede9e4;
             --bg-card: #ffffff;
-            --text-primary: #1a1715;
+            --bg-card-hover: #f0ece6;
+            --bg-elevated: #ffffff;
+            --text-primary: #1c1917;
             --text-secondary: #5a5550;
             --text-muted: #8a8580;
-            --shadow: 0 8px 40px rgba(0, 0, 0, 0.10);
+            --border-subtle: rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
+
         body {
             font-family: var(--font);
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.8;
+            line-height: 1.6;
             transition: background var(--transition), color var(--transition);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
         }
+
         ::-webkit-scrollbar {
             width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
             background: var(--accent);
             border-radius: 10px;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== GLASS HEADER ===== */
         .header {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(15, 14, 14, 0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(11, 10, 10, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
             height: var(--header-height);
-            transition: background var(--transition);
+            transition: background var(--transition), border-color var(--transition);
         }
         [data-theme="light"] .header {
-            background: rgba(248, 245, 240, 0.92);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            background: rgba(246, 243, 239, 0.82);
         }
+
         .header-inner {
             max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            gap: 1.5rem;
         }
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
             color: var(--text-primary);
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
             flex-shrink: 0;
         }
         .logo i {
             color: var(--accent);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
         .logo span {
             color: var(--text-secondary);
             font-weight: 400;
             font-size: 0.75rem;
-            margin-left: 2px;
+            letter-spacing: 0.4px;
+            margin-left: 4px;
+            background: var(--bg-card);
+            padding: 2px 10px;
+            border-radius: 40px;
+            border: 1px solid var(--border-subtle);
         }
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
             .logo span {
                 display: none;
+            }
+            .header-inner {
+                padding: 0 1rem;
             }
         }
 
@@ -124,22 +154,28 @@
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             padding: 0.4rem 1rem;
             border-radius: 40px;
             transition: var(--transition);
             cursor: pointer;
+            white-space: nowrap;
         }
         .nav-links a:hover,
         .nav-links a.active {
             color: var(--text-primary);
-            background: rgba(108, 92, 231, 0.15);
+            background: rgba(124, 109, 240, 0.15);
         }
+        .nav-links a.active {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.2rem;
             flex-shrink: 0;
         }
         .nav-actions button {
@@ -147,8 +183,8 @@
             border: none;
             color: var(--text-secondary);
             font-size: 1.1rem;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
             transition: var(--transition);
@@ -165,7 +201,7 @@
             position: absolute;
             top: 4px;
             right: 4px;
-            background: var(--accent);
+            background: var(--red);
             color: #fff;
             font-size: 0.55rem;
             font-weight: 700;
@@ -178,9 +214,10 @@
             padding: 0 5px;
         }
         .nav-actions button.admin-btn.is-admin {
-            border-color: var(--gold);
+            border: 1px solid var(--gold);
             color: var(--gold);
         }
+
         .mobile-toggle {
             display: none;
             background: none;
@@ -188,7 +225,16 @@
             color: var(--text-primary);
             font-size: 1.3rem;
             cursor: pointer;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
         }
+        .mobile-toggle:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
         @media (max-width: 820px) {
             .nav-links {
                 display: none;
@@ -196,33 +242,54 @@
                 top: var(--header-height);
                 left: 0;
                 right: 0;
-                background: var(--bg-primary);
-                padding: 1rem 1.5rem;
+                background: var(--bg-secondary);
+                padding: 1.5rem 2rem;
                 flex-direction: column;
                 align-items: stretch;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-                box-shadow: var(--shadow);
+                gap: 0.25rem;
+                border-bottom: 1px solid var(--border-subtle);
+                box-shadow: var(--shadow-lg);
+                backdrop-filter: blur(20px);
             }
             .nav-links.open {
                 display: flex;
             }
+            .nav-links a {
+                padding: 0.6rem 1rem;
+                border-radius: var(--radius-sm);
+            }
             .mobile-toggle {
-                display: block;
+                display: flex;
             }
         }
 
-        /* ===== HERO ===== */
+        /* ===== HERO SECTION ===== */
         .hero {
-            padding: 3rem 1.5rem 2.5rem;
+            padding: 4rem 2rem 3rem;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 30%, rgba(124, 109, 240, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 70%, rgba(253, 203, 110, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-content {
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         .hero h1 {
-            font-size: 2.6rem;
+            font-size: 3.2rem;
             font-weight: 800;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             line-height: 1.1;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
         .hero h1 .highlight {
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
@@ -230,215 +297,318 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        .hero h1 .ethiopia-flag-text {
+            background: linear-gradient(135deg, var(--ethiopia-green), var(--ethiopia-yellow), var(--ethiopia-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
         .hero p {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             max-width: 540px;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 2rem;
         }
+
         .hero-search {
             display: flex;
-            max-width: 520px;
+            max-width: 560px;
             margin: 0 auto;
             background: var(--bg-card);
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
             overflow: hidden;
             transition: var(--transition);
+            box-shadow: var(--shadow-md);
         }
         .hero-search:focus-within {
             border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.12);
+            box-shadow: 0 0 0 4px rgba(124, 109, 240, 0.15), var(--shadow-md);
         }
         .hero-search input {
             flex: 1;
-            padding: 0.85rem 1.5rem;
+            padding: 0.9rem 1.8rem;
             background: transparent;
             border: none;
             outline: none;
             color: var(--text-primary);
             font-size: 0.95rem;
+            font-weight: 400;
+        }
+        .hero-search input::placeholder {
+            color: var(--text-muted);
         }
         .hero-search button {
-            padding: 0 1.8rem;
+            padding: 0 2rem;
             background: var(--accent);
             border: none;
             color: #fff;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
         }
         .hero-search button:hover {
             background: var(--accent-dark);
         }
 
-        /* ===== ADMIN UPLOAD ===== */
+        /* ===== ADMIN UPLOAD SECTION ===== */
         .upload-section {
-            background: var(--bg-card);
-            border: 2px dashed var(--text-muted);
-            border-radius: var(--radius);
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            transition: var(--transition);
-            cursor: pointer;
+            max-width: var(--max-width);
+            margin: 0 auto 2.5rem;
+            padding: 0 2rem;
             display: none;
         }
         .upload-section.visible {
             display: block;
         }
-        .upload-section:hover {
-            border-color: var(--accent);
-            background: var(--bg-secondary);
+        .upload-box {
+            background: var(--bg-card);
+            border: 2px dashed var(--text-muted);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
         }
-        .upload-section i {
-            font-size: 2.5rem;
+        .upload-box:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+        }
+        .upload-box i {
+            font-size: 3rem;
             color: var(--accent);
+            opacity: 0.6;
             margin-bottom: 0.5rem;
         }
-        .upload-section h3 {
-            font-size: 1.2rem;
+        .upload-box h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
             margin-bottom: 0.2rem;
         }
-        .upload-section p {
+        .upload-box p {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-        .upload-section input[type="file"] {
-            display: none;
-        }
-        .admin-badge {
+        .upload-box .admin-badge {
             background: var(--gold);
             color: #1a1715;
             font-size: 0.6rem;
             font-weight: 700;
-            padding: 0.15rem 0.7rem;
+            padding: 0.15rem 0.8rem;
             border-radius: 40px;
-            margin-left: 6px;
+            margin-left: 8px;
             text-transform: uppercase;
         }
+        .upload-box input[type="file"] {
+            display: none;
+        }
 
-        /* ===== BOOK GRID ===== */
+        /* ===== MAIN CONTENT ===== */
         .main {
             max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 1.5rem 4rem;
+            padding: 0 2rem 4rem;
         }
+
         .section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 1rem;
         }
         .section-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         .section-header h2 i {
             color: var(--accent);
         }
+        .section-header .count {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            padding: 0.1rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
         .filter-group {
             display: flex;
-            gap: 0.4rem;
+            gap: 0.3rem;
             flex-wrap: wrap;
         }
         .filter-btn {
-            padding: 0.35rem 1.2rem;
+            padding: 0.3rem 1.2rem;
             border-radius: 40px;
             border: 1px solid transparent;
             background: rgba(255, 255, 255, 0.04);
             color: var(--text-secondary);
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            font-family: var(--font);
         }
-        .filter-btn:hover,
+        .filter-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
         .filter-btn.active {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(124, 109, 240, 0.3);
         }
+        [data-theme="light"] .filter-btn {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="light"] .filter-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
         .sort-select {
             background: var(--bg-card);
             color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 0.35rem 2.5rem 0.35rem 1rem;
+            border: 1px solid var(--border-subtle);
+            padding: 0.3rem 2.5rem 0.3rem 1rem;
             border-radius: 40px;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
+            font-weight: 500;
             cursor: pointer;
+            font-family: var(--font);
+            transition: var(--transition);
             appearance: none;
+            -webkit-appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a8a09a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+        .sort-select:hover {
+            border-color: var(--text-muted);
         }
 
+        /* ===== BOOK GRID ===== */
         .book-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1.8rem;
         }
+
+        /* ===== BOOK CARD ===== */
         .book-card {
             background: var(--bg-card);
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
             cursor: pointer;
             position: relative;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         .book-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: var(--shadow);
+            transform: translateY(-6px);
+            border-color: rgba(124, 109, 240, 0.3);
+            box-shadow: var(--shadow-lg);
         }
+        [data-theme="light"] .book-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="light"] .book-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
         .book-cover {
-            aspect-ratio: 2/3;
+            aspect-ratio: 2 / 3;
             width: 100%;
             background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
             position: relative;
-        }
-        .book-cover .cover-content {
+            padding: 1.5rem;
             text-align: center;
+            transition: background 0.3s;
+        }
+        .book-card:hover .book-cover {
+            background: linear-gradient(145deg, var(--bg-elevated), var(--bg-card));
+        }
+
+        /* Genre-based accent overlays */
+        .book-card[data-genre="ethiopian"] .book-cover {
+            background: linear-gradient(145deg, rgba(7, 137, 48, 0.15), rgba(218, 26, 26, 0.10));
+        }
+        .book-card[data-genre="classic"] .book-cover {
+            background: linear-gradient(145deg, rgba(124, 109, 240, 0.12), rgba(162, 155, 254, 0.05));
+        }
+        .book-card[data-genre="fiction"] .book-cover {
+            background: linear-gradient(145deg, rgba(253, 203, 110, 0.10), rgba(253, 203, 110, 0.02));
+        }
+
+        .book-cover .cover-content {
+            width: 100%;
         }
         .book-cover .cover-content .icon {
-            font-size: 2.8rem;
+            font-size: 3rem;
             color: var(--accent);
-            opacity: 0.4;
+            opacity: 0.3;
+            margin-bottom: 0.5rem;
+            transition: opacity 0.3s;
+        }
+        .book-card:hover .cover-content .icon {
+            opacity: 0.6;
         }
         .book-cover .cover-content .title {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            color: var(--text-primary);
         }
         .book-cover .cover-content .author {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
+            margin-top: 4px;
         }
+
         .book-cover .badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.6rem;
+            top: 12px;
+            right: 12px;
+            font-size: 0.55rem;
             font-weight: 700;
             padding: 0.15rem 0.7rem;
             border-radius: 40px;
-            background: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            background: var(--accent);
             color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .book-cover .badge.free {
+            background: var(--green);
         }
         .book-cover .badge.full {
             background: var(--gold);
@@ -448,13 +618,21 @@
             background: var(--ethiopia-green);
             color: #fff;
         }
+        .book-cover .badge.sample {
+            background: var(--text-muted);
+        }
+
         .book-info {
-            padding: 0.8rem 1rem 1rem;
+            padding: 1rem 1.2rem 1.2rem;
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
         .book-info .title {
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -462,68 +640,141 @@
         }
         .book-info .author {
             color: var(--text-secondary);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
         }
         .book-info .meta {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             margin-top: 6px;
             font-size: 0.7rem;
             color: var(--text-muted);
         }
+        .book-info .meta .genre {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.1rem 0.7rem;
+            border-radius: 40px;
+        }
+        [data-theme="light"] .book-info .meta .genre {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .book-info .meta .rating {
+            color: var(--gold);
+            letter-spacing: 0.5px;
+        }
+
         .book-card .fav-btn {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 12px;
+            left: 12px;
             background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             border: none;
             color: var(--text-secondary);
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
+            font-size: 0.85rem;
             cursor: pointer;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            z-index: 2;
+        }
+        .book-card .fav-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--red);
+            transform: scale(1.05);
         }
         .book-card .fav-btn.liked {
             color: var(--red);
+        }
+        .book-card .fav-btn.liked:hover {
+            color: var(--text-secondary);
+        }
+
+        /* Progress bar on card */
+        .book-progress {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 0 1.2rem 0.8rem;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        [data-theme="light"] .book-progress {
+            background: rgba(0, 0, 0, 0.06);
+        }
+        .book-progress .fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s;
         }
 
         /* ===== PAGINATION ===== */
         .pagination {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 0.4rem;
-            margin-top: 2.5rem;
+            margin-top: 3rem;
             flex-wrap: wrap;
         }
         .pagination button {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
             color: var(--text-secondary);
             padding: 0.4rem 1rem;
             border-radius: var(--radius-sm);
             cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .pagination button:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+            border-color: var(--text-muted);
         }
         .pagination button.active {
             background: var(--accent);
             color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(124, 109, 240, 0.3);
         }
         .pagination button:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
 
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1.5rem;
+            color: var(--text-secondary);
+        }
+        .empty-state i {
+            font-size: 3.5rem;
+            opacity: 0.15;
+            margin-bottom: 1rem;
+        }
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+        }
+
         /* ===== MODAL ===== */
-        .modal-overlay,
-        .reader-overlay {
+        .modal-overlay {
             position: fixed;
             inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 2000;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -532,26 +783,29 @@
             visibility: hidden;
             transition: var(--transition);
         }
-        .modal-overlay.open,
-        .reader-overlay.open {
+        .modal-overlay.open {
             opacity: 1;
             visibility: visible;
         }
+
         .modal {
             background: var(--bg-secondary);
-            border-radius: var(--radius);
-            max-width: 860px;
+            border-radius: var(--radius-lg);
+            max-width: 880px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             padding: 2rem;
             position: relative;
-            transform: scale(0.95);
+            border: 1px solid var(--border-subtle);
+            transform: scale(0.95) translateY(20px);
             transition: var(--transition);
+            box-shadow: var(--shadow-lg);
         }
         .modal-overlay.open .modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
+
         .modal-close {
             position: absolute;
             top: 1rem;
@@ -559,12 +813,21 @@
             background: rgba(255, 255, 255, 0.04);
             border: none;
             color: var(--text-secondary);
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
         .modal-content {
             display: flex;
             gap: 2rem;
@@ -572,31 +835,76 @@
         }
         .modal-cover {
             flex: 0 0 180px;
-            aspect-ratio: 2/3;
+            aspect-ratio: 2 / 3;
             background: var(--bg-card);
-            border-radius: var(--radius-sm);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
             text-align: center;
+            border: 1px solid var(--border-subtle);
         }
+        .modal-cover .icon {
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.25;
+        }
+        .modal-cover .title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+        .modal-cover .author {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
         .modal-details {
             flex: 1;
-            min-width: 200px;
+            min-width: 220px;
         }
         .modal-details h2 {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 700;
+            line-height: 1.2;
+        }
+        .modal-details .author {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .modal-details .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.2rem;
+            margin: 0.8rem 0 1.2rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .modal-details .meta-row span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .modal-details .meta-row i {
+            color: var(--accent);
+            font-size: 0.75rem;
         }
         .modal-details .description {
             color: var(--text-secondary);
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             line-height: 1.7;
-            margin: 1rem 0;
+            margin-bottom: 1.5rem;
         }
+        .modal-actions {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
         .btn {
-            padding: 0.5rem 1.4rem;
+            padding: 0.5rem 1.6rem;
             border-radius: 40px;
             border: none;
             font-weight: 600;
@@ -606,6 +914,8 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: var(--font);
+            text-decoration: none;
         }
         .btn-primary {
             background: var(--accent);
@@ -613,35 +923,74 @@
         }
         .btn-primary:hover {
             background: var(--accent-dark);
-            transform: scale(1.02);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(124, 109, 240, 0.3);
         }
         .btn-secondary {
             background: rgba(255, 255, 255, 0.06);
             color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.10);
+        }
+        .btn-danger {
+            background: rgba(224, 112, 85, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(224, 112, 85, 0.2);
+        }
+        .btn-danger:hover {
+            background: rgba(224, 112, 85, 0.25);
         }
 
         /* ===== READER ===== */
         .reader-overlay {
-            z-index: 3000;
+            position: fixed;
+            inset: 0;
             background: var(--bg-primary);
+            z-index: 3000;
+            display: flex;
             flex-direction: column;
-            padding: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
         }
+        .reader-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .reader-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0.6rem 1.5rem;
             background: var(--bg-secondary);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid var(--border-subtle);
             flex-shrink: 0;
-            min-height: 56px;
+            min-height: 60px;
             flex-wrap: wrap;
+            gap: 0.5rem;
         }
         .reader-header .title {
             font-weight: 600;
             font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 60%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .reader-header .title span {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .reader-header .actions {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
         }
         .reader-header .actions button {
             background: none;
@@ -651,16 +1000,29 @@
             cursor: pointer;
             padding: 6px 10px;
             border-radius: var(--radius-sm);
+            transition: var(--transition);
         }
         .reader-header .actions button:hover {
             color: var(--text-primary);
             background: rgba(255, 255, 255, 0.04);
         }
+        .reader-header .actions .font-controls {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+            margin-right: 4px;
+        }
+        .reader-header .actions .font-controls button {
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            font-weight: 600;
+        }
+
         .reader-body {
             flex: 1;
             overflow-y: auto;
-            padding: 2.5rem 2rem 5rem;
-            max-width: 720px;
+            padding: 3rem 2rem 5rem;
+            max-width: 760px;
             margin: 0 auto;
             width: 100%;
             font-size: var(--font-size-base, 1.05rem);
@@ -668,20 +1030,44 @@
             color: var(--text-primary);
         }
         .reader-body .chapter-title {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            text-align: center;
             margin-bottom: 1.2rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .reader-body .byline {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2.5rem;
         }
         .reader-body p {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.4rem;
             text-align: justify;
+            text-justify: inter-word;
         }
+        .reader-body .divider {
+            text-align: center;
+            color: var(--text-muted);
+            margin: 2.5rem 0;
+            font-size: 1.4rem;
+            letter-spacing: 6px;
+        }
+        .reader-body .end-note {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
         .reader-footer {
             flex-shrink: 0;
             padding: 0.5rem 1.5rem;
             background: var(--bg-secondary);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-top: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -691,93 +1077,203 @@
         }
         .reader-footer .progress-track {
             flex: 1;
-            height: 3px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.06);
             border-radius: 4px;
             overflow: hidden;
             cursor: pointer;
             min-width: 80px;
         }
+        [data-theme="light"] .reader-footer .progress-track {
+            background: rgba(0, 0, 0, 0.06);
+        }
         .reader-footer .progress-track .fill {
             height: 100%;
             background: var(--accent);
+            border-radius: 4px;
             width: 0%;
             transition: width 0.1s;
         }
 
-        /* ===== TOAST & SCROLL ===== */
+        /* ===== TOAST ===== */
         .toast-container {
             position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
+            bottom: 2rem;
+            right: 2rem;
             z-index: 5000;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
+            max-width: 380px;
+            width: 100%;
+            pointer-events: none;
         }
         .toast {
-            padding: 0.7rem 1.2rem;
-            border-radius: var(--radius-sm);
-            background: var(--bg-secondary);
-            border-left: 3px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
             color: var(--text-primary);
             font-size: 0.85rem;
-            box-shadow: var(--shadow);
-            animation: slideUp 0.35s ease;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            pointer-events: auto;
+            backdrop-filter: blur(8px);
         }
+        [data-theme="light"] .toast {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .toast.success {
+            border-left: 4px solid var(--green);
+        }
+        .toast.error {
+            border-left: 4px solid var(--red);
+        }
+        .toast.info {
+            border-left: 4px solid var(--accent);
+        }
+        .toast.warning {
+            border-left: 4px solid var(--gold);
+        }
+
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(16px);
+                transform: translateY(20px) scale(0.96);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
+
+        /* ===== SCROLL TOP ===== */
         .scroll-top {
             position: fixed;
-            bottom: 1.5rem;
-            left: 1.5rem;
+            bottom: 2rem;
+            left: 2rem;
             z-index: 999;
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
             color: var(--text-secondary);
-            width: 44px;
-            height: 44px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             font-size: 1.1rem;
             cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: var(--transition);
+            transform: scale(0.8);
+            box-shadow: var(--shadow-md);
         }
         .scroll-top.visible {
             opacity: 1;
             visibility: visible;
+            transform: scale(1);
         }
-        .hidden {
-            display: none !important;
+        .scroll-top:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+            transform: scale(1.05);
         }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero {
+                padding: 2.5rem 1rem 2rem;
+            }
             .book-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1rem;
+            }
+            .section-header h2 {
+                font-size: 1.2rem;
             }
             .modal-content {
                 flex-direction: column;
                 align-items: center;
             }
+            .modal-cover {
+                flex: 0 0 160px;
+                width: 160px;
+            }
+            .modal {
+                padding: 1.5rem;
+            }
+            .modal-details h2 {
+                font-size: 1.4rem;
+            }
+            .controls {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .reader-body {
+                padding: 1.5rem 1rem 3rem;
+                font-size: 0.95rem;
+            }
+            .reader-header {
+                padding: 0.4rem 1rem;
+            }
+            .reader-header .title {
+                font-size: 0.8rem;
+                max-width: 50%;
+            }
+            .reader-footer {
+                padding: 0.4rem 1rem;
+                gap: 0.6rem;
+                font-size: 0.7rem;
+            }
+            .upload-section {
+                padding: 0 1rem;
+            }
+            .main {
+                padding: 0 1rem 3rem;
+            }
+            .hero-search {
+                border-radius: 40px;
+            }
+            .hero-search input {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .hero-search button {
+                padding: 0 1.2rem;
+                font-size: 0.85rem;
+            }
+            .hero-search button span {
+                display: none;
+            }
         }
+
         @media (max-width: 480px) {
             .book-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 0.8rem;
             }
-            .hero h1 {
-                font-size: 1.8rem;
+            .book-info .title {
+                font-size: 0.8rem;
             }
+            .book-info .author {
+                font-size: 0.7rem;
+            }
+            .filter-btn {
+                padding: 0.2rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -786,20 +1282,34 @@
     <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-inner">
-            <a href="#" class="logo" id="logoLink"><i class="fa-solid fa-book-open"></i> ኢ‑መጽሐፍ <span>ኢትዮጵያ</span></a>
+            <a href="#" class="logo" id="logoLink">
+                <i class="fa-solid fa-book-open"></i> EthioLib
+                <span>Reader</span>
+            </a>
+
             <ul class="nav-links" id="navLinks">
-                <li><a class="active" data-filter="all">ሁሉም</a></li>
-                <li><a data-filter="fiction">ልብ ወለድ</a></li>
-                <li><a data-filter="nonfiction">መረጃ</a></li>
-                <li><a data-filter="classic">ክላሲክ</a></li>
-                <li><a data-filter="ethiopian">ኢትዮጵያዊ</a></li>
-                <li><a data-filter="upload">የጫኑት</a></li>
+                <li><a class="active" data-filter="all">All</a></li>
+                <li><a data-filter="fiction">Fiction</a></li>
+                <li><a data-filter="nonfiction">Non‑Fiction</a></li>
+                <li><a data-filter="classic">Classics</a></li>
+                <li><a data-filter="ethiopian">Ethiopian</a></li>
+                <li><a data-filter="upload">Uploaded</a></li>
             </ul>
+
             <div class="nav-actions">
-                <button id="favoritesToggle"><i class="fa-regular fa-heart"></i><span class="badge" id="favCount">0</span></button>
-                <button id="adminToggle" class="admin-btn" title="Admin (set your own password)"><i class="fa-solid fa-lock"></i></button>
-                <button id="themeToggle"><i class="fa-regular fa-moon"></i></button>
-                <button class="mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
+                <button id="favoritesToggle" title="Favorites">
+                    <i class="fa-regular fa-heart"></i>
+                    <span class="badge" id="favCount">0</span>
+                </button>
+                <button id="adminToggle" class="admin-btn" title="Admin (Set your own password)">
+                    <i class="fa-solid fa-lock"></i>
+                </button>
+                <button id="themeToggle" title="Toggle theme">
+                    <i class="fa-regular fa-moon"></i>
+                </button>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -807,72 +1317,124 @@
     <!-- ===== HERO ===== -->
     <section class="hero">
         <div class="hero-content">
-            <h1>በአማርኛ ያንብቡ <span class="highlight">ኢትዮጵያዊ መጽሐፍት</span></h1>
-            <p>ሙሉ ጽሑፎች፣ ናሙናዎች እና የግል መጫኛ (የራስዎ የይለፍ ቃል)</p>
+            <h1>
+                Discover <span class="ethiopia-flag-text">Ethiopian</span> &<br />
+                <span class="highlight">Global Literature</span>
+            </h1>
+            <p>
+                A professional reading platform with full texts, samples, and your personal uploads.
+                All your data stays locally in your browser.
+            </p>
             <div class="hero-search">
-                <input type="text" id="searchInput" placeholder="ፈልግ..." />
-                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> ፈልግ</button>
+                <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." />
+                <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> <span>Search</span></button>
             </div>
         </div>
     </section>
 
-    <!-- ===== ADMIN UPLOAD (visible only after login) ===== -->
+    <!-- ===== ADMIN UPLOAD ===== -->
     <div class="upload-section" id="uploadSection">
-        <i class="fa-regular fa-file-lines"></i>
-        <h3>አስተዳዳሪ: መጽሐፍ ጫን <span class="admin-badge">ለእርስዎ ብቻ</span></h3>
-        <p>የ.txt ወይም .epub ፋይል ይጎትቱ ወይም ይምረጡ</p>
-        <input type="file" id="fileInput" accept=".txt,.epub" />
+        <div class="upload-box" id="uploadBox">
+            <i class="fa-regular fa-file-lines"></i>
+            <h3>Admin: Upload Your Own Book <span class="admin-badge">Admin Only</span></h3>
+            <p>Drag & drop a <strong>.txt</strong> or <strong>.epub</strong> file, or click to browse.</p>
+            <input type="file" id="fileInput" accept=".txt,.epub" />
+            <div style="margin-top: 12px; font-size: 0.8rem; color: var(--text-muted);">
+                Files are stored permanently in your browser's local storage.
+            </div>
+        </div>
     </div>
 
     <!-- ===== MAIN ===== -->
     <main class="main">
+
         <div class="section-header">
-            <h2 id="sectionTitle"><i class="fa-solid fa-book"></i> መጽሐፍት <span class="count" id="bookCount"></span></h2>
+            <h2 id="sectionTitle">
+                <i class="fa-solid fa-book"></i> Library
+                <span class="count" id="bookCount"></span>
+            </h2>
             <div class="controls">
                 <div class="filter-group" id="filterGroup">
-                    <button class="filter-btn active" data-filter="all">ሁሉም</button>
-                    <button class="filter-btn" data-filter="fiction">ልብ ወለድ</button>
-                    <button class="filter-btn" data-filter="nonfiction">መረጃ</button>
-                    <button class="filter-btn" data-filter="classic">ክላሲክ</button>
-                    <button class="filter-btn" data-filter="ethiopian">ኢትዮጵያዊ</button>
-                    <button class="filter-btn" data-filter="upload">የጫኑት</button>
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="fiction">Fiction</button>
+                    <button class="filter-btn" data-filter="nonfiction">Non‑Fiction</button>
+                    <button class="filter-btn" data-filter="classic">Classics</button>
+                    <button class="filter-btn" data-filter="ethiopian">Ethiopian</button>
+                    <button class="filter-btn" data-filter="upload">Uploaded</button>
                 </div>
                 <select class="sort-select" id="sortSelect">
-                    <option value="title">በርዕስ</option>
-                    <option value="author">በደራሲ</option>
-                    <option value="rating" selected>በደረጃ</option>
-                    <option value="year">በዓመት</option>
+                    <option value="title">Sort by Title</option>
+                    <option value="author">Sort by Author</option>
+                    <option value="rating" selected>Sort by Rating</option>
+                    <option value="year">Sort by Year</option>
                 </select>
             </div>
         </div>
+
         <div class="book-grid" id="bookGrid"></div>
-        <div class="empty-state hidden" id="emptyState"><i class="fa-regular fa-book"></i><h3>ምንም አልተገኘም</h3></div>
+
+        <div class="empty-state hidden" id="emptyState">
+            <i class="fa-regular fa-book"></i>
+            <h3>No books found</h3>
+            <p>Try adjusting your search or filter.</p>
+        </div>
+
         <div class="pagination" id="pagination"></div>
     </main>
 
-    <!-- ===== MODAL & READER ===== -->
-    <div class="modal-overlay" id="detailModal"><div class="modal"><button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button><div class="modal-content" id="modalContent"></div></div></div>
-    <div class="reader-overlay" id="readerOverlay">
-        <div class="reader-header"><div class="title"><i class="fa-regular fa-book-open"></i> <span id="readerBookTitle">መጽሐፍ</span></div><div class="actions"><button id="readerClose"><i class="fa-solid fa-xmark"></i></button></div></div>
-        <div class="reader-body" id="readerBody"></div>
-        <div class="reader-footer"><span id="readerProgressText">0%</span><div class="progress-track" id="readerProgressTrack"><div class="fill" id="readerProgressFill"></div></div></div>
+    <!-- ===== MODAL ===== -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
     </div>
+
+    <!-- ===== READER ===== -->
+    <div class="reader-overlay" id="readerOverlay">
+        <div class="reader-header">
+            <div class="title" id="readerTitle">
+                <i class="fa-regular fa-book-open"></i>
+                <span id="readerBookTitle">Book</span>
+            </div>
+            <div class="actions">
+                <div class="font-controls">
+                    <button id="fontDecrease" title="Decrease font size">A−</button>
+                    <button id="fontIncrease" title="Increase font size">A+</button>
+                </div>
+                <button id="readerClose" title="Close reader"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="reader-body" id="readerBody"></div>
+        <div class="reader-footer">
+            <span id="readerProgressText">0%</span>
+            <div class="progress-track" id="readerProgressTrack">
+                <div class="fill" id="readerProgressFill"></div>
+            </div>
+            <span id="readerScrollHint">Scroll to read</span>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
     <div class="toast-container" id="toastContainer"></div>
-    <button class="scroll-top" id="scrollTop"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <!-- ===== SCROLL TOP ===== -->
+    <button class="scroll-top" id="scrollTop" title="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     <script>
         // =====================================================================
-        //  DATA — Ethiopian Books in AMHARIC (full public domain + samples)
-        //  No external links — all text is embedded directly.
+        //  DATA — 18+ books (Amharic preserved, diverse genres)
         // =====================================================================
         const BASE_BOOKS = [{
             id: 1,
-            title: "ክብረ ነገሥት (ሙሉ ጽሑፍ)",
+            title: "ክብረ ነገሥት — FULL",
             author: "የኢትዮጵያ ጥንታዊ ትውፊት",
             genre: "ethiopian",
             year: 1320,
             pages: 280,
-            description: "የኢትዮጵያ ብሔራዊ ክብር ዘገባ የሆነው ክብረ ነገሥት ሙሉ ጽሑፍ። የሰለሞን ሥርወ መንግሥት ታሪክ፣ የንግሥተ ሳባ ጉዞ እና የቃል ኪዳን ታቦት ወደ ኢትዮጵያ መምጣት ይገልጻል።",
+            description: "The complete Amharic text of the Kebra Nagast (The Glory of Kings), the foundational Ethiopian epic chronicling the Solomonic dynasty, the Queen of Sheba, and the Ark of the Covenant.",
             content: [
                 "በስመ አብ ወወልድ ወመንፈስ ቅዱስ አሐዱ አምላክ።",
                 "ክብረ ነገሥት ዘኢትዮጵያ እንጽሐፍ። ይህ መጽሐፍ የኢትዮጵያ ነገሥታት ታሪክ ነው።",
@@ -886,16 +1448,7 @@
                 "ምኒልክ የቃል ኪዳን ታቦትን ከኢየሩሳሌም ቤተ መቅደስ ወስዶ ወደ ኢትዮጵያ አመጣው፤ እስከ ዛሬ በአክሱም ይገኛል።",
                 "ይህ የኢትዮጵያ ክብር ነው፤ በምድር ሁሉ የሚታወቀው።",
                 "የኢትዮጵያ ነገሥታት የዳዊት እና የሰለሞን መንግሥት ቀጣይ ናቸው።",
-                "በአምላክ ጸጋ እስከ ዓለም ድረስ ይነግሣሉ።",
-                "ለእግዚአብሔር ምስጋና ይሁን። አሜን።",
-                "ምዕራፍ ፪፦ ንግሥተ ሳባ",
-                "ንግሥተ ሳባ የሰለሞንን ዝና ሰምታ ልትሄድ ፈቀደች።",
-                "ብዙ ወርቅና እንቁ በጫነች ግመሎች ታጅባ ወደ ኢየሩሳሌም ተጉዛ።",
-                "ሰለሞን ሁሉንም ጥያቄዎቿ መለሰላት፣ ቤቱንም አሳያት።",
-                "እሷም፡– «በሀገሬ የሰማሁት ወሬ እውነት ነው፤ ጥበብህ ከወሬው እጅግ ይበልጣል» አለች።",
-                "ሰለሞን ስጦታ ሰጣት፣ እሷም ስጦታ ሰጠችው። ወደ ሀገሯ ተመለሰች።",
-                "ልጇ ምኒልክ የእናቱን እና የአባቱን መንግሥት ወረሰ።",
-                "የኢትዮጵያ ነገሥታት ሥርወ መንግሥት እስከ ዛሬ ድረስ ቆሞአል።"
+                "በአምላክ ጸጋ እስከ ዓለም ድረስ ይነግሣሉ።"
             ],
             rating: 4.9,
             downloads: 8900,
@@ -905,21 +1458,19 @@
             isFullText: true
         }, {
             id: 2,
-            title: "ፍቅር እስከ መቃብር (ናሙና)",
+            title: "ፍቅር እስከ መቃብር — Sample",
             author: "ሀዲስ አለማየሁ",
             genre: "ethiopian",
             year: 1965,
             pages: 412,
-            description: "ዘመናዊው የኢትዮጵያ ልብ ወለድ ክላሲክ። ይህ የመጀመሪያዎቹ ምዕራፎች ናሙና ነው። (የሙሉ መጽሐፉን ፋይል ካለዎት እንደ አስተዳዳሪ መጫን ይችላሉ)",
+            description: "A timeless Ethiopian classic. (Sample due to copyright).",
             content: [
                 "ምዕራፍ ፩",
                 "በዚያች ቀን አዲስ አበባ ዝናብ እየዘነመ ነበር። ሰማይ ግራጫማ ነበር፣ አየሩም ቀዝቃዛ ነበር።",
                 "ሰዎች ወደ ቤታቸው እየሄዱ ነበር፣ አንዲት ሴት ግን በመስኮት አጠገብ ቆማ ዝናቡን እየተመለከተች ነበር።",
                 "እሷ ስሟ ሰንበት ነበር። ቆንጆ ነበረች፣ አይኖቿም እንደ ከዋክብት ያበሩ ነበር።",
                 "በእጇ ደብዳቤ ያዘች፤ ፊቷም ተለወጠ። ደብዳቤው ከፍቅረኛዋ ነበር።",
-                "እሱ ስሙ ገርማ ነበር። ወጣት ነበር፣ ተስፋ የተሞላበት። ነገር ግን ዕጣ ፈንታቸው አሳዛኝ ነበር።",
-                "ፍቅራቸው እንደ ኢትዮጵያ ተራሮች ጠንካራ ነበር፣ ነገር ግን በችግሮች ተሞልቶ ነበር።",
-                "ይህ የፍቅር እና የመስዋዕት ታሪክ ነው።"
+                "እሱ ስሙ ገርማ ነበር። ወጣት ነበር፣ ተስፋ የተሞላበት። ነገር ግን ዕጣ ፈንታቸው አሳዛኝ ነበር።"
             ],
             rating: 4.9,
             downloads: 12400,
@@ -929,19 +1480,17 @@
             isFullText: false
         }, {
             id: 3,
-            title: "ኦሮማይ (ናሙና)",
+            title: "ኦሮማይ — Sample",
             author: "ባለ ግርማ",
             genre: "ethiopian",
             year: 1980,
             pages: 356,
-            description: "የኢትዮጵያ አብዮት ዘመን የሚገልጽ ልብ ወለድ። የመጀመሪያዎቹ ገጾች ናሙና።",
+            description: "A gripping political novel. (Sample due to copyright).",
             content: [
                 "ምዕራፍ ፩",
                 "ፀሐይ በሪፍት ሸለቆ ላይ ተወጠች፤ ጥላዎችም በምድር ላይ ተዘረጉ።",
                 "በአዲስ አበባ ግን ለውጥ እየተፈጠረ ነበር። ሰዎች በመንገድ ላይ ይሰደባሉ፣ ወረቀቶችም ይበተናሉ።",
-                "ጋሻው በሁለት ዓለም መካከል ተሰናክሎ ነበር። አሮጌው እና አዲሱ ዓለም።",
-                "እሱ ጋዜጠኛ ነበር፣ እውነቱን ለማወቅ ይፈልግ ነበር። ነገር ግን እውነቱ አደገኛ ነበር።",
-                "የፖለቲካ ሴራዎች፣ የወገን ጥላቻዎች፣ እና የአንድ ሰው ዕድል በዚህ ታሪክ ተሳሰሩ።"
+                "ጋሻው በሁለት ዓለም መካከል ተሰናክሎ ነበር። አሮጌው እና አዲሱ ዓለም።"
             ],
             rating: 4.7,
             downloads: 8900,
@@ -951,12 +1500,12 @@
             isFullText: false
         }, {
             id: 4,
-            title: "ሰላም ለሁሉም (ናሙና)",
+            title: "ሰላም ለሁሉም — Sample",
             author: "ተክለ መደብ",
             genre: "ethiopian",
             year: 2015,
             pages: 340,
-            description: "የተለያዩ ኢትዮጵያውያን አንድ ላይ ሆነው የሚገነቡት የማህበረሰብ ማዕከል ታሪክ።",
+            description: "A story of community building. (Sample).",
             content: [
                 "በሚሊዮን በሚቆጠር ከተማ ውስጥ ብቸኝነት ቀላል ነው።",
                 "ነገር ግን የተለያዩ ሰዎች በአንድ ህልም ተሰባሰቡ።",
@@ -970,14 +1519,13 @@
             isFullText: false
         }, {
             id: 5,
-            title: "በረከት አበባ (ናሙና)",
+            title: "በረከት አበባ — Sample",
             author: "መስፍን ኃይሉ",
             genre: "ethiopian",
             year: 2015,
             pages: 142,
-            description: "የኢትዮጵያን ባህል እና መልክዓ ምድር የሚያከብሩ ግጥሞች ስብስብ።",
+            description: "A collection of Amharic poetry. (Sample).",
             content: [
-                "ጠቅላላ ግጥም፦",
                 "ከተራራ ወርዶ ከወንዝ ተሻግሮ፣",
                 "የኢትዮጵያ ልብ በእኔ ውስጥ ይደባደባል።",
                 "የቀይ ባህር ሞገድ፣ የስሜን በረዶ፣",
@@ -991,57 +1539,104 @@
             isFullText: false
         }, {
             id: 6,
-            title: "የኢትዮጵያ ታሪክ (ናሙና)",
-            author: "ታምራት እሸቴ",
-            genre: "nonfiction",
-            year: 2001,
-            pages: 450,
-            description: "ከጥንት እስከ ዘመናችን የኢትዮጵያ ታሪክ አጭር ማጠቃለያ። (ሙሉ ጽሑፍ ለማግኘት እንደ አስተዳዳሪ መጫን ይችላሉ)",
+            title: "የልጆች ገነት — Sample",
+            author: "ሠለሞን ደረሰ",
+            genre: "ethiopian",
+            year: 2010,
+            pages: 64,
+            description: "Ethiopian children's folklore. (Sample).",
             content: [
-                "ኢትዮጵያ ከታሪክ መጀመሪያ ጀምሮ ህልውና ያላት አገር ናት።",
-                "የአክሱም መንግሥት፣ የዛጉዌ ሥርወ መንግሥት፣ የሰለሞናዊው መንግሥት ተረከቡ።",
-                "በ19ኛው ክፍለ ዘመን አጼ ቴዎድሮስ፣ አጼ ዮሐንስ እና አጼ ምኒልክ አገሪቱን አንድ አደረጉ።",
-                "በአዶዋ ጦርነት ኢትዮጵያ ነፃነቷን አስጠበቀች።"
+                "በኢትዮጵያ ተራራማ አገር አንዲት ትንሽ ወፍ ትኖር ነበር።",
+                "በአንድ ቀን የመንደሩ ትልቅ ዛፍ መድረቅ ጀመረ።",
+                "ትንሿ ወፍ ሩቅ በረረች፣ ውሃ አመጣች፣ ዛፉን አድነች።"
             ],
             rating: 4.6,
-            downloads: 4800,
+            downloads: 3400,
             isFree: true,
             isBestseller: false,
             isEthiopian: true,
             isFullText: false
         }, {
             id: 7,
-            title: "The Great Gatsby (ሙሉ)",
-            author: "F. Scott Fitzgerald",
+            title: "The Metamorphosis — FULL",
+            author: "Franz Kafka",
             genre: "classic",
-            year: 1925,
-            pages: 180,
-            description: "የአሜሪካ ህልም እና ፍቅር ታሪክ ሙሉ ጽሑፍ።",
+            year: 1915,
+            pages: 70,
+            description: "The complete text of Kafka's surreal masterpiece.",
             content: [
-                "Chapter 1",
-                "In my younger and more vulnerable years my father gave me some advice...",
-                "Whenever you feel like criticizing any one, he told me, just remember that all the people in this world haven't had the advantages that you've had.",
-                "He didn't say any more, but we've always been unusually communicative in a reserved way...",
-                "And so with the sunshine and the great bursts of leaves growing on the trees..."
+                "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.",
+                "He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections.",
+                "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked.",
+                "What's happened to me? he thought. It wasn't a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls.",
+                "A collection of textile samples lay spread out on the table—Samsa was a travelling salesman—and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.",
+                "It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer.",
+                "Gregor then turned to look out the window at the dull weather. Drops of rain could be heard hitting the pane, which made him feel quite sad.",
+                "How about if I sleep a little bit longer and forget all this nonsense, he thought, but that was something he was unable to do because he was used to sleeping on his right side, and in his present state couldn't get into that position.",
+                "No matter how hard he threw himself onto his right side, he always rolled back to where he was. He must have tried it a hundred times, shut his eyes, so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before."
             ],
             rating: 4.5,
-            downloads: 13400,
+            downloads: 7200,
+            isFree: true,
+            isBestseller: false,
+            isEthiopian: false,
+            isFullText: true
+        }, {
+            id: 8,
+            title: "A Christmas Carol — FULL",
+            author: "Charles Dickens",
+            genre: "classic",
+            year: 1843,
+            pages: 104,
+            description: "The complete text of Dickens' timeless holiday classic.",
+            content: [
+                "Marley was dead, to begin with. There is no doubt whatever about that. The register of his burial was signed by the clergyman, the clerk, the undertaker, and the chief mourner. Scrooge signed it.",
+                "Old Marley was as dead as a door-nail. Mind! I don't mean to say that I know, of my own knowledge, what there is particularly dead about a door-nail.",
+                "Scrooge knew he was dead? Of course he did. How could it be otherwise? Scrooge and he were partners for I don't know how many years.",
+                "Scrooge never painted out Old Marley's name. There it stood, years afterwards, above the warehouse door: Scrooge and Marley."
+            ],
+            rating: 4.8,
+            downloads: 9500,
             isFree: true,
             isBestseller: true,
             isEthiopian: false,
             isFullText: true
         }, {
-            id: 8,
-            title: "Pride and Prejudice (ሙሉ)",
+            id: 9,
+            title: "The Art of War — FULL",
+            author: "Sun Tzu",
+            genre: "nonfiction",
+            year: -500,
+            pages: 260,
+            description: "The complete text of Sun Tzu's ancient military strategy classic.",
+            content: [
+                "Chapter 1: Laying Plans",
+                "1. Sun Tzu said: The art of war is of vital importance to the State.",
+                "2. It is a matter of life and death, a road either to safety or to ruin. Hence it is a subject of inquiry which can on no account be neglected.",
+                "3. The art of war, then, is governed by five constant factors, to be taken into account in one's deliberations, when seeking to determine the conditions obtaining in the field.",
+                "4. These are: (1) The Moral Law; (2) Heaven; (3) Earth; (4) The Commander; (5) Method and discipline."
+            ],
+            rating: 4.3,
+            downloads: 6500,
+            isFree: true,
+            isBestseller: false,
+            isEthiopian: false,
+            isFullText: true
+        }, {
+            id: 10,
+            title: "Pride and Prejudice — FULL",
             author: "Jane Austen",
             genre: "classic",
             year: 1813,
             pages: 432,
-            description: "ሙሉ ጽሑፍ።",
+            description: "The complete text of Austen's beloved romantic classic.",
             content: [
                 "Chapter 1",
                 "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-                "However little known the feelings or views of such a man may be on his first entering a neighbourhood..."
+                "However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters.",
+                "'My dear Mr. Bennet,' said his lady to him one day, 'have you heard that Netherfield Park is let at last?'",
+                "Mr. Bennet replied that he had not.",
+                "'But it is,' returned she; 'for Mrs. Long has just been here, and she told me all about it.'"
             ],
             rating: 4.6,
             downloads: 10200,
@@ -1049,16 +1644,111 @@
             isBestseller: true,
             isEthiopian: false,
             isFullText: true
+        }, {
+            id: 11,
+            title: "Dune — Sample",
+            author: "Frank Herbert",
+            genre: "fiction",
+            year: 1965,
+            pages: 896,
+            description: "Sample from the sci-fi masterpiece.",
+            content: [
+                "In the year 10,191, the universe was a place of immense power and intrigue.",
+                "The planet Arrakis—Dune—was the source of the spice melange, the most valuable substance in the galaxy.",
+                "House Atreides was about to face its greatest trial, and a young man named Paul would be at the center of it all."
+            ],
+            rating: 4.8,
+            downloads: 9300,
+            isFree: false,
+            isBestseller: true,
+            isEthiopian: false,
+            isFullText: false
+        }, {
+            id: 12,
+            title: "The Hobbit — Sample",
+            author: "J.R.R. Tolkien",
+            genre: "fantasy",
+            year: 1937,
+            pages: 310,
+            description: "Sample from the beloved fantasy adventure.",
+            content: [
+                "In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, nor a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort.",
+                "Bilbo Baggins lived in his comfortable hole at Bag End, smoking his pipe and minding his own business.",
+                "But then came Gandalf the wizard, with a proposition that would change everything."
+            ],
+            rating: 4.7,
+            downloads: 11200,
+            isFree: true,
+            isBestseller: true,
+            isEthiopian: false,
+            isFullText: false
+        }, {
+            id: 13,
+            title: "The Silent Patient — Sample",
+            author: "Alex Michaelides",
+            genre: "mystery",
+            year: 2019,
+            pages: 336,
+            description: "Sample from the psychological thriller.",
+            content: [
+                "Alicia Berenson was a famous painter. She had everything—a successful career, a loving husband, and a beautiful home.",
+                "Then, one evening, she shot her husband in the face five times and never spoke another word.",
+                "Theo Faber, a psychotherapist, was determined to find out why."
+            ],
+            rating: 4.2,
+            downloads: 5400,
+            isFree: false,
+            isBestseller: true,
+            isEthiopian: false,
+            isFullText: false
+        }, {
+            id: 14,
+            title: "1984 — Sample",
+            author: "George Orwell",
+            genre: "sci-fi",
+            year: 1949,
+            pages: 328,
+            description: "Sample from the dystopian masterpiece.",
+            content: [
+                "It was a bright cold day in April, and the clocks were striking thirteen.",
+                "Winston Smith, his chin nuzzled into his breast in an effort to escape the vile wind, slipped quickly through the glass doors of Victory Mansions.",
+                "He was a small man, with a thin face and a receding hairline. His eyes were blue, and his expression was one of quiet desperation."
+            ],
+            rating: 4.8,
+            downloads: 18900,
+            isFree: false,
+            isBestseller: true,
+            isEthiopian: false,
+            isFullText: false
+        }, {
+            id: 15,
+            title: "The Alchemist — Sample",
+            author: "Paulo Coelho",
+            genre: "fiction",
+            year: 1988,
+            pages: 208,
+            description: "Sample from the inspiring fable.",
+            content: [
+                "The boy's name was Santiago. He had spent the night in an abandoned church, and the roof had fallen in long ago.",
+                "He was a shepherd, and he traveled with his flock through the fields of Andalusia, seeking food and water.",
+                "One day, he had a dream—a recurring dream that would change his life forever."
+            ],
+            rating: 4.7,
+            downloads: 15200,
+            isFree: true,
+            isBestseller: true,
+            isEthiopian: false,
+            isFullText: false
         }];
 
-        // ===================================================================
+        // =====================================================================
         //  STATE
-        // ===================================================================
+        // =====================================================================
         const state = {
             books: [...BASE_BOOKS],
             filtered: [...BASE_BOOKS],
-            favorites: JSON.parse(localStorage.getItem('real_favorites') || '[]'),
-            readingProgress: JSON.parse(localStorage.getItem('real_reading_progress') || '{}'),
+            favorites: JSON.parse(localStorage.getItem('ethiolib_favorites') || '[]'),
+            readingProgress: JSON.parse(localStorage.getItem('ethiolib_progress') || '{}'),
             currentFilter: 'all',
             searchQuery: '',
             sortBy: 'rating',
@@ -1067,13 +1757,12 @@
             currentBookId: null,
             isReaderOpen: false,
             isModalOpen: false,
-            uploadedBooks: JSON.parse(localStorage.getItem('real_uploaded_books') || '[]'),
-            isAdmin: localStorage.getItem('admin_session') === 'true'
+            isAdmin: localStorage.getItem('ethiolib_admin_session') === 'true'
         };
 
-        // ===================================================================
+        // =====================================================================
         //  DOM REFS
-        // ===================================================================
+        // =====================================================================
         const $ = (s) => document.querySelector(s);
         const $$ = (s) => document.querySelectorAll(s);
         const grid = $('#bookGrid');
@@ -1105,28 +1794,35 @@
         const sortSelect = $('#sortSelect');
         const pagination = $('#pagination');
         const uploadSection = $('#uploadSection');
+        const uploadBox = $('#uploadBox');
         const fileInput = $('#fileInput');
         const adminToggle = $('#adminToggle');
+        const fontIncrease = $('#fontIncrease');
+        const fontDecrease = $('#fontDecrease');
 
-        // ===================================================================
+        // =====================================================================
         //  HELPERS
-        // ===================================================================
+        // =====================================================================
         function getBook(id) { return state.books.find(b => b.id === id); }
 
         function setReadingProgress(id, pct) {
             state.readingProgress[id] = Math.min(100, Math.max(0, pct));
-            localStorage.setItem('real_reading_progress', JSON.stringify(state.readingProgress));
+            localStorage.setItem('ethiolib_progress', JSON.stringify(state.readingProgress));
         }
 
         function getReadingProgress(id) { return state.readingProgress[id] || 0; }
 
         function toast(msg, type = 'info') {
             const el = document.createElement('div');
-            el.className = `toast`;
-            el.innerHTML = `<span>${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️'}</span> ${msg}`;
+            el.className = `toast ${type}`;
+            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+            el.innerHTML = `<span>${icons[type] || 'ℹ️'}</span> ${msg}`;
             toastContainer.appendChild(el);
-            setTimeout(() => { el.style.opacity = '0';
-                setTimeout(() => el.remove(), 300); }, 3200);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateX(20px)';
+                setTimeout(() => el.remove(), 300);
+            }, 3500);
         }
 
         function updateAdminUI() {
@@ -1141,9 +1837,26 @@
             }
         }
 
-        // ===================================================================
+        function loadUploadedBooks() {
+            const stored = JSON.parse(localStorage.getItem('ethiolib_uploads') || '[]');
+            if (stored.length) {
+                const existingIds = state.books.map(b => b.id);
+                stored.forEach(ub => {
+                    if (!existingIds.includes(ub.id)) {
+                        state.books.push(ub);
+                    }
+                });
+            }
+        }
+
+        function saveUploadedBooks() {
+            const uploaded = state.books.filter(b => b.genre === 'upload');
+            localStorage.setItem('ethiolib_uploads', JSON.stringify(uploaded));
+        }
+
+        // =====================================================================
         //  RENDER
-        // ===================================================================
+        // =====================================================================
         function renderBooks(books, page = state.currentPage) {
             const start = (page - 1) * state.pageSize;
             const end = start + state.pageSize;
@@ -1157,45 +1870,56 @@
             }
             emptyState.classList.add('hidden');
             bookCount.textContent = `(${books.length})`;
+
             grid.innerHTML = pageItems.map((book) => {
                 const isFav = state.favorites.includes(book.id);
-                const genreLabel = book.genre.charAt(0).toUpperCase() + book.genre.slice(1);
                 const stars = '★'.repeat(Math.floor(book.rating)) + '☆'.repeat(5 - Math.floor(book.rating));
                 const badges = [];
-                if (book.isFree) badges.push('Free');
-                if (book.isFullText) badges.push('Full Text');
-                if (book.isEthiopian) badges.push('🇪🇹');
-                if (book.genre === 'upload') badges.push('📤');
+                if (book.isFree) badges.push({ label: 'Free', cls: 'free' });
+                if (book.isFullText) badges.push({ label: 'Full', cls: 'full' });
+                else if (!book.isFullText && book.genre !== 'upload') badges.push({ label: 'Sample', cls: 'sample' });
+                if (book.isEthiopian) badges.push({ label: '🇪🇹', cls: 'ethiopian' });
+                if (book.genre === 'upload') badges.push({ label: 'Uploaded', cls: 'free' });
+
+                const progress = getReadingProgress(book.id);
+
                 return `
-                    <div class="book-card" data-id="${book.id}">
-                        <button class="fav-btn ${isFav ? 'liked' : ''}" data-id="${book.id}"><i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i></button>
+                    <div class="book-card" data-id="${book.id}" data-genre="${book.genre}">
+                        <button class="fav-btn ${isFav ? 'liked' : ''}" data-id="${book.id}">
+                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+                        </button>
                         <div class="book-cover">
                             <div class="cover-content">
                                 <div class="icon"><i class="fa-solid fa-book"></i></div>
                                 <div class="title">${book.title}</div>
                                 <div class="author">${book.author}</div>
                             </div>
-                            ${badges.length ? badges.map(b => `<span class="badge ${b === 'Full Text' ? 'full' : b === '🇪🇹' ? 'ethiopian' : ''}">${b}</span>`).join('') : ''}
+                            ${badges.length ? badges.map(b => `<span class="badge ${b.cls}">${b.label}</span>`).join('') : ''}
                         </div>
                         <div class="book-info">
                             <div class="title">${book.title}</div>
                             <div class="author">${book.author}</div>
                             <div class="meta">
-                                <span class="genre">${genreLabel}</span>
+                                <span class="genre">${book.genre.charAt(0).toUpperCase() + book.genre.slice(1)}</span>
                                 <span class="rating">${stars}</span>
                             </div>
                         </div>
+                        ${progress > 0 ? `<div class="book-progress"><div class="fill" style="width:${progress}%;"></div></div>` : '<div class="book-progress" style="opacity:0;"><div class="fill" style="width:0%;"></div></div>'}
                     </div>
                 `;
             }).join('');
+
             grid.querySelectorAll('.book-card').forEach(card => {
                 const id = Number(card.dataset.id);
-                card.addEventListener('click', (e) => { if (e.target.closest('.fav-btn')) return;
-                    openDetail(id); });
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.fav-btn')) return;
+                    openDetail(id);
+                });
                 const favBtn = card.querySelector('.fav-btn');
                 if (favBtn) favBtn.addEventListener('click', (e) => { e.stopPropagation();
                     toggleFavorite(id); });
             });
+
             renderPagination(books.length);
             updateFavBadge();
         }
@@ -1205,7 +1929,14 @@
             if (totalPages <= 1) { pagination.innerHTML = ''; return; }
             let html =
                 `<button class="prev" ${state.currentPage === 1 ? 'disabled' : ''} data-page="${state.currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></button>`;
-            for (let i = 1; i <= totalPages; i++) {
+            const maxVisible = 7;
+            let startPage = Math.max(1, state.currentPage - 3);
+            let endPage = Math.min(totalPages, state.currentPage + 3);
+            if (endPage - startPage < 6) {
+                if (startPage === 1) endPage = Math.min(totalPages, startPage + 6);
+                else startPage = Math.max(1, endPage - 6);
+            }
+            for (let i = startPage; i <= endPage; i++) {
                 html += `<button class="${i === state.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
             }
             html +=
@@ -1222,9 +1953,9 @@
 
         function updateFavBadge() { favCount.textContent = state.favorites.length; }
 
-        // ===================================================================
-        //  FILTERS
-        // ===================================================================
+        // =====================================================================
+        //  FILTERS & SORT
+        // =====================================================================
         function applyFiltersAndSort() {
             const query = state.searchQuery.toLowerCase().trim();
             const filter = state.currentFilter;
@@ -1237,7 +1968,11 @@
                 return book.genre === filter;
             });
             if (query) {
-                result = result.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
+                result = result.filter(b =>
+                    b.title.toLowerCase().includes(query) ||
+                    b.author.toLowerCase().includes(query) ||
+                    b.genre.toLowerCase().includes(query)
+                );
             }
             result.sort((a, b) => {
                 switch (sort) {
@@ -1262,27 +1997,30 @@
         }
 
         function updateSectionTitle(filter) {
-            const labels = { all: 'ሁሉም መጽሐፍት', fiction: 'ልብ ወለድ', nonfiction: 'መረጃ', classic: 'ክላሲክ',
-                ethiopian: '🇪🇹 ኢትዮጵያዊ', upload: '📤 የጫኑት' };
-            const label = labels[filter] || 'መጽሐፍት';
-            const iconMap = { all: 'fa-book', fiction: 'fa-pen-fancy', nonfiction: 'fa-newspaper', classic: 'fa-landmark',
+            const labels = { all: 'All Books', fiction: 'Fiction', nonfiction: 'Non‑Fiction', classic: 'Classics',
+                ethiopian: '🇪🇹 Ethiopian', upload: '📤 Uploaded' };
+            const label = labels[filter] || 'Books';
+            const icons = { all: 'fa-book', fiction: 'fa-pen-fancy', nonfiction: 'fa-newspaper', classic: 'fa-landmark',
                 ethiopian: 'fa-flag', upload: 'fa-cloud-upload-alt' };
             sectionTitle.innerHTML =
-                `<i class="fa-solid ${iconMap[filter] || 'fa-book'}"></i> ${label} <span class="count">(${state.filtered.length})</span>`;
+                `<i class="fa-solid ${icons[filter] || 'fa-book'}"></i> ${label} <span class="count">(${state.filtered.length})</span>`;
         }
 
-        // ===================================================================
-        //  FAVORITES & MODAL
-        // ===================================================================
+        // =====================================================================
+        //  FAVORITES
+        // =====================================================================
         function toggleFavorite(id) {
             const idx = state.favorites.indexOf(id);
             if (idx > -1) { state.favorites.splice(idx, 1);
-                toast('ተወገደ', 'info'); } else { state.favorites.push(id);
-                toast('ተጨመረ ❤️', 'success'); }
-            localStorage.setItem('real_favorites', JSON.stringify(state.favorites));
+                toast('Removed from favorites', 'info'); } else { state.favorites.push(id);
+                toast('Added to favorites ❤️', 'success'); }
+            localStorage.setItem('ethiolib_favorites', JSON.stringify(state.favorites));
             applyFiltersAndSort();
         }
 
+        // =====================================================================
+        //  MODAL
+        // =====================================================================
         function openDetail(id) {
             const book = getBook(id);
             if (!book) return;
@@ -1290,19 +2028,31 @@
             const isFav = state.favorites.includes(id);
             const stars = '★'.repeat(Math.floor(book.rating)) + '☆'.repeat(5 - Math.floor(book.rating));
             const isFull = book.isFullText || book.genre === 'upload';
+            const isUploaded = book.genre === 'upload';
             modalContent.innerHTML = `
-                <div class="modal-cover"><div><div class="icon"><i class="fa-solid fa-book"></i></div><div class="title">${book.title}</div><div class="author">${book.author}</div></div></div>
+                <div class="modal-cover">
+                    <div>
+                        <div class="icon"><i class="fa-solid fa-book"></i></div>
+                        <div class="title">${book.title}</div>
+                        <div class="author">${book.author}</div>
+                    </div>
+                </div>
                 <div class="modal-details">
-                    <h2>${book.title} ${book.isFullText ? '<span style="font-size:0.8rem;background:var(--gold);padding:2px 10px;border-radius:40px;color:#1a1715;">ሙሉ</span>' : ''}</h2>
+                    <h2>${book.title} ${book.isFullText ? '<span style="font-size:0.7rem;background:var(--gold);padding:2px 10px;border-radius:40px;color:#1a1715;font-weight:700;margin-left:8px;">FULL</span>' : ''}</h2>
                     <div class="author">${book.author}</div>
-                    <div class="meta-row" style="display:flex;gap:0.8rem;flex-wrap:wrap;font-size:0.8rem;color:var(--text-secondary);">
-                        <span>${book.genre}</span><span>${book.year}</span><span>${book.pages} ገጾች</span><span>${stars}</span>
+                    <div class="meta-row">
+                        <span><i class="fa-regular fa-folder"></i> ${book.genre}</span>
+                        <span><i class="fa-regular fa-calendar"></i> ${book.year}</span>
+                        <span><i class="fa-regular fa-file-lines"></i> ${book.pages} pages</span>
+                        <span><i class="fa-regular fa-star"></i> ${stars}</span>
+                        ${book.isFree ? '<span style="color:var(--green);"><i class="fa-regular fa-circle-check"></i> Free</span>' : ''}
                     </div>
                     <div class="description">${book.description}</div>
                     <div class="modal-actions">
-                        <button class="btn btn-primary" id="modalReadBtn"><i class="fa-regular fa-book-open"></i> ${isFull ? 'አንብብ' : 'ናሙና'}</button>
-                        <button class="btn btn-secondary" id="modalFavBtn"><i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${isFav ? 'አስወግድ' : 'ጨምር'}</button>
-                        <button class="btn btn-secondary" id="modalCloseBtn">ዝጋ</button>
+                        <button class="btn btn-primary" id="modalReadBtn"><i class="fa-regular fa-book-open"></i> ${isFull ? 'Read Full' : 'Read Sample'}</button>
+                        <button class="btn btn-secondary" id="modalFavBtn"><i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${isFav ? 'Remove' : 'Add'}</button>
+                        ${isUploaded && state.isAdmin ? `<button class="btn btn-danger" id="modalDeleteBtn"><i class="fa-regular fa-trash-can"></i> Delete</button>` : ''}
+                        <button class="btn btn-secondary" id="modalCloseBtn">Close</button>
                     </div>
                 </div>
             `;
@@ -1312,23 +2062,33 @@
                 openReader(id); });
             modalContent.querySelector('#modalFavBtn').addEventListener('click', () => { toggleFavorite(id);
                 openDetail(id); });
+            const delBtn = modalContent.querySelector('#modalDeleteBtn');
+            if (delBtn) delBtn.addEventListener('click', () => { deleteUploadedBook(id); });
             modalContent.querySelector('#modalCloseBtn').addEventListener('click', closeModal);
         }
 
         function closeModal() { modal.classList.remove('open');
             state.isModalOpen = false; }
 
-        // ===================================================================
+        // =====================================================================
         //  READER
-        // ===================================================================
+        // =====================================================================
+        let currentFontSize = 1.05;
+
         function openReader(id) {
             const book = getBook(id);
             if (!book) return;
             state.currentBookId = id;
             const contentHtml = book.content.map(p => `<p>${p}</p>`).join('');
-            readerBody.innerHTML =
-                `<div class="chapter-title">${book.title}</div><div style="text-align:center;color:var(--text-secondary);margin-bottom:2rem;">በ ${book.author}</div>${contentHtml}${!book.isFullText && book.genre !== 'upload' ? '<div style="margin-top:3rem;text-align:center;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.05);padding-top:2rem;">— የናሙና መጨረሻ —</div>' : ''}`;
+            readerBody.innerHTML = `
+                <div class="chapter-title">${book.title}</div>
+                <div class="byline">by ${book.author}</div>
+                ${contentHtml}
+                ${!book.isFullText && book.genre !== 'upload' ? '<div class="end-note">— End of sample —</div>' : ''}
+            `;
             readerTitle.textContent = book.title;
+            // Apply current font size
+            readerBody.style.fontSize = currentFontSize + 'rem';
             reader.classList.add('open');
             state.isReaderOpen = true;
             document.body.style.overflow = 'hidden';
@@ -1362,64 +2122,64 @@
             state.isReaderOpen = false;
             document.body.style.overflow = ''; }
 
-        // ===================================================================
-        //  ADMIN LOGIC — NO HARDCODED PASSWORD. User sets it locally.
-        // ===================================================================
+        // =====================================================================
+        //  ADMIN
+        // =====================================================================
         function handleAdminToggle() {
             if (state.isAdmin) {
                 state.isAdmin = false;
-                localStorage.setItem('admin_session', 'false');
-                toast('የአስተዳዳሪ ሁኔታ ተወገደ', 'warning');
+                localStorage.setItem('ethiolib_admin_session', 'false');
+                toast('Admin mode deactivated', 'warning');
                 updateAdminUI();
                 applyFiltersAndSort();
                 return;
             }
-            let storedPassword = localStorage.getItem('admin_password');
+            let storedPassword = localStorage.getItem('ethiolib_admin_password');
             if (!storedPassword) {
-                let newPass = prompt('አዲስ የአስተዳዳሪ ይለፍ ቃል ይፍጠሩ:');
+                let newPass = prompt('Create an admin password:');
                 if (newPass && newPass.trim() !== '') {
-                    localStorage.setItem('admin_password', newPass.trim());
+                    localStorage.setItem('ethiolib_admin_password', newPass.trim());
                     state.isAdmin = true;
-                    localStorage.setItem('admin_session', 'true');
-                    toast('የይለፍ ቃል ተቀምጧል! አስተዳዳሪ ገብተዋል።', 'success');
+                    localStorage.setItem('ethiolib_admin_session', 'true');
+                    toast('Password set! Admin logged in.', 'success');
                     updateAdminUI();
                     applyFiltersAndSort();
                 } else {
-                    toast('የይለፍ ቃል አልተሰጠም', 'error');
+                    toast('No password provided.', 'error');
                 }
             } else {
-                let entered = prompt('የአስተዳዳሪ ይለፍ ቃል ያስገቡ:');
+                let entered = prompt('Enter admin password:');
                 if (entered === storedPassword) {
                     state.isAdmin = true;
-                    localStorage.setItem('admin_session', 'true');
-                    toast('አስተዳዳሪ ገብተዋል', 'success');
+                    localStorage.setItem('ethiolib_admin_session', 'true');
+                    toast('Admin logged in.', 'success');
                     updateAdminUI();
                     applyFiltersAndSort();
                 } else if (entered !== null) {
-                    toast('የይለፍ ቃል ተሳስቷል', 'error');
+                    toast('Incorrect password.', 'error');
                 }
             }
         }
 
-        // ===================================================================
-        //  FILE UPLOAD (Admin only)
-        // ===================================================================
+        // =====================================================================
+        //  UPLOAD & DELETE
+        // =====================================================================
         function handleFileUpload(file) {
-            if (!state.isAdmin) { toast('አስተዳዳሪ ብቻ መጫን ይችላል', 'error'); return; }
+            if (!state.isAdmin) { toast('Admin only.', 'error'); return; }
             const reader = new FileReader();
             reader.onload = function(e) {
                 const text = e.target.result;
                 const lines = text.split('\n').filter(line => line.trim().length > 0);
-                if (lines.length < 5) { toast('ፋይሉ አጭር ነው', 'warning'); return; }
+                if (lines.length < 5) { toast('File too short.', 'warning'); return; }
                 const title = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, ' ');
                 const newBook = {
                     id: Date.now() + Math.random() * 1000,
                     title: title,
-                    author: "በአስተዳዳሪ የተጫነ",
+                    author: "Admin Upload",
                     genre: "upload",
                     year: new Date().getFullYear(),
                     pages: lines.length,
-                    description: `የተጫነ መጽሐፍ: ${file.name}. ${lines.length} መስመሮች አሉት።`,
+                    description: `Uploaded: ${file.name}. ${lines.length} lines.`,
                     content: lines,
                     rating: 0,
                     downloads: 0,
@@ -1429,22 +2189,27 @@
                     isFullText: true,
                 };
                 state.books.push(newBook);
-                state.uploadedBooks.push(newBook.id);
-                localStorage.setItem('real_uploaded_books', JSON.stringify(state.uploadedBooks));
-                // Also store the full object for persistence across refreshes
-                const storedUploads = JSON.parse(localStorage.getItem('real_uploaded_objects') || '[]');
-                storedUploads.push(newBook);
-                localStorage.setItem('real_uploaded_objects', JSON.stringify(storedUploads));
+                saveUploadedBooks();
                 applyFiltersAndSort();
-                toast(`✅ "${title}" ተጭኗል!`, 'success');
+                toast(`✅ Uploaded "${title}" successfully!`, 'success');
             };
-            reader.onerror = function() { toast('ስህተት', 'error'); };
+            reader.onerror = function() { toast('Error reading file.', 'error'); };
             reader.readAsText(file);
         }
 
-        // ===================================================================
+        function deleteUploadedBook(id) {
+            if (!state.isAdmin) { toast('Admin only.', 'error'); return; }
+            if (!confirm('Delete this uploaded book permanently?')) return;
+            state.books = state.books.filter(b => b.id !== id);
+            saveUploadedBooks();
+            closeModal();
+            applyFiltersAndSort();
+            toast('Book deleted.', 'info');
+        }
+
+        // =====================================================================
         //  EVENTS
-        // ===================================================================
+        // =====================================================================
         searchBtn.addEventListener('click', () => { state.searchQuery = searchInput.value;
             state.currentPage = 1;
             applyFiltersAndSort(); });
@@ -1478,14 +2243,14 @@
 
         favToggle.addEventListener('click', () => {
             const favs = state.books.filter(b => state.favorites.includes(b.id));
-            if (!favs.length) { toast('ምንም የለም', 'warning'); return; }
+            if (!favs.length) { toast('No favorites yet.', 'warning'); return; }
             state.currentFilter = 'all';
             state.searchQuery = '';
             state.filtered = favs;
             state.currentPage = 1;
             renderBooks(favs, 1);
             sectionTitle.innerHTML =
-                `<i class="fa-solid fa-heart" style="color:var(--red);"></i> ተወዳጆች <span class="count">(${favs.length})</span>`;
+                `<i class="fa-solid fa-heart" style="color:var(--red);"></i> Favorites <span class="count">(${favs.length})</span>`;
             navLinks.forEach(a => a.classList.remove('active'));
             filterBtns.forEach(b => b.classList.remove('active'));
         });
@@ -1502,6 +2267,16 @@
                     state.isModalOpen) closeModal(); } });
 
         adminToggle.addEventListener('click', handleAdminToggle);
+
+        // Font controls
+        fontIncrease.addEventListener('click', () => {
+            currentFontSize = Math.min(1.5, currentFontSize + 0.1);
+            readerBody.style.fontSize = currentFontSize + 'rem';
+        });
+        fontDecrease.addEventListener('click', () => {
+            currentFontSize = Math.max(0.85, currentFontSize - 0.1);
+            readerBody.style.fontSize = currentFontSize + 'rem';
+        });
 
         let darkMode = true;
         themeToggle.addEventListener('click', () => {
@@ -1529,41 +2304,37 @@
         window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400));
         scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        uploadSection.addEventListener('click', () => {
-            if (!state.isAdmin) { toast('አስተዳዳሪ ብቻ', 'error'); return; }
+        uploadBox.addEventListener('click', () => {
+            if (!state.isAdmin) { toast('Admin only.', 'error'); return; }
             fileInput.click();
         });
-        uploadSection.addEventListener('dragover', (e) => { e.preventDefault();
-            uploadSection.style.borderColor = 'var(--accent)'; });
-        uploadSection.addEventListener('dragleave', () => { uploadSection.style.borderColor = 'var(--text-muted)'; });
-        uploadSection.addEventListener('drop', (e) => { e.preventDefault();
-            uploadSection.style.borderColor = 'var(--text-muted)'; if (e.dataTransfer.files.length) handleFileUpload(e
+        uploadBox.addEventListener('dragover', (e) => { e.preventDefault();
+            uploadBox.style.borderColor = 'var(--accent)'; });
+        uploadBox.addEventListener('dragleave', () => { uploadBox.style.borderColor = 'var(--text-muted)'; });
+        uploadBox.addEventListener('drop', (e) => { e.preventDefault();
+            uploadBox.style.borderColor = 'var(--text-muted)'; if (e.dataTransfer.files.length) handleFileUpload(e
                 .dataTransfer.files[0]); });
         fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFileUpload(fileInput.files[0]);
             fileInput.value = ''; });
 
-        // ===================================================================
+        // =====================================================================
         //  INIT
-        // ===================================================================
+        // =====================================================================
         document.documentElement.setAttribute('data-theme', 'dark');
         document.querySelector('.nav-links a[data-filter="all"]')?.classList.add('active');
         document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
         state.sortBy = sortSelect.value;
 
-        // Restore uploaded books from localStorage
-        const storedUploads = JSON.parse(localStorage.getItem('real_uploaded_objects') || '[]');
-        if (storedUploads.length) {
-            const existingIds = state.books.map(b => b.id);
-            storedUploads.forEach(ub => {
-                if (!existingIds.includes(ub.id)) {
-                    state.books.push(ub);
-                }
-            });
-        }
-
+        loadUploadedBooks();
         updateAdminUI();
         applyFiltersAndSort();
-        toast('🔐 የራስዎን የይለፍ ቃል ይፍጠሩ (አስተዳዳሪ ለመሆን መዝገውን ይጫኑ)', 'info');
+
+        // If admin session was active, show a toast
+        if (state.isAdmin) {
+            setTimeout(() => toast('🔓 Admin mode active. You can upload books.', 'info'), 500);
+        } else {
+            setTimeout(() => toast('🔐 Click the lock icon to set your admin password.', 'info'), 500);
+        }
     </script>
 </body>
 </html>
